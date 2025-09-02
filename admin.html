@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/site.css">
+  <!-- Firebase (compat SDKs) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+  <script src="/js/firebase-config.js"></script>
+
+  <title>Admin • Nagcoop</title>
+  <style>
+    .card{background:#111;border:1px solid #333;border-radius:12px;padding:16px;margin-bottom:16px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h1>Admin Panel</h1>
+      <div>
+        <a class="btn" href="/">← Back</a>
+        <button class="btn" id="logout">Logout</button>
+      </div>
+    </div>
+
+    <div id="guard" class="card">Checking session…</div>
+
+    <div id="admin-panels" style="display:none">
+      <div class="card">
+        <h2>Add News</h2>
+        <input id="news-title" placeholder="Title" />
+        <div style="height:8px"></div>
+        <textarea id="news-body" rows="4" placeholder="Content"></textarea>
+        <div style="height:8px"></div>
+        <input id="news-tags" placeholder="Comma-separated tags (optional)" />
+        <div style="height:10px"></div>
+        <button class="btn" id="add-news">Publish</button>
+        <p id="news-msg" class="muted"></p>
+      </div>
+
+      <div class="card">
+        <h2>Add Video (YouTube)</h2>
+        <input id="video-id" placeholder="YouTube ID (after v=)" />
+        <div style="height:8px"></div>
+        <input id="video-title" placeholder="Title (optional)" />
+        <div style="height:10px"></div>
+        <button class="btn" id="add-video">Add Video</button>
+        <p id="video-msg" class="muted"></p>
+      </div>
+
+      <div class="card">
+        <h2>Upload Download</h2>
+        <input id="dl-name" placeholder="Display name" />
+        <div style="height:8px"></div>
+        <input id="dl-file" type="file" />
+        <div style="height:10px"></div>
+        <button class="btn" id="upload-dl">Upload</button>
+        <p id="dl-msg" class="muted"></p>
+      </div>
+    </div>
+  </div>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
