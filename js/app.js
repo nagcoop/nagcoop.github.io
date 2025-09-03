@@ -82,21 +82,34 @@ if (featEl) {
 }
 
 // ======= DOWNLOADS =======
+// ======= DOWNLOADS =======
 const downloadsList = document.getElementById('downloads-list');
 if (downloadsList) {
   db.collection('downloads').orderBy('createdAt','desc').limit(50).onSnapshot(snap => {
     downloadsList.innerHTML = '';
     snap.forEach(doc => {
       const d = doc.data();
+      const isMagnet = typeof d.url === 'string' && d.url.startsWith('magnet:');
+      const isTorrent = typeof d.url === 'string' && d.url.toLowerCase().endsWith('.torrent');
+      const badge = isMagnet ? 'Magnet' : (isTorrent ? 'Torrent' : 'File');
+
+      const size = d.size ? `(${(d.size/1024/1024).toFixed(2)} MB)` : '';
       const card = document.createElement('div');
       card.className = 'card';
-      const size = d.size ? `(${(d.size/1024/1024).toFixed(2)} MB)` : '';
       card.innerHTML = `
         <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
-          <div><strong>${d.name || 'File'}</strong> <span class="muted">${size}</span></div>
-          <a class="btn" href="${d.url}" target="_blank" rel="noopener noreferrer">Download</a>
+          <div>
+            <strong>${d.name || 'File'}</strong>
+            <span class="muted">${size}</span>
+            <span class="btn" style="padding:2px 8px;border-radius:9999px;margin-left:6px">${badge}</span>
+          </div>
+          <a class="btn" href="${d.url}" target="_blank" rel="noopener noreferrer">
+            ${isMagnet ? 'Open magnet' : 'Download'}
+          </a>
         </div>`;
       downloadsList.appendChild(card);
     });
   });
 }
+
+    
