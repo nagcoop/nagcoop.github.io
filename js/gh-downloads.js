@@ -1,3 +1,4 @@
+<script src="/js/app.js"></script>
 <script src="/js/gh-downloads.js"></script>
 <script>
   renderGithubDownloads({
