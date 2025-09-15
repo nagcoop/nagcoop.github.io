@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nagcoop • Web Emulator</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="header">
+    <div class="wrap brand">
+      <div class="brand-left">
+        <img src="/assets/logo.jpg" class="logo" alt="Nagcoop">
+        <div>
+          <h1 class="title">Nagcoop</h1>
+          <div class="subtitle">Web Emulator</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/emulator.html" class="nav-link is-active">Emulator</a>
+        <a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener" class="nav-link">YouTube</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card span2">
+      <h2>🎮 Web Emulator</h2>
+      <p class="muted">Use your own legal backups/homebrews. Nothing is uploaded: the ROM runs locally in your browser.</p>
+
+      <div class="emu-toolbar">
+        <label class="label">Core:</label>
+        <select id="core" class="select">
+          <option value="segaMD">Mega Drive / Genesis</option>
+          <option value="segaMS">Master System</option>
+          <option value="gba">Game Boy Advance</option>
+        </select>
+
+        <button id="demo" class="btn">Load demo ROM (legal)</button>
+
+        <span class="split"></span>
+
+        <input id="romfile" type="file" class="file" accept=".bin,.sms,.gg,.gba,.zip,.7z,.gz,.md,.gen">
+        <button id="runLocal" class="btn accent">Run local ROM</button>
+
+        <span class="split"></span>
+
+        <input id="romUrl" class="input" placeholder="Or paste a direct ROM URL (https://...)">
+        <button id="runUrl" class="btn ghost">Run via URL</button>
+
+        <button id="fullscreen" class="btn ghost">Full screen</button>
+      </div>
+
+      <div id="player" class="emu-player"></div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">© 2025 Nagcoop • Heavy-metal theme 🤘</footer>
+
+  <!-- EmulatorJS: vamos criar/recortar o player dinamicamente -->
+  <script>
+    const DATA_PATH = "https://cdn.emulatorjs.org/latest/data/";
+    const playerEl  = document.getElementById('player');
+    const coreSel   = document.getElementById('core');
+    const fileInp   = document.getElementById('romfile');
+    const demoBtn   = document.getElementById('demo');
+    const runLocal  = document.getElementById('runLocal');
+    const runUrlBtn = document.getElementById('runUrl');
+    const romUrlInp = document.getElementById('romUrl');
+    const fsBtn     = document.getElementById('fullscreen');
+
+    function resetPlayer() {
+      playerEl.innerHTML = "";
+      // remove loader.js anterior, se existir
+      [...document.querySelectorAll('script[data-ejs-loader]')].forEach(s => s.remove());
+      // pequenas sobras
+      if (window.Module?.canvas) window.Module.canvas = null;
+    }
+
+    function startEmu({ core, gameUrl }) {
+      resetPlayer();
+
+      // variáveis globais que o loader da EmulatorJS usa
+      window.EJS_player       = "#player";
+      window.EJS_core         = core;                 // 'segaMD' | 'segaMS' | 'gba' | ...
+      window.EJS_biosUrl      = "";                   // opcional
+      window.EJS_gameUrl      = gameUrl || "";        // pode ser blob:… ou https://…
+      window.EJS_startOnLoaded= true;
+      window.EJS_pathtodata   = DATA_PATH;
+
+      const s = document.createElement('script');
+      s.src = DATA_PATH + "loader.js";
+      s.async = true;
+      s.setAttribute('data-ejs-loader','1');
+      document.body.appendChild(s);
+    }
+
+    // Demo ROMs livres (homebrew) – bem pequenos
+    const DEMOS = {
+      segaMD: "https://files.emulatorjs.org/roms/homebrew/segaMD/asteroids-md.bin",
+      segaMS: "https://files.emulatorjs.org/roms/homebrew/segaMS/sonic-minims.sms",
+      gba:    "https://files.emulatorjs.org/roms/homebrew/gba/2048.gba"
+    };
+
+    demoBtn.addEventListener('click', () => {
+      const core = coreSel.value;
+      const url  = DEMOS[core];
+      if (!url) return alert("No demo for this core.");
+      startEmu({ core, gameUrl: url });
+    });
+
+    runLocal.addEventListener('click', () => {
+      const f = fileInp.files?.[0];
+      if (!f) return alert("Choose a ROM file first.");
+      const blobUrl = URL.createObjectURL(f);
+      startEmu({ core: coreSel.value, gameUrl: blobUrl });
+    });
+
+    runUrlBtn.addEventListener('click', () => {
+      const url = romUrlInp.value.trim();
+      if (!/^https?:\/\//i.test(url)) return alert("Paste a direct http(s) ROM URL.");
+      startEmu({ core: coreSel.value, gameUrl: url });
+    });
+
+    fsBtn.addEventListener('click', () => {
+      const el = document.querySelector("#player canvas") || playerEl;
+      if (el.requestFullscreen) el.requestFullscreen();
+    });
+  </script>
+</body>
+</html>

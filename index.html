@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nagcoop • Games & News</title>
+
+  <!-- Google Font: Heavy/metal vibe -->
+  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- AdSense (ok ter em todas as páginas) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="header">
+    <div class="wrap brand">
+      <div class="brand-left">
+        <img src="/assets/logo.jpg" alt="Nagcoop" class="logo">
+        <div>
+          <h1 class="title">Nagcoop</h1>
+          <div class="subtitle">Games & News</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="/" class="nav-link is-active">Home</a>
+        <a href="/emulator.html" class="nav-link">Emulator</a>
+        <a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener" class="nav-link">YouTube</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap grid2">
+    <!-- Destaques -->
+    <section class="card">
+      <h2>🔥 Channel Highlights</h2>
+      <p class="muted">Co-op mayhem, quick gamer news, and online emulators ⚡</p>
+
+      <div class="btn-row">
+        <a class="btn" href="https://www.youtube.com/@Nagcoop?sub_confirmation=1" target="_blank" rel="noopener">Subscribe</a>
+        <a class="btn ghost" href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener">Watch videos</a>
+        <a class="btn accent" href="/emulator.html">🎮 Try the Web Emulator</a>
+      </div>
+    </section>
+
+    <!-- Vídeo em destaque (tocando do seu canal) -->
+    <section class="card">
+      <div class="video-shell">
+        <!-- troque o ID se quiser outro vídeo em destaque -->
+        <iframe
+          id="featured-video"
+          src="https://www.youtube.com/embed/20-61MqJHbw?rel=0"
+          title="Featured video"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- Últimas “notícias” (estático simples – dá pra ligar no Firestore depois) -->
+    <section class="card span2">
+      <h2>📰 Latest News</h2>
+      <div class="news-list">
+        <article class="news">
+          <h3>New: Web Emulator page</h3>
+          <p class="muted">Play your own backups/homebrews in the browser. Mega Drive, Master System and GBA supported.</p>
+          <a class="link" href="/emulator.html">Open the Emulator →</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    © 2025 Nagcoop • All rights reserved • Heavy-metal theme 🤘
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
