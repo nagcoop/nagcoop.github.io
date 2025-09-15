@@ -3,48 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b0f12" />
   <title>Nagcoop • Web Emulator</title>
 
-  <!-- AdSense -->
+  <!-- AdSense (ok deixar no emulador também) -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
 
-  <!-- Fonte + tema -->
+  <!-- Fonte e estilo dark -->
   <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0b0f12; --panel:#12171d; --muted:#9aa4af;
-      --brand:#ffd166; --line:#9f1239;
-    }
+    :root{ --bg:#0b0f12; --panel:#12171d; --muted:#9aa4af; --line:#9f1239; --brand:#ffd166; }
     *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial}
+    html,body{margin:0;background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial}
     a{color:#ffd166;text-decoration:none}
     .wrap{max-width:1100px;margin:auto;padding:16px}
     header{border-bottom:2px solid var(--line);background:linear-gradient(180deg,rgba(159,18,57,.15),transparent)}
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand h1{font-family:'Metal Mania', cursive;color:var(--brand);margin:0}
-    .brand img{height:48px;border:2px solid var(--line);border-radius:8px}
     nav a{margin-left:16px}
-    nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
-    .panel{background:#12171d;border:1px solid #222a33;border-radius:12px;padding:14px}
-    .muted{color:var(--muted)}
-    .controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-    .btn{padding:9px 14px;border-radius:10px;border:1px solid #2a3340;background:#171e26;color:#e5e7eb;cursor:pointer}
-    select,input[type="file"]{background:#0f141a;color:#e5e7eb;border:1px solid #2a3340;border-radius:10px;padding:9px 10px}
-    .player{position:relative;width:100%;aspect-ratio:16/9;background:#000;border:1px solid #222a33;border-radius:12px;overflow:hidden}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand h1{font-family:'Metal Mania',cursive;letter-spacing:.5px;color:var(--brand);margin:0}
+    .brand img{height:48px;border:2px solid var(--line);border-radius:8px}
+    h2.section{display:flex;align-items:center;gap:8px;font-family:'Metal Mania',cursive;margin:14px 0}
+    .panel{background:var(--panel);border:1px solid #222a33;border-radius:12px;padding:14px}
+    /* Player responsivo 16:9 */
+    .player{position:relative;width:100%;background:#000;border:1px solid #222a33;border-radius:12px;overflow:hidden;aspect-ratio:16/9;max-height:75vh}
     #game{position:absolute;inset:0}
-    @media (max-width:620px){
-      .controls{flex-direction:column}
-      .btn,select,input[type="file"]{width:100%}
-    }
+    .controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+    .controls > *{font:inherit}
+    .btn{padding:9px 14px;border-radius:10px;border:1px solid #2a3340;background:#171e26;color:#e5e7eb;cursor:pointer;transition:transform .08s ease}
+    .btn:hover{transform:translateY(-1px)}
+    select,input[type="file"]{background:#0f141a;color:#e5e7eb;border:1px solid #2a3340;border-radius:10px;padding:9px 10px}
+    .muted{color:var(--muted);font-size:.95rem}
+    footer{border-top:1px solid #1b222c;color:#9aa4af;padding:24px 0;margin-top:24px}
+    @media (max-width:620px){ nav{display:flex;gap:12px} .controls{flex-direction:column;align-items:stretch} .btn,select,input[type="file"]{width:100%} }
   </style>
-
-  <!-- Caminho dos dados do EmulatorJS (versão estável, não “latest”) -->
-  <script>
-    const EJS_BASE = "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@v2.0.3/";
-    // o loader usa esse path:
-    window.EJS_pathtodata = EJS_BASE + "data/";
-  </script>
 </head>
 <body>
   <header>
@@ -59,30 +49,29 @@
       <nav>
         <a href="/">Home</a>
         <a href="/downloads.html">Downloads</a>
-        <a href="/emulator.html" aria-current="page">Emulator</a>
-        <a href="https://www.youtube.com/@Nagcoop" target="_blank" rel="noopener">YouTube</a>
+        <a href="/emulator.html"><strong>Emulator</strong></a>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
     <section class="panel">
-      <h2 style="font-family:'Metal Mania',cursive;margin:10px 0">🎮 Web Emulator</h2>
-      <p class="muted">
-        Nada é enviado ao servidor — a ROM roda no seu navegador.<br>
-        <strong>Dica Mega Drive/Genesis:</strong> use <code>.bin</code> ou <code>.gen</code> (muitos <code>.md</code> falham).
+      <h2 class="section">🎮 Web Emulator</h2>
+      <p class="muted" style="margin-top:-4px">
+        Use seus próprios <em>backups</em> (ou homebrews/demos). Nada é enviado ao servidor — a ROM roda no seu navegador.
       </p>
 
       <div class="controls">
         <label class="muted">Core:</label>
         <select id="core">
-          <option value="gba">Game Boy Advance (GBA)</option>
-          <option value="segaMD" selected>Sega Mega Drive / Genesis</option>
-          <option value="sms">Sega Master System</option>
+          <option value="segaMD">Mega Drive / Genesis</option>
+          <option value="segaMS">Sega Master System</option>
+          <option value="gba">Game Boy Advance</option>
         </select>
 
-        <input type="file" id="rom" accept=".gba,.bin,.gen,.sms,.rom,.zip" />
+        <input type="file" id="rom" accept=".bin,.gen,.md,.smd,.sms,.gb,.gbc,.gba,.rom,.zip" />
         <button class="btn" id="btn-run">Rodar ROM local</button>
+
         <button class="btn" id="btn-demo">Carregar demo legal</button>
         <button class="btn" id="btn-full">Tela cheia</button>
       </div>
@@ -91,9 +80,19 @@
     </section>
   </main>
 
-  <footer class="wrap" style="color:#9aa4af;border-top:1px solid #1b222c;padding-top:18px">© 2025 Nagcoop</footer>
+  <footer class="wrap">© 2025 Nagcoop • Dark theme • Gamepad na tela habilitado no mobile</footer>
 
   <script>
+    // CDN oficial: loader.js e /data precisam vir do MESMO lugar
+    const EJS_CDN = "https://cdn.emulatorjs.org/stable/data/";
+
+    // Demos (pequenas e legais) – hospedadas no site de demo do EmulatorJS
+    const DEMOS = {
+      segaMD:  "https://demo.emulatorjs.org/roms/megadrive/Columns%20(World).md",
+      segaMS:  "https://demo.emulatorjs.org/roms/mastersystem/Snail%20Maze%20(World).sms",
+      gba:     "https://demo.emulatorjs.org/roms/gba/FlappyBird.gba"
+    };
+
     const container = document.getElementById('game');
     const coreSel   = document.getElementById('core');
     const fileInp   = document.getElementById('rom');
@@ -101,74 +100,55 @@
     const demoBtn   = document.getElementById('btn-demo');
     const fullBtn   = document.getElementById('btn-full');
 
-    // Demos leves para validar cada core
-    const DEMOS = {
-      gba:    "https://cdn.jsdelivr.net/gh/thiagola92/gbajs-demos@master/roms/FlappyBird.gba",
-      segaMD: "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@gh-pages/roms/megadrive/Columns (World).bin",
-      sms:    "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@gh-pages/roms/mastersystem/Snail Maze (World).sms"
-    };
-
-    // remove instância e loader anterior
-    function resetPlayer(){
+    function clearPlayer(){
       container.innerHTML = "";
-      const old = document.getElementById("ejs-loader");
+      // Evita loader duplicado quando re-executa
+      const old = document.getElementById('ejs-loader');
       if (old) old.remove();
     }
 
-    // inicia o emulador (sempre recarrega o loader.js correto)
-    function startEmu(romUrl, core, gameName=""){
-      resetPlayer();
+    function startEmu(romUrl, core){
+      clearPlayer();
 
-      // Variáveis globais lidas pelo loader
+      // Variáveis globais lidas pelo loader.js
       window.EJS_player        = "#game";
-      window.EJS_core          = core;            // 'gba' | 'segaMD' | 'sms'
-      window.EJS_gameUrl       = romUrl;
-      window.EJS_gameName      = gameName || undefined;
-      window.EJS_startOnLoaded = true;
-      window.EJS_color         = "#111";
-      window.EJS_onGameStart   = () => console.log("Emulador iniciado");
-      window.EJS_onError       = (err) => {
-        console.error(err);
-        alert(
-          "Não foi possível iniciar o emulador.\n\nDicas:\n" +
-          "• GBA: .gba\n" +
-          "• Mega Drive/Genesis: .bin ou .gen (evite .md)\n" +
-          "• Master System: .sms\n\n" +
-          "Use 'Carregar demo legal' para testar o core."
-        );
-      };
+      window.EJS_core          = core;               // 'segaMD' | 'segaMS' | 'gba'
+      window.EJS_gameUrl       = romUrl;             // URL da ROM (também aceita blob: local)
+      window.EJS_pathtodata    = EJS_CDN;            // pasta /data/ no MESMO host do loader
+      window.EJS_startOnLoaded = true;               // inicia automaticamente
+      window.EJS_color         = "#111";             // cor do tema do player
 
-      // carrega o loader oficial (é ele que inicializa tudo)
+      // Injeta o loader do CDN oficial
       const s = document.createElement("script");
-      s.src = window.EJS_pathtodata + "loader.js";
-      s.id  = "ejs-loader";
+      s.src   = EJS_CDN + "loader.js";
+      s.id    = "ejs-loader";
+      s.onerror = () => alert("Não foi possível carregar o emulador (loader). Verifique conexão e tente novamente.");
       document.body.appendChild(s);
     }
 
     runBtn.addEventListener("click", () => {
-      const f = fileInp.files && fileInp.files[0];
-      if (!f){
-        alert("Escolha um arquivo de ROM primeiro.\nGBA: .gba • MD: .bin/.gen • SMS: .sms");
-        return;
-      }
-      const url = URL.createObjectURL(f);
-      startEmu(url, coreSel.value, f.name);
+      const file = fileInp.files?.[0];
+      if (!file) { alert("Escolha um arquivo de ROM primeiro."); return; }
+      // Dica: para Mega Drive prefira .bin ou .gen (alguns .md/.smd falham)
+      const url = URL.createObjectURL(file);
+      startEmu(url, coreSel.value);
     });
 
     demoBtn.addEventListener("click", () => {
       const core = coreSel.value;
-      const url  = DEMOS[core];
-      if (!url) return alert("Sem demo para este core.");
-      startEmu(url, core);
+      const demoUrl = DEMOS[core];
+      if (!demoUrl) { alert("Sem demo para este core."); return; }
+      startEmu(demoUrl, core);
     });
 
     fullBtn.addEventListener("click", () => {
-      const el = container.parentElement;
+      const el = container.parentElement; // .player
       if (el.requestFullscreen) el.requestFullscreen();
       else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
       else if (el.msRequestFullscreen) el.msRequestFullscreen();
     });
 
+    // Evita scroll quando em fullscreen no mobile
     document.addEventListener('fullscreenchange', () => {
       document.body.style.overflow = document.fullscreenElement ? 'hidden' : '';
     });
