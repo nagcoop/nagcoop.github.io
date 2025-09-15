@@ -8,31 +8,30 @@
   <!-- AdSense global -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
 
-  <!-- Fonte "Metal" e reset dark -->
+  <!-- Fonte + tema dark -->
   <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#0b0f12; --panel:#12171d; --muted:#9aa4af;
-      --brand:#f87171; --accent:#8b5cf6; --line:#9f1239;
+      --brand:#ffd166; --accent:#8b5cf6; --line:#9f1239;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial}
+    html,body{margin:0;background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
     a{color:#ffd166;text-decoration:none}
     .wrap{max-width:1100px;margin:auto;padding:16px}
     header{border-bottom:2px solid var(--line);background:linear-gradient(180deg,rgba(159,18,57,.15),transparent)}
     nav a{margin-left:16px}
     .brand{display:flex;align-items:center;gap:12px}
-    .brand h1{font-family:'Metal Mania', cursive;letter-spacing:.5px;color:#ffd166;margin:0}
+    .brand h1{font-family:'Metal Mania', cursive;letter-spacing:.5px;color:var(--brand);margin:0}
     .brand img{height:48px;border:2px solid var(--line);border-radius:8px}
 
     h2.section{display:flex;align-items:center;gap:8px;font-family:'Metal Mania', cursive;margin:14px 0}
     .panel{background:var(--panel);border:1px solid #222a33;border-radius:12px;padding:14px}
 
-    /* Área do player responsiva 16:9 */
+    /* Player responsivo 16:9 */
     .player{
       position:relative;width:100%;max-width:100%;
       background:#000;border:1px solid #222a33;border-radius:12px;overflow:hidden;
-      /* 16:9 */
       aspect-ratio:16/9;
     }
     #game{position:absolute;inset:0}
@@ -49,7 +48,7 @@
     .muted{color:var(--muted);font-size:.95rem}
     footer{border-top:1px solid #1b222c;color:#9aa4af;padding:24px 0;margin-top:24px}
 
-    /* Mobile tweaks */
+    /* Mobile */
     @media (max-width:620px){
       nav{display:flex;gap:12px}
       .controls{flex-direction:column;align-items:stretch}
@@ -57,11 +56,12 @@
     }
   </style>
 
-  <!-- Loader do EmulatorJS -->
+  <!-- Caminho de assets do EmulatorJS (CDN oficial) -->
   <script>
-    // Onde o EmulatorJS busca os assets de runtime
-    window.EJS_pathtodata = "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@latest/data/";
+    window.EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
   </script>
+  <!-- Carrega o emulador uma única vez -->
+  <script src="https://cdn.emulatorjs.org/latest/emulator.js"></script>
 </head>
 <body>
   <header>
@@ -85,7 +85,7 @@
     <section class="panel">
       <h2 class="section">🎮 Web Emulator</h2>
       <p class="muted" style="margin-top:-4px">
-        Use seus próprios <em>backups</em> (ou homebrews/demos). Nada é enviado ao servidor — a ROM roda só no seu navegador.
+        Use seus próprios <em>backups</em> (ou homebrews/demos). Nada é enviado ao servidor — tudo roda no seu navegador.
       </p>
 
       <div class="controls">
@@ -96,7 +96,11 @@
           <option value="sms">Sega Master System</option>
         </select>
 
-        <input type="file" id="rom" accept=".gba,.bin,.sms,.rom,.zip" />
+        <input
+          type="file"
+          id="rom"
+          accept=".gba,.bin,.gen,.md,.smd,.sms,.gg,.rom,.zip"
+        />
         <button class="btn" id="btn-run">Rodar ROM local</button>
 
         <button class="btn" id="btn-demo">Carregar demo legal</button>
@@ -106,13 +110,17 @@
       <div class="player">
         <div id="game"></div>
       </div>
+
+      <p class="muted" style="margin-top:8px">
+        Dica: para Mega Drive, prefira ROM <code>.bin</code>. Se sua ROM for <code>.md</code> ou <code>.smd</code> e não iniciar, converta de SMD→BIN.
+      </p>
     </section>
   </main>
 
-  <footer class="wrap">© 2025 Nagcoop • Dark theme • On-screen gamepad habilitado no mobile</footer>
+  <footer class="wrap">© 2025 Nagcoop • Dark theme • Gamepad na tela habilitado no mobile</footer>
 
   <script>
-    // --------- Config e helpers ----------
+    // --------- elementos ----------
     const container = document.getElementById('game');
     const coreSel   = document.getElementById('core');
     const fileInp   = document.getElementById('rom');
@@ -120,47 +128,61 @@
     const demoBtn   = document.getElementById('btn-demo');
     const fullBtn   = document.getElementById('btn-full');
 
-    // Demos/homebrews pequeninos e legais para testar (CDN público)
+    // Demos leves (homebrews/demos públicas)
     const DEMOS = {
-      // GBA: "flappy-bird homebrew" ou demo pequenininha
-      gba: "https://cdn.jsdelivr.net/gh/thiagola92/gbajs-demos@master/roms/FlappyBird.gba",
-      // Mega Drive: "Sega 16-bit tech demo" (homebrew simples)
-      segaMD: "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@gh-pages/roms/megadrive/Columns (World).md",
-      // Master System: demo / jogo simples (domínio público ou sample)
-      sms: "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@gh-pages/roms/mastersystem/Snail Maze (World).sms"
+      gba:   "https://cdn.jsdelivr.net/gh/thiagola92/gbajs-demos@master/roms/FlappyBird.gba",
+      segaMD:"https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@gh-pages/roms/megadrive/Columns (World).md",
+      sms:   "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@gh-pages/roms/mastersystem/Snail Maze (World).sms"
     };
 
+    // --------- helpers ----------
     function clearPlayer(){
       container.innerHTML = "";
     }
 
-    // Lança o emulador apontando para uma URL de ROM
+    function warnIfSMD(name){
+      const n = name.toLowerCase();
+      if (n.endsWith('.md') || n.endsWith('.smd')) {
+        alert('Se a ROM não iniciar, ela pode estar em formato SMD. Converta para BIN (SMD→BIN) e tente novamente.');
+      }
+    }
+
+    // Start/Restart do emulador sem reinjetar o script
     function startEmu(romUrl, core){
       clearPlayer();
 
-      // Variáveis globais que o EmulatorJS usa
-      window.EJS_player = "#game";
-      window.EJS_gameUrl = romUrl;
-      window.EJS_core = core;           // 'gba' | 'segaMD' | 'sms'
-      window.EJS_color = "#111";
-      window.EJS_startOnLoaded = true;  // auto-start
-      // On-screen gamepad (mobile) = true por padrão; EJS ativa quando necessário.
+      // encerra sessão anterior se existir
+      if (window.EJS_emulator && typeof window.EJS_emulator.stop === 'function'){
+        try { window.EJS_emulator.stop(); } catch {}
+      }
 
-      // Injeta o script do emulador
-      const s = document.createElement("script");
-      s.src = "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@latest/emulator.js";
-      document.body.appendChild(s);
+      // configura variáveis que o EJS lê
+      window.EJS_player         = "#game";
+      window.EJS_gameUrl        = romUrl;
+      window.EJS_core           = core;     // 'gba' | 'segaMD' | 'sms'
+      window.EJS_color          = "#111";
+      window.EJS_startOnLoaded  = true;     // inicia automaticamente
+
+      // cria nova instância
+      try {
+        window.EJS_emulator = new EJS("#game");
+      } catch (e) {
+        console.error(e);
+        alert("Não foi possível iniciar o emulador. Tente recarregar a página.");
+      }
     }
 
-    // Arquivo local do usuário
+    // arquivo local
     runBtn.addEventListener("click", () => {
       const file = fileInp.files?.[0];
       if (!file) { alert("Escolha um arquivo de ROM primeiro."); return; }
+
+      warnIfSMD(file.name);
       const url = URL.createObjectURL(file);
       startEmu(url, coreSel.value);
     });
 
-    // Demo legal por core
+    // demo
     demoBtn.addEventListener("click", () => {
       const core = coreSel.value;
       const demoUrl = DEMOS[core];
@@ -168,7 +190,7 @@
       startEmu(demoUrl, core);
     });
 
-    // Fullscreen do container
+    // fullscreen
     fullBtn.addEventListener("click", () => {
       const el = container.parentElement; // .player
       if (el.requestFullscreen) el.requestFullscreen();
@@ -176,7 +198,7 @@
       else if (el.msRequestFullscreen) el.msRequestFullscreen();
     });
 
-    // Ajuste de rolagem no iOS/Android quando em fullscreen
+    // evita scroll ao sair/entrar de fullscreen no mobile
     document.addEventListener('fullscreenchange', () => {
       document.body.style.overflow = document.fullscreenElement ? 'hidden' : '';
     });
