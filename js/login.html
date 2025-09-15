@@ -1,43 +1,43 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nagcoop • Login</title>
   <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
-  <!-- Styles -->
-  <link rel="stylesheet" href="/assets/site.css">
-  <!-- Firebase (compat SDKs) -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
-  <script src="/js/firebase-config.js"></script>
-
-  <title>Login • Nagcoop</title>
   <style>
-    .box{max-width:420px;margin:10vh auto;padding:20px;border:1px solid #333;border-radius:12px;background:#111}
-    .actions{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    :root{--bg:#0b0f12;--panel:#12171d;--muted:#9aa4af;--line:#9f1239}
+    html,body{margin:0;height:100%;background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial}
+    .wrap{max-width:720px;margin:auto;padding:16px}
+    header{border-bottom:2px solid var(--line)}
+    a{color:#ffd166;text-decoration:none}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand h1{font-family:'Metal Mania',cursive;margin:0;color:#ffd166}
+    .panel{background:var(--panel);border:1px solid #222a33;border-radius:12px;padding:16px;margin-top:16px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid #2a3340;background:#171e26;color:#e5e7eb}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="box">
-      <h1 style="margin-top:0">Login</h1>
-      <form id="login-form">
-        <label>Email</label><input id="email" type="email" required>
-        <div style="height:8px"></div>
-        <label>Password</label><input id="password" type="password" required>
-        <div style="height:14px"></div>
-        <div class="actions">
-          <a class="btn" href="/">← Back</a>
-          <button class="btn" type="submit">Sign in</button>
-        </div>
-        <p id="msg" class="muted"></p>
-      </form>
+  <header>
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between">
+      <div class="brand">
+        <img src="/assets/logo.jpg" alt="Nagcoop" style="height:44px;border:2px solid var(--line);border-radius:8px">
+        <h1>Nagcoop</h1>
+      </div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/emulator.html">Emulator</a>
+        <a href="/downloads.html">Downloads</a>
+      </nav>
     </div>
-  </div>
-  <script src="/js/auth.js"></script>
+  </header>
+
+  <main class="wrap">
+    <div class="panel">
+      <h2 style="margin:0 0 8px 0">Login</h2>
+      <p class="muted">Login em construção. Em breve login com Google/Email para postar vídeos/notícias e gerenciar downloads.</p>
+      <p><a class="btn" href="/">Voltar para a Home</a></p>
+    </div>
+  </main>
 </body>
 </html>
