@@ -9,60 +9,40 @@
   <!-- AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
 
-  <!-- Fonte + tema dark -->
+  <!-- Fonte + tema -->
   <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#0b0f12; --panel:#12171d; --muted:#9aa4af;
-      --brand:#ffd166; --accent:#8b5cf6; --line:#9f1239;
+      --brand:#ffd166; --line:#9f1239;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial}
+    html,body{margin:0;background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial}
     a{color:#ffd166;text-decoration:none}
     .wrap{max-width:1100px;margin:auto;padding:16px}
     header{border-bottom:2px solid var(--line);background:linear-gradient(180deg,rgba(159,18,57,.15),transparent)}
     .brand{display:flex;align-items:center;gap:12px}
-    .brand h1{font-family:'Metal Mania', cursive;letter-spacing:.5px;color:var(--brand);margin:0}
+    .brand h1{font-family:'Metal Mania', cursive;color:var(--brand);margin:0}
     .brand img{height:48px;border:2px solid var(--line);border-radius:8px}
     nav a{margin-left:16px}
     nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
-
-    h2.section{display:flex;align-items:center;gap:8px;font-family:'Metal Mania', cursive;margin:14px 0}
-    .panel{background:var(--panel);border:1px solid #222a33;border-radius:12px;padding:14px}
-
-    /* área do player (16:9 responsivo) */
-    .player{
-      position:relative;width:100%;max-width:100%;
-      background:#000;border:1px solid #222a33;border-radius:12px;overflow:hidden;
-      aspect-ratio:16/9;
-    }
-    #game{position:absolute;inset:0}
-
+    .panel{background:#12171d;border:1px solid #222a33;border-radius:12px;padding:14px}
+    .muted{color:var(--muted)}
     .controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-    .controls > *{font:inherit}
-    .btn{
-      padding:9px 14px;border-radius:10px;border:1px solid #2a3340;background:#171e26;color:#e5e7eb;
-      cursor:pointer;transition:transform .08s ease;
-    }
-    .btn:hover{transform:translateY(-1px)}
-    select, input[type="file"]{
-      background:#0f141a;color:#e5e7eb;border:1px solid #2a3340;border-radius:10px;padding:9px 10px;
-    }
-    .muted{color:var(--muted);font-size:.95rem}
-    footer{border-top:1px solid #1b222c;color:#9aa4af;padding:24px 0;margin-top:24px}
-
-    /* mobile */
+    .btn{padding:9px 14px;border-radius:10px;border:1px solid #2a3340;background:#171e26;color:#e5e7eb;cursor:pointer}
+    select,input[type="file"]{background:#0f141a;color:#e5e7eb;border:1px solid #2a3340;border-radius:10px;padding:9px 10px}
+    .player{position:relative;width:100%;aspect-ratio:16/9;background:#000;border:1px solid #222a33;border-radius:12px;overflow:hidden}
+    #game{position:absolute;inset:0}
     @media (max-width:620px){
-      nav{display:flex;gap:12px}
-      .controls{flex-direction:column;align-items:stretch}
-      .btn, select, input[type="file"]{width:100%}
+      .controls{flex-direction:column}
+      .btn,select,input[type="file"]{width:100%}
     }
   </style>
 
-  <!-- Caminho de dados do EmulatorJS (versão estável, NÃO latest) -->
+  <!-- Caminho dos dados do EmulatorJS (versão estável, não “latest”) -->
   <script>
-    // Pina numa versão estável para evitar quebras inesperadas
     const EJS_BASE = "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@v2.0.3/";
+    // o loader usa esse path:
     window.EJS_pathtodata = EJS_BASE + "data/";
   </script>
 </head>
@@ -87,10 +67,10 @@
 
   <main class="wrap">
     <section class="panel">
-      <h2 class="section">🎮 Web Emulator</h2>
-      <p class="muted" style="margin-top:-4px">
-        Use seus próprios <em>backups</em> (ou homebrews/demos). Nada é enviado ao servidor — a ROM roda apenas no seu navegador.
-        <br>Para Mega Drive/Genesis, prefira <strong>.bin</strong> ou <strong>.gen</strong> (muitos <code>.md</code> falham).
+      <h2 style="font-family:'Metal Mania',cursive;margin:10px 0">🎮 Web Emulator</h2>
+      <p class="muted">
+        Nada é enviado ao servidor — a ROM roda no seu navegador.<br>
+        <strong>Dica Mega Drive/Genesis:</strong> use <code>.bin</code> ou <code>.gen</code> (muitos <code>.md</code> falham).
       </p>
 
       <div class="controls">
@@ -103,21 +83,17 @@
 
         <input type="file" id="rom" accept=".gba,.bin,.gen,.sms,.rom,.zip" />
         <button class="btn" id="btn-run">Rodar ROM local</button>
-
         <button class="btn" id="btn-demo">Carregar demo legal</button>
         <button class="btn" id="btn-full">Tela cheia</button>
       </div>
 
-      <div class="player">
-        <div id="game"></div>
-      </div>
+      <div class="player"><div id="game"></div></div>
     </section>
   </main>
 
-  <footer class="wrap">© 2025 Nagcoop • Dark theme • Gamepad na tela habilitado no mobile</footer>
+  <footer class="wrap" style="color:#9aa4af;border-top:1px solid #1b222c;padding-top:18px">© 2025 Nagcoop</footer>
 
   <script>
-    // --------- elementos ----------
     const container = document.getElementById('game');
     const coreSel   = document.getElementById('core');
     const fileInp   = document.getElementById('rom');
@@ -125,30 +101,32 @@
     const demoBtn   = document.getElementById('btn-demo');
     const fullBtn   = document.getElementById('btn-full');
 
-    // Demos pequenas e legais para testar
+    // Demos leves para validar cada core
     const DEMOS = {
       gba:    "https://cdn.jsdelivr.net/gh/thiagola92/gbajs-demos@master/roms/FlappyBird.gba",
       segaMD: "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@gh-pages/roms/megadrive/Columns (World).bin",
       sms:    "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@gh-pages/roms/mastersystem/Snail Maze (World).sms"
     };
 
-    // mata instância anterior e limpa player
-    function resetPlayer() {
+    // remove instância e loader anterior
+    function resetPlayer(){
       container.innerHTML = "";
-      const old = document.getElementById("ejs-script");
+      const old = document.getElementById("ejs-loader");
       if (old) old.remove();
     }
 
-    // inicia emulador
-    function startEmu(romUrl, core, gameName = "") {
+    // inicia o emulador (sempre recarrega o loader.js correto)
+    function startEmu(romUrl, core, gameName=""){
       resetPlayer();
 
+      // Variáveis globais lidas pelo loader
       window.EJS_player        = "#game";
-      window.EJS_core          = core;                 // 'gba' | 'segaMD' | 'sms'
+      window.EJS_core          = core;            // 'gba' | 'segaMD' | 'sms'
       window.EJS_gameUrl       = romUrl;
       window.EJS_gameName      = gameName || undefined;
       window.EJS_startOnLoaded = true;
       window.EJS_color         = "#111";
+      window.EJS_onGameStart   = () => console.log("Emulador iniciado");
       window.EJS_onError       = (err) => {
         console.error(err);
         alert(
@@ -156,28 +134,27 @@
           "• GBA: .gba\n" +
           "• Mega Drive/Genesis: .bin ou .gen (evite .md)\n" +
           "• Master System: .sms\n\n" +
-          "Tente carregar a demo para validar o core."
+          "Use 'Carregar demo legal' para testar o core."
         );
       };
 
+      // carrega o loader oficial (é ele que inicializa tudo)
       const s = document.createElement("script");
-      s.src = EJS_BASE + "emulator.js";
-      s.id  = "ejs-script";
+      s.src = window.EJS_pathtodata + "loader.js";
+      s.id  = "ejs-loader";
       document.body.appendChild(s);
     }
 
-    // ROM local
     runBtn.addEventListener("click", () => {
       const f = fileInp.files && fileInp.files[0];
-      if (!f) {
-        alert("Escolha primeiro um arquivo de ROM.\n\nGBA: .gba • Mega Drive: .bin/.gen (evite .md) • Master System: .sms");
+      if (!f){
+        alert("Escolha um arquivo de ROM primeiro.\nGBA: .gba • MD: .bin/.gen • SMS: .sms");
         return;
       }
       const url = URL.createObjectURL(f);
       startEmu(url, coreSel.value, f.name);
     });
 
-    // Demo do core
     demoBtn.addEventListener("click", () => {
       const core = coreSel.value;
       const url  = DEMOS[core];
@@ -185,15 +162,13 @@
       startEmu(url, core);
     });
 
-    // Tela cheia
     fullBtn.addEventListener("click", () => {
-      const el = container.parentElement; // .player
+      const el = container.parentElement;
       if (el.requestFullscreen) el.requestFullscreen();
       else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
       else if (el.msRequestFullscreen) el.msRequestFullscreen();
     });
 
-    // trava rolagem em fullscreen no mobile
     document.addEventListener('fullscreenchange', () => {
       document.body.style.overflow = document.fullscreenElement ? 'hidden' : '';
     });
