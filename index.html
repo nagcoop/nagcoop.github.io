@@ -1,13 +1,15 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0f12" />
   <title>Nagcoop • Games & News</title>
 
   <!-- AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
 
+  <!-- Font + dark theme -->
   <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -22,17 +24,16 @@
     header{border-bottom:2px solid var(--line);background:linear-gradient(180deg,rgba(159,18,57,.15),transparent)}
     nav a{margin-left:16px}
     .brand{display:flex;align-items:center;gap:12px}
-    .brand h1{font-family:'Metal Mania', cursive;letter-spacing:.5px;color:var(--brand);margin:0}
+    .brand h1{font-family:'Metal Mania',cursive;letter-spacing:.5px;color:var(--brand);margin:0}
     .brand img{height:48px;border:2px solid var(--line);border-radius:8px}
 
     .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
     .card{background:var(--panel);border:1px solid #222a33;border-radius:12px;padding:16px}
     .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid #2a3340;background:#171e26;color:#e5e7eb}
-    .btn:hover{filter:brightness(1.1)}
+    .btn:hover{filter:brightness(1.08)}
     .muted{color:var(--muted)}
     h2{font-family:'Metal Mania',cursive;margin:10px 0}
 
-    /* Mobile */
     @media (max-width:900px){ .grid{grid-template-columns:1fr} }
   </style>
 </head>
@@ -57,21 +58,21 @@
 
   <main class="wrap">
     <div class="grid">
-      <!-- Destaques -->
+      <!-- Channel highlight -->
       <section class="card" style="grid-column:span 12">
-        <h2>🔥 Destaques do Canal</h2>
-        <p class="muted">Co-op mayhem, notícias rápidas e vibe dark ⚡</p>
+        <h2>🔥 Channel Highlights</h2>
+        <p class="muted">Co-op mayhem, quick gamer news, and a dark heavy vibe ⚡</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">
-          <a class="btn" href="https://www.youtube.com/@Nagcoop?sub_confirmation=1" target="_blank" rel="noopener">Inscreva-se</a>
-          <a class="btn" href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener">Assistir vídeos</a>
-          <a class="btn" href="/emulator.html">Abrir Emulador</a>
-          <a class="btn" href="/downloads.html">Ir para Downloads</a>
+          <a class="btn" href="https://www.youtube.com/@Nagcoop?sub_confirmation=1" target="_blank" rel="noopener">Subscribe</a>
+          <a class="btn" href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener">Watch videos</a>
+          <a class="btn" href="/emulator.html">Open Emulator</a>
+          <a class="btn" href="/downloads.html">Go to Downloads</a>
         </div>
 
-        <!-- Vídeo em destaque (pode trocar o ID à vontade) -->
+        <!-- Featured video (replace ID if you want) -->
         <div style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:12px;border:1px solid #222a33">
           <iframe
-            title="Vídeo em destaque"
+            title="Featured video"
             src="https://www.youtube.com/embed/20-61MqJHbw?rel=0"
             allowfullscreen
             style="position:absolute;inset:0;width:100%;height:100%;border:0">
@@ -79,14 +80,14 @@
         </div>
       </section>
 
-      <!-- Notícias -->
+      <!-- News (static placeholder) -->
       <section class="card" style="grid-column:span 12">
-        <h2>📰 Últimas News</h2>
-        <p class="muted">Nenhuma publicação ainda. (Em breve)</p>
+        <h2>📰 Latest News</h2>
+        <p class="muted">No posts yet. Coming soon.</p>
       </section>
     </div>
   </main>
 
-  <footer class="wrap muted">© 2025 Nagcoop • Todos os direitos reservados.</footer>
+  <footer class="wrap muted">© 2025 Nagcoop • All rights reserved.</footer>
 </body>
 </html>
