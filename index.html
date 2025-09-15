@@ -1,80 +1,144 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="theme-color" content="#000000">
   <title>Nagcoop • Games & News</title>
 
-  <!-- Google Font: Heavy/metal vibe -->
-  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <!-- AdSense (ok ter em todas as páginas) -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
-  <!-- Styles -->
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
+
+  <!-- Estilo principal -->
   <link rel="stylesheet" href="/assets/site.css">
+
+  <!-- AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864"
+     crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #1b1b1b;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+    }
+    .brand img {
+      height: 46px;
+      border-radius: 8px;
+      border: 2px solid #9f1239;
+      margin-right: 10px;
+    }
+    .brand .title {
+      font-family: 'Metal Mania', cursive;
+      font-size: 1.5rem;
+      color: #f87171;
+      margin: 0;
+    }
+    .subtitle {
+      font-size: 0.8rem;
+      color: #ccc;
+      margin-top: -4px;
+    }
+    nav a {
+      color: #ffd700;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .wrap {
+      width: 90%;
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 15px;
+    }
+    .card {
+      background: #1b1b1b;
+      padding: 15px;
+      border-radius: 12px;
+    }
+    .btn {
+      display: inline-block;
+      background: #9f1239;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+    iframe {
+      width: 100%;
+      height: 200px;
+      border: 0;
+      border-radius: 12px;
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        margin-top: 10px;
+      }
+      iframe {
+        height: 180px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header class="header">
-    <div class="wrap brand">
-      <div class="brand-left">
-        <img src="/assets/logo.jpg" alt="Nagcoop" class="logo">
-        <div>
-          <h1 class="title">Nagcoop</h1>
-          <div class="subtitle">Games & News</div>
-        </div>
+  <header>
+    <div class="brand">
+      <img src="/assets/logo.jpg" alt="Nagcoop Logo">
+      <div>
+        <h1 class="title">Nagcoop</h1>
+        <div class="subtitle">Games & News</div>
       </div>
-
-      <nav class="nav">
-        <a href="/" class="nav-link is-active">Home</a>
-        <a href="/emulator.html" class="nav-link">Emulator</a>
-        <a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener" class="nav-link">YouTube</a>
-      </nav>
     </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/downloads.html">Downloads</a>
+      <a href="/emulator.html">Emulador</a>
+      <a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener">YouTube</a>
+    </nav>
   </header>
 
-  <main class="wrap grid2">
-    <!-- Destaques -->
-    <section class="card">
-      <h2>🔥 Channel Highlights</h2>
-      <p class="muted">Co-op mayhem, quick gamer news, and online emulators ⚡</p>
-
-      <div class="btn-row">
-        <a class="btn" href="https://www.youtube.com/@Nagcoop?sub_confirmation=1" target="_blank" rel="noopener">Subscribe</a>
-        <a class="btn ghost" href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener">Watch videos</a>
-        <a class="btn accent" href="/emulator.html">🎮 Try the Web Emulator</a>
+  <main class="wrap">
+    <section class="grid">
+      <div class="card">
+        <h2>🔥 Destaques do Canal</h2>
+        <p>Co-op mayhem, quick gamer news, and a dark vibe ⚡</p>
+        <a class="btn" href="https://www.youtube.com/@Nagcoop" target="_blank" rel="noopener">Inscreva-se no Canal</a>
       </div>
-    </section>
-
-    <!-- Vídeo em destaque (tocando do seu canal) -->
-    <section class="card">
-      <div class="video-shell">
-        <!-- troque o ID se quiser outro vídeo em destaque -->
-        <iframe
-          id="featured-video"
-          src="https://www.youtube.com/embed/20-61MqJHbw?rel=0"
-          title="Featured video"
-          allowfullscreen
-          referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
-      </div>
-    </section>
-
-    <!-- Últimas “notícias” (estático simples – dá pra ligar no Firestore depois) -->
-    <section class="card span2">
-      <h2>📰 Latest News</h2>
-      <div class="news-list">
-        <article class="news">
-          <h3>New: Web Emulator page</h3>
-          <p class="muted">Play your own backups/homebrews in the browser. Mega Drive, Master System and GBA supported.</p>
-          <a class="link" href="/emulator.html">Open the Emulator →</a>
-        </article>
+      <div class="card">
+        <iframe src="https://www.youtube.com/embed/20-61MqJHbw?rel=0" title="Vídeo destaque" allowfullscreen></iframe>
       </div>
     </section>
   </main>
 
-  <footer class="wrap footer">
-    © 2025 Nagcoop • All rights reserved • Heavy-metal theme 🤘
+  <footer class="wrap">
+    © 2025 Nagcoop • Todos os direitos reservados ⚡
   </footer>
-
-  <script src="/js/app.js"></script>
 </body>
 </html>
