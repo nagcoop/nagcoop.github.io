@@ -1,134 +1,184 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nagcoop • Web Emulator</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- AdSense global -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="/assets/site.css">
+
+  <!-- Fonte "Metal" e reset dark -->
+  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f12; --panel:#12171d; --muted:#9aa4af;
+      --brand:#f87171; --accent:#8b5cf6; --line:#9f1239;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial}
+    a{color:#ffd166;text-decoration:none}
+    .wrap{max-width:1100px;margin:auto;padding:16px}
+    header{border-bottom:2px solid var(--line);background:linear-gradient(180deg,rgba(159,18,57,.15),transparent)}
+    nav a{margin-left:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand h1{font-family:'Metal Mania', cursive;letter-spacing:.5px;color:#ffd166;margin:0}
+    .brand img{height:48px;border:2px solid var(--line);border-radius:8px}
+
+    h2.section{display:flex;align-items:center;gap:8px;font-family:'Metal Mania', cursive;margin:14px 0}
+    .panel{background:var(--panel);border:1px solid #222a33;border-radius:12px;padding:14px}
+
+    /* Área do player responsiva 16:9 */
+    .player{
+      position:relative;width:100%;max-width:100%;
+      background:#000;border:1px solid #222a33;border-radius:12px;overflow:hidden;
+      /* 16:9 */
+      aspect-ratio:16/9;
+    }
+    #game{position:absolute;inset:0}
+    .controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+    .controls > *{font:inherit}
+    .btn{
+      padding:9px 14px;border-radius:10px;border:1px solid #2a3340;background:#171e26;color:#e5e7eb;
+      cursor:pointer;transition:transform .08s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    select, input[type="file"]{
+      background:#0f141a;color:#e5e7eb;border:1px solid #2a3340;border-radius:10px;padding:9px 10px;
+    }
+    .muted{color:var(--muted);font-size:.95rem}
+    footer{border-top:1px solid #1b222c;color:#9aa4af;padding:24px 0;margin-top:24px}
+
+    /* Mobile tweaks */
+    @media (max-width:620px){
+      nav{display:flex;gap:12px}
+      .controls{flex-direction:column;align-items:stretch}
+      .btn, select, input[type="file"]{width:100%}
+    }
+  </style>
+
+  <!-- Loader do EmulatorJS -->
+  <script>
+    // Onde o EmulatorJS busca os assets de runtime
+    window.EJS_pathtodata = "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@latest/data/";
+  </script>
 </head>
 <body>
-  <header class="header">
-    <div class="wrap brand">
-      <div class="brand-left">
-        <img src="/assets/logo.jpg" class="logo" alt="Nagcoop">
+  <header>
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between">
+      <div class="brand">
+        <img src="/assets/logo.jpg" alt="Nagcoop">
         <div>
-          <h1 class="title">Nagcoop</h1>
-          <div class="subtitle">Web Emulator</div>
+          <h1>Nagcoop</h1>
+          <div class="muted" style="margin-top:-6px">Games & News • Web Emulator</div>
         </div>
       </div>
-      <nav class="nav">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/emulator.html" class="nav-link is-active">Emulator</a>
-        <a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener" class="nav-link">YouTube</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/downloads.html">Downloads</a>
+        <a href="/emulator.html"><strong>Emulator</strong></a>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="card span2">
-      <h2>🎮 Web Emulator</h2>
-      <p class="muted">Use your own legal backups/homebrews. Nothing is uploaded: the ROM runs locally in your browser.</p>
+    <section class="panel">
+      <h2 class="section">🎮 Web Emulator</h2>
+      <p class="muted" style="margin-top:-4px">
+        Use seus próprios <em>backups</em> (ou homebrews/demos). Nada é enviado ao servidor — a ROM roda só no seu navegador.
+      </p>
 
-      <div class="emu-toolbar">
-        <label class="label">Core:</label>
-        <select id="core" class="select">
-          <option value="segaMD">Mega Drive / Genesis</option>
-          <option value="segaMS">Master System</option>
-          <option value="gba">Game Boy Advance</option>
+      <div class="controls">
+        <label class="muted">Core:</label>
+        <select id="core">
+          <option value="gba">Game Boy Advance (GBA)</option>
+          <option value="segaMD">Sega Mega Drive / Genesis</option>
+          <option value="sms">Sega Master System</option>
         </select>
 
-        <button id="demo" class="btn">Load demo ROM (legal)</button>
+        <input type="file" id="rom" accept=".gba,.bin,.sms,.rom,.zip" />
+        <button class="btn" id="btn-run">Rodar ROM local</button>
 
-        <span class="split"></span>
-
-        <input id="romfile" type="file" class="file" accept=".bin,.sms,.gg,.gba,.zip,.7z,.gz,.md,.gen">
-        <button id="runLocal" class="btn accent">Run local ROM</button>
-
-        <span class="split"></span>
-
-        <input id="romUrl" class="input" placeholder="Or paste a direct ROM URL (https://...)">
-        <button id="runUrl" class="btn ghost">Run via URL</button>
-
-        <button id="fullscreen" class="btn ghost">Full screen</button>
+        <button class="btn" id="btn-demo">Carregar demo legal</button>
+        <button class="btn" id="btn-full">Tela cheia</button>
       </div>
 
-      <div id="player" class="emu-player"></div>
+      <div class="player">
+        <div id="game"></div>
+      </div>
     </section>
   </main>
 
-  <footer class="wrap footer">© 2025 Nagcoop • Heavy-metal theme 🤘</footer>
+  <footer class="wrap">© 2025 Nagcoop • Dark theme • On-screen gamepad habilitado no mobile</footer>
 
-  <!-- EmulatorJS: vamos criar/recortar o player dinamicamente -->
   <script>
-    const DATA_PATH = "https://cdn.emulatorjs.org/latest/data/";
-    const playerEl  = document.getElementById('player');
+    // --------- Config e helpers ----------
+    const container = document.getElementById('game');
     const coreSel   = document.getElementById('core');
-    const fileInp   = document.getElementById('romfile');
-    const demoBtn   = document.getElementById('demo');
-    const runLocal  = document.getElementById('runLocal');
-    const runUrlBtn = document.getElementById('runUrl');
-    const romUrlInp = document.getElementById('romUrl');
-    const fsBtn     = document.getElementById('fullscreen');
+    const fileInp   = document.getElementById('rom');
+    const runBtn    = document.getElementById('btn-run');
+    const demoBtn   = document.getElementById('btn-demo');
+    const fullBtn   = document.getElementById('btn-full');
 
-    function resetPlayer() {
-      playerEl.innerHTML = "";
-      // remove loader.js anterior, se existir
-      [...document.querySelectorAll('script[data-ejs-loader]')].forEach(s => s.remove());
-      // pequenas sobras
-      if (window.Module?.canvas) window.Module.canvas = null;
+    // Demos/homebrews pequeninos e legais para testar (CDN público)
+    const DEMOS = {
+      // GBA: "flappy-bird homebrew" ou demo pequenininha
+      gba: "https://cdn.jsdelivr.net/gh/thiagola92/gbajs-demos@master/roms/FlappyBird.gba",
+      // Mega Drive: "Sega 16-bit tech demo" (homebrew simples)
+      segaMD: "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@gh-pages/roms/megadrive/Columns (World).md",
+      // Master System: demo / jogo simples (domínio público ou sample)
+      sms: "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@gh-pages/roms/mastersystem/Snail Maze (World).sms"
+    };
+
+    function clearPlayer(){
+      container.innerHTML = "";
     }
 
-    function startEmu({ core, gameUrl }) {
-      resetPlayer();
+    // Lança o emulador apontando para uma URL de ROM
+    function startEmu(romUrl, core){
+      clearPlayer();
 
-      // variáveis globais que o loader da EmulatorJS usa
-      window.EJS_player       = "#player";
-      window.EJS_core         = core;                 // 'segaMD' | 'segaMS' | 'gba' | ...
-      window.EJS_biosUrl      = "";                   // opcional
-      window.EJS_gameUrl      = gameUrl || "";        // pode ser blob:… ou https://…
-      window.EJS_startOnLoaded= true;
-      window.EJS_pathtodata   = DATA_PATH;
+      // Variáveis globais que o EmulatorJS usa
+      window.EJS_player = "#game";
+      window.EJS_gameUrl = romUrl;
+      window.EJS_core = core;           // 'gba' | 'segaMD' | 'sms'
+      window.EJS_color = "#111";
+      window.EJS_startOnLoaded = true;  // auto-start
+      // On-screen gamepad (mobile) = true por padrão; EJS ativa quando necessário.
 
-      const s = document.createElement('script');
-      s.src = DATA_PATH + "loader.js";
-      s.async = true;
-      s.setAttribute('data-ejs-loader','1');
+      // Injeta o script do emulador
+      const s = document.createElement("script");
+      s.src = "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@latest/emulator.js";
       document.body.appendChild(s);
     }
 
-    // Demo ROMs livres (homebrew) – bem pequenos
-    const DEMOS = {
-      segaMD: "https://files.emulatorjs.org/roms/homebrew/segaMD/asteroids-md.bin",
-      segaMS: "https://files.emulatorjs.org/roms/homebrew/segaMS/sonic-minims.sms",
-      gba:    "https://files.emulatorjs.org/roms/homebrew/gba/2048.gba"
-    };
+    // Arquivo local do usuário
+    runBtn.addEventListener("click", () => {
+      const file = fileInp.files?.[0];
+      if (!file) { alert("Escolha um arquivo de ROM primeiro."); return; }
+      const url = URL.createObjectURL(file);
+      startEmu(url, coreSel.value);
+    });
 
-    demoBtn.addEventListener('click', () => {
+    // Demo legal por core
+    demoBtn.addEventListener("click", () => {
       const core = coreSel.value;
-      const url  = DEMOS[core];
-      if (!url) return alert("No demo for this core.");
-      startEmu({ core, gameUrl: url });
+      const demoUrl = DEMOS[core];
+      if (!demoUrl) { alert("Sem demo para este core."); return; }
+      startEmu(demoUrl, core);
     });
 
-    runLocal.addEventListener('click', () => {
-      const f = fileInp.files?.[0];
-      if (!f) return alert("Choose a ROM file first.");
-      const blobUrl = URL.createObjectURL(f);
-      startEmu({ core: coreSel.value, gameUrl: blobUrl });
-    });
-
-    runUrlBtn.addEventListener('click', () => {
-      const url = romUrlInp.value.trim();
-      if (!/^https?:\/\//i.test(url)) return alert("Paste a direct http(s) ROM URL.");
-      startEmu({ core: coreSel.value, gameUrl: url });
-    });
-
-    fsBtn.addEventListener('click', () => {
-      const el = document.querySelector("#player canvas") || playerEl;
+    // Fullscreen do container
+    fullBtn.addEventListener("click", () => {
+      const el = container.parentElement; // .player
       if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      else if (el.msRequestFullscreen) el.msRequestFullscreen();
+    });
+
+    // Ajuste de rolagem no iOS/Android quando em fullscreen
+    document.addEventListener('fullscreenchange', () => {
+      document.body.style.overflow = document.fullscreenElement ? 'hidden' : '';
     });
   </script>
 </body>
