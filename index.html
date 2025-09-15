@@ -1,317 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="theme-color" content="#000000">
-  <title>Nagcoop • Web Emulator</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
-
-  <style>
-    :root { --red:#9f1239; --bg:#111; --card:#1b1b1b; --text:#eee; --muted:#cfcfcf; --gold:#ffd700; }
-    * { box-sizing: border-box; }
-    body { margin:0; background:var(--bg); color:var(--text); font-family: Arial, sans-serif; }
-    header { background:#1b1b1b; padding:12px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; }
-    .brand { display:flex; align-items:center; gap:10px; }
-    .brand img { height:46px; border-radius:8px; border:2px solid var(--red); }
-    .title { margin:0; font-family:'Metal Mania', cursive; color:#f87171; font-size:1.5rem; }
-    .subtitle { margin-top:-4px; color:var(--muted); font-size:0.85rem; }
-    nav a { color:var(--gold); margin:0 10px; text-decoration:none; font-weight:700; }
-    nav a:hover { text-decoration:underline; }
-
-    .wrap { width:92%; max-width:1100px; margin:16px auto; }
-    .card { background:var(--card); border-radius:12px; padding:14px; }
-    .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-    label { font-weight:700; }
-    select, input[type="text"] { padding:8px; border-radius:8px; border:1px solid #333; background:#0f0f0f; color:var(--text); }
-    .btn { background:var(--red); color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:700; }
-    .btn.secondary { background:#333; }
-    .muted { color:var(--muted); font-size:0.9rem; }
-    #game { width:100%; aspect-ratio: 16/9; background:#000; border-radius:12px; overflow:hidden; }
-    footer { padding:24px 0; text-align:center; color:var(--muted); }
-
-    @media (max-width:600px){
-      header{ align-items:flex-start; }
-      nav{ margin-top:8px; }
-      #game{ aspect-ratio: 3/4; } /* tela mais alta no celular */
-    }
-  </style>
-
-  <!-- AdSense (opcional aqui, já está no index) -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864"
-    crossorigin="anonymous"></script>
-
-  <!-- EmulatorJS (suporta Mega Drive, Master System, GG, GBA etc.) -->
-  <script src="https://cdn.jsdelivr.net/npm/emulatorjs@latest/dist/emulator.min.js"></script>
-</head>
-<body>
-  <header>
-    <div class="brand">
-      <a href="/"><img src="/assets/logo.jpg" alt="Nagcoop Logo"></a>
-      <div>
-        <h1 class="title">Nagcoop</h1>
-        <div class="subtitle">Web Emulator</div>
-      </div>
-    </div>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/downloads.html">Downloads</a>
-      <a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener">YouTube</a>
-    </nav>
-  </header>
-
-  <main class="wrap">
-    <div class="card" style="margin-bottom:12px">
-      <h2 style="margin:0 0 8px 0">🎮 Emulador Web</h2>
-      <p class="muted" style="margin:6px 0 12px">
-        Dica: para Mega Drive use **.bin** ou **.gen** (algumas ROMs <em>.md</em> não são reconhecidas).
-        Nada é enviado ao servidor — a ROM roda no seu navegador.
-      </p>
-
-      <div class="row" style="margin-bottom:10px">
-        <label for="core">Core:</label>
-        <select id="core">
-          <option value="segaMD">Mega Drive / Genesis</option>
-          <option value="segaMS">Master System</option>
-          <option value="segaGG">Game Gear</option>
-          <option value="gba">Game Boy Advance</option>
-        </select>
-
-        <button id="demoBtn" class="btn secondary" title="Carregar um homebrew/demo legal hospedado no site">
-          Carregar ROM demo
-        </button>
-
-        <input id="romLocal" type="file" accept=".bin,.gen,.md,.sms,.gg,.gba,.zip" style="display:none">
-        <button id="romLocalBtn" class="btn">Escolher ROM local</button>
-
-        <button id="fullscreenBtn" class="btn secondary">Tela cheia</button>
-      </div>
-
-      <div id="game"></div>
-    </div>
-
-    <div class="card">
-      <h3 style="margin-top:0">Compatibilidade & dicas</h3>
-      <ul class="muted">
-        <li>Extensões aceitas:
-          <strong>MD/GEN</strong> → <code>.bin</code>, <code>.gen</code> (se falhar com <code>.md</code>, renomeie para <code>.bin</code>),
-          <strong>Master System</strong> → <code>.sms</code>,
-          <strong>Game Gear</strong> → <code>.gg</code>,
-          <strong>GBA</strong> → <code>.gba</code>.
-        </li>
-        <li>Arquivos <code>.zip</code> podem funcionar, mas prefira ROM “descompactada”.</li>
-        <li>No celular, se o áudio não tocar, toque na tela após iniciar a ROM (política de autoplay do navegador).</li>
-      </ul>
-    </div>
-  </main>
-
-  <footer>© 2025 Nagcoop • Todos os direitos reservados ⚡</footer>
-
-  <script>
-    // Configuração base do EmulatorJS
-    window.EJS_player = '#game';
-    window.EJS_pathtodata = 'https://cdn.jsdelivr.net/npm/emulatorjs@latest/dist/data/';
-    window.EJS_color = '#9f1239';
-    window.EJS_startOnLoaded = true; // inicia logo após escolher ROM
-
-    const coreSel = document.getElementById('core');
-    const demoBtn = document.getElementById('demoBtn');
-    const romLocal = document.getElementById('romLocal');
-    const romLocalBtn = document.getElementById('romLocalBtn');
-    const fsBtn = document.getElementById('fullscreenBtn');
-
-    // Define o core esperado pelo EmulatorJS
-    function setCoreFromSelect() {
-      const v = coreSel.value;
-      // Valores válidos: 'segaMD', 'segaMS', 'segaGG', 'gba', etc.
-      window.EJS_core = v;
-    }
-    setCoreFromSelect();
-    coreSel.addEventListener('change', setCoreFromSelect);
-
-    // Carregar uma ROM demo legal (coloque um homebrew seu se quiser)
-    demoBtn.addEventListener('click', () => {
-      setCoreFromSelect();
-      // Exemplos de demos públicas (ajuste se quiser hospedar suas próprias em /assets/roms/…)
-      const demos = {
-        segaMD: 'https://files.emulatorjs.org/roms/genesis/Sonic%20the%20Hedgehog%202.bin', // exemplo público
-        segaMS: 'https://files.emulatorjs.org/roms/mastersystem/Sonic%20The%20Hedgehog.sms',
-        segaGG: 'https://files.emulatorjs.org/roms/gamegear/Sonic%20The%20Hedgehog.gg',
-        gba:    'https://files.emulatorjs.org/roms/gba/Kirby%20-%20Nightmare%20in%20Dream%20Land.gba'
-      };
-      const url = demos[coreSel.value];
-      if (!url) return alert('Sem demo para este core.');
-      window.EJS_gameUrl = url;
-      // Reinicia o emulador apontando para a ROM remota
-      if (window.EJS_emulator) window.EJS_emulator.stop();
-      window.EJS_emulator = new EJS('#game');
-    });
-
-    // ROM local
-    romLocalBtn.addEventListener('click', () => romLocal.click());
-    romLocal.addEventListener('change', () => {
-      const file = romLocal.files?.[0];
-      if (!file) return;
-      setCoreFromSelect();
-      const url = URL.createObjectURL(file); // não envia nada ao servidor
-      window.EJS_gameUrl = url;
-
-      // Reinicia o emulador com a ROM local
-      if (window.EJS_emulator) window.EJS_emulator.stop();
-      window.EJS_emulator = new EJS('#game');
-    });
-
-    // Tela cheia
-    fsBtn.addEventListener('click', () => {
-      const el = document.querySelector('#game');
-      if (!document.fullscreenElement) el.requestFullscreen?.();
-      else document.exitFullscreen?.();
-    });
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="theme-color" content="#000000">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nagcoop • Games & News</title>
 
-  <!-- Fonte -->
-  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
-
-  <!-- Estilo principal -->
-  <link rel="stylesheet" href="/assets/site.css">
-
   <!-- AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864"
-     crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
 
+  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #111;
-      color: #eee;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+    :root{
+      --bg:#0b0f12; --panel:#12171d; --muted:#9aa4af;
+      --brand:#ffd166; --accent:#8b5cf6; --line:#9f1239;
     }
-    header {
-      background: #1b1b1b;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-    }
-    .brand img {
-      height: 46px;
-      border-radius: 8px;
-      border: 2px solid #9f1239;
-      margin-right: 10px;
-    }
-    .brand .title {
-      font-family: 'Metal Mania', cursive;
-      font-size: 1.5rem;
-      color: #f87171;
-      margin: 0;
-    }
-    .subtitle {
-      font-size: 0.8rem;
-      color: #ccc;
-      margin-top: -4px;
-    }
-    nav a {
-      color: #ffd700;
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .wrap {
-      width: 90%;
-      max-width: 1200px;
-      margin: 20px auto;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 15px;
-    }
-    .card {
-      background: #1b1b1b;
-      padding: 15px;
-      border-radius: 12px;
-    }
-    .btn {
-      display: inline-block;
-      background: #9f1239;
-      color: #fff;
-      padding: 10px 15px;
-      border-radius: 8px;
-      text-decoration: none;
-    }
-    iframe {
-      width: 100%;
-      height: 200px;
-      border: 0;
-      border-radius: 12px;
-    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    a{color:#ffd166;text-decoration:none}
+    .wrap{max-width:1100px;margin:auto;padding:16px}
 
-    /* Responsivo */
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav {
-        margin-top: 10px;
-      }
-      iframe {
-        height: 180px;
-      }
-    }
+    header{border-bottom:2px solid var(--line);background:linear-gradient(180deg,rgba(159,18,57,.15),transparent)}
+    nav a{margin-left:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand h1{font-family:'Metal Mania', cursive;letter-spacing:.5px;color:var(--brand);margin:0}
+    .brand img{height:48px;border:2px solid var(--line);border-radius:8px}
+
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+    .card{background:var(--panel);border:1px solid #222a33;border-radius:12px;padding:16px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid #2a3340;background:#171e26;color:#e5e7eb}
+    .btn:hover{filter:brightness(1.1)}
+    .muted{color:var(--muted)}
+    h2{font-family:'Metal Mania',cursive;margin:10px 0}
+
+    /* Mobile */
+    @media (max-width:900px){ .grid{grid-template-columns:1fr} }
   </style>
 </head>
 <body>
   <header>
-    <div class="brand">
-      <img src="/assets/logo.jpg" alt="Nagcoop Logo">
-      <div>
-        <h1 class="title">Nagcoop</h1>
-        <div class="subtitle">Games & News</div>
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between">
+      <div class="brand">
+        <img src="/assets/logo.jpg" alt="Nagcoop">
+        <div>
+          <h1>Nagcoop</h1>
+          <div class="muted" style="margin-top:-6px">Games & News</div>
+        </div>
       </div>
+      <nav>
+        <a href="/" class="nav-link is-active">Home</a>
+        <a href="/emulator.html" class="nav-link">Emulator</a>
+        <a href="/downloads.html" class="nav-link">Downloads</a>
+        <a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener" class="nav-link">YouTube</a>
+      </nav>
     </div>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/downloads.html">Downloads</a>
-      <a href="/emulator.html">Emulador</a>
-      <a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener">YouTube</a>
-    </nav>
   </header>
 
   <main class="wrap">
-    <section class="grid">
-      <div class="card">
+    <div class="grid">
+      <!-- Destaques -->
+      <section class="card" style="grid-column:span 12">
         <h2>🔥 Destaques do Canal</h2>
-        <p>Co-op mayhem, quick gamer news, and a dark vibe ⚡</p>
-        <a class="btn" href="https://www.youtube.com/@Nagcoop" target="_blank" rel="noopener">Inscreva-se no Canal</a>
-      </div>
-      <div class="card">
-        <iframe src="https://www.youtube.com/embed/20-61MqJHbw?rel=0" title="Vídeo destaque" allowfullscreen></iframe>
-      </div>
-    </section>
+        <p class="muted">Co-op mayhem, notícias rápidas e vibe dark ⚡</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">
+          <a class="btn" href="https://www.youtube.com/@Nagcoop?sub_confirmation=1" target="_blank" rel="noopener">Inscreva-se</a>
+          <a class="btn" href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener">Assistir vídeos</a>
+          <a class="btn" href="/emulator.html">Abrir Emulador</a>
+          <a class="btn" href="/downloads.html">Ir para Downloads</a>
+        </div>
+
+        <!-- Vídeo em destaque (pode trocar o ID à vontade) -->
+        <div style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:12px;border:1px solid #222a33">
+          <iframe
+            title="Vídeo em destaque"
+            src="https://www.youtube.com/embed/20-61MqJHbw?rel=0"
+            allowfullscreen
+            style="position:absolute;inset:0;width:100%;height:100%;border:0">
+          </iframe>
+        </div>
+      </section>
+
+      <!-- Notícias -->
+      <section class="card" style="grid-column:span 12">
+        <h2>📰 Últimas News</h2>
+        <p class="muted">Nenhuma publicação ainda. (Em breve)</p>
+      </section>
+    </div>
   </main>
 
-  <footer class="wrap">
-    © 2025 Nagcoop • Todos os direitos reservados ⚡
-  </footer>
+  <footer class="wrap muted">© 2025 Nagcoop • Todos os direitos reservados.</footer>
 </body>
 </html>
