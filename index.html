@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nagcoop — Games, Co-op & News</title>
+  <meta name="description" content="Nagcoop: canal de gameplay co-op, notícias de games, emulador web e downloads. Dark vibe, heavy energy."/>
+  <meta name="keywords" content="nagcoop, games, co-op, gameplay, emulador, notícias games, youtube gaming, jogos indie, retro, lançamentos 2025"/>
+  <meta property="og:title" content="Nagcoop — Games, Co-op & News"/>
+  <meta property="og:description" content="Co-op mayhem, notícias rápidas e heavy vibe. Inscreve-se no canal."/>
+  <meta property="og:image" content="https://nagcoop.github.io/assets/logo.jpg"/>
+  <meta property="og:url" content="https://nagcoop.github.io"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="canonical" href="https://nagcoop.github.io"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#0a0a0c;--bg2:#111114;--bg3:#18181d;--border:#2a2a32;--accent:#e8ff00;--accent2:#ff3c00;--text:#e8e6df;--muted:#6b6b78}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.025;pointer-events:none;z-index:1000}
+    nav{position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem);height:58px;background:rgba(10,10,12,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
+    .nav-logo img{width:32px;height:32px;border-radius:6px;object-fit:cover}
+    .nav-logo span{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;color:var(--accent)}
+    .nav-links{display:flex;gap:clamp(1rem,3vw,2rem);list-style:none}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:color .2s;cursor:pointer}
+    .nav-links a:hover{color:var(--accent)}
+    @media(max-width:600px){.hide-sm{display:none}}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:4px;font-family:'DM Mono',monospace;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .2s;cursor:pointer;border:none}
+    .btn-primary{background:var(--accent);color:#0a0a0c}
+    .btn-primary:hover{background:#fff;transform:translateY(-2px)}
+    .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+    .btn-ghost{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--border)}
+    .btn-ghost:hover{color:var(--text);background:rgba(255,255,255,.08)}
+    .page{display:none}
+    .page.active{display:block}
+
+    /* HOME */
+    .hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(2rem,6vw,5rem) clamp(1.5rem,6vw,4rem);overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(232,255,0,.06) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(255,60,0,.08) 0%,transparent 70%),linear-gradient(180deg,#0a0a0c 0%,#0d0d10 100%)}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.3;mask-image:linear-gradient(180deg,transparent 0%,black 30%,black 70%,transparent 100%)}
+    .hero-tag{position:relative;display:inline-block;font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;margin-bottom:1.2rem;opacity:0;animation:fadeUp .6s .1s ease forwards}
+    .hero-tag::before{content:'';display:inline-block;width:28px;height:1px;background:var(--accent);vertical-align:middle;margin-right:10px}
+    .hero h1{position:relative;font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,14vw,12rem);line-height:.88;color:var(--text);opacity:0;animation:fadeUp .7s .2s ease forwards}
+    .hero h1 .ay{color:var(--accent)}
+    .hero-sub{position:relative;margin-top:1.5rem;font-size:clamp(.9rem,2vw,1.1rem);color:var(--muted);max-width:480px;opacity:0;animation:fadeUp .7s .35s ease forwards}
+    .hero-ctas{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-top:2.5rem;opacity:0;animation:fadeUp .7s .45s ease forwards}
+    .scroll-hint{position:absolute;bottom:2rem;right:clamp(1.5rem,4vw,3rem);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeIn 1s 1.2s ease forwards}
+    .scroll-hint span{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;writing-mode:vertical-rl}
+    .scroll-line{width:1px;height:48px;background:linear-gradient(var(--accent),transparent);animation:scrollLine 2s 1.5s ease-in-out infinite}
+    .stats-bar{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.5rem clamp(1.5rem,6vw,4rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+    .stat{padding:1rem 1.5rem;border-right:1px solid var(--border);text-align:center}
+    .stat:last-child{border-right:none}
+    .stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--accent);line-height:1}
+    .stat-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+    section{padding:clamp(3rem,8vw,6rem) clamp(1.5rem,6vw,4rem)}
+    .section-label{display:flex;align-items:center;gap:12px;margin-bottom:2.5rem}
+    .section-label span{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+    .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+    .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4.5rem);line-height:1;letter-spacing:.02em;margin-bottom:.5rem}
+    .yt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:2rem}
+    .yt-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .2s,transform .2s;text-decoration:none;display:block}
+    .yt-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+    .yt-thumb{position:relative;aspect-ratio:16/9;background:var(--bg3);overflow:hidden}
+    .yt-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .yt-card:hover .yt-thumb img{transform:scale(1.04)}
+    .yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);opacity:0;transition:opacity .2s}
+    .yt-card:hover .yt-play{opacity:1}
+    .yt-play svg{width:48px;height:48px;fill:var(--accent)}
+    .yt-info{padding:14px 16px 16px}
+    .yt-info h3{font-size:.9rem;font-weight:600;line-height:1.4;color:var(--text);margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .yt-meta{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted)}
+    .yt-cta-wrap{margin-top:2rem;text-align:center}
+    .yt-loading{grid-column:1/-1;text-align:center;padding:3rem;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--muted);letter-spacing:.1em}
+    .blog-section{background:var(--bg2)}
+    .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-top:2rem}
+    .article-card{background:var(--bg);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:pointer;display:flex;flex-direction:column}
+    .article-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+    .article-card-top{aspect-ratio:16/8;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .article-card-top .bg-text{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;color:rgba(232,255,0,.07);letter-spacing:.05em;user-select:none;position:absolute}
+    .article-badge{position:absolute;top:12px;left:12px;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:2px;font-weight:500}
+    .badge-coop{background:#1a3a1a;color:#4ade80;border:1px solid #2a5a2a}
+    .badge-retro{background:#2a1a3a;color:#a78bfa;border:1px solid #4a2a6a}
+    .badge-indie{background:#3a2a1a;color:#fb923c;border:1px solid #6a4a2a}
+    .badge-news{background:#3a1a1a;color:#f87171;border:1px solid #6a2a2a}
+    .article-body{padding:18px 20px;flex:1}
+    .article-cat{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+    .article-body h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1.1;color:var(--text);margin-bottom:8px}
+    .article-body p{font-size:.85rem;color:var(--muted);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .article-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-top:1px solid var(--border)}
+    .article-date{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--muted)}
+    .article-read{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em}
+    .emu-section{background:var(--bg);border-top:1px solid var(--border)}
+    .emu-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+    @media(max-width:700px){.emu-inner{grid-template-columns:1fr}}
+    .emu-visual{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:2rem;display:flex;flex-direction:column;gap:12px}
+    .emu-screen{background:#000;border-radius:4px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .emu-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0px,rgba(0,0,0,.15) 1px,transparent 1px,transparent 3px)}
+    .emu-logo-text{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--accent);letter-spacing:.1em;text-shadow:0 0 30px rgba(232,255,0,.4);position:relative;animation:pulse 3s ease-in-out infinite}
+    .emu-systems{display:flex;flex-wrap:wrap;gap:6px}
+    .emu-tag{background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:3px 8px;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.08em}
+    .emu-text h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4rem);line-height:1;margin-bottom:1rem}
+    .emu-text p{font-size:.92rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem}
+    .newsletter-section{background:var(--bg2);border-top:1px solid var(--border)}
+    .newsletter-inner{max-width:600px;margin:0 auto;text-align:center}
+    .newsletter-inner p{color:var(--muted);font-size:.95rem;margin-bottom:2rem}
+    .newsletter-form{display:flex;gap:8px;max-width:440px;margin:0 auto}
+    @media(max-width:480px){.newsletter-form{flex-direction:column}}
+    .newsletter-form input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:12px 16px;font-family:'DM Mono',monospace;font-size:.8rem;color:var(--text);outline:none;transition:border-color .2s}
+    .newsletter-form input::placeholder{color:var(--muted)}
+    .newsletter-form input:focus{border-color:var(--accent)}
+    #nl-status{margin-top:12px;font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.08em;min-height:20px}
+    .nl-ok{color:var(--accent)}.nl-err{color:var(--accent2)}
+    footer{background:var(--bg);border-top:1px solid var(--border);padding:3rem clamp(1.5rem,6vw,4rem);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem}
+    .footer-brand span{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.08em;color:var(--accent)}
+    .footer-brand p{font-size:.78rem;color:var(--muted);margin-top:4px}
+    .footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+    .footer-links a{color:var(--muted);text-decoration:none;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;cursor:pointer}
+    .footer-links a:hover{color:var(--accent)}
+    .footer-copy{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:.08em;width:100%;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);text-align:center}
+
+    /* ARTICLE PAGE */
+    .article-hero{padding:clamp(3rem,8vw,6rem) clamp(1.5rem,6vw,4rem) 3rem;background:var(--bg);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+    .article-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 80% 50%,rgba(232,255,0,.04) 0%,transparent 70%)}
+    .back-btn{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-bottom:2rem;transition:color .2s;background:none;border:none}
+    .back-btn:hover{color:var(--accent)}
+    .article-hero-badge{display:inline-block;margin-bottom:1rem;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;padding:4px 10px;border-radius:2px}
+    .article-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5rem);line-height:1;color:var(--text);margin-bottom:1.2rem;position:relative}
+    .article-hero-meta{display:flex;gap:1.5rem;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:.08em;margin-bottom:1.5rem;position:relative}
+    .article-hero-desc{font-size:1.05rem;color:var(--muted);max-width:680px;line-height:1.7;position:relative}
+    .article-content{max-width:780px;margin:0 auto;padding:clamp(2rem,6vw,4rem) clamp(1.5rem,6vw,4rem)}
+    .article-content h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--text);margin:2.5rem 0 1rem;letter-spacing:.02em;line-height:1.1}
+    .article-content h3{font-family:'Barlow',sans-serif;font-weight:600;font-size:1.1rem;color:var(--accent);margin:2rem 0 .6rem}
+    .article-content p{font-size:.98rem;color:#b8b6af;line-height:1.8;margin-bottom:1.2rem}
+    .article-content ul,.article-content ol{margin:1rem 0 1.4rem 1.5rem;color:#b8b6af;font-size:.98rem;line-height:1.8}
+    .article-content li{margin-bottom:.5rem}
+    .highlight-box{background:var(--bg2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:1.2rem 1.5rem;margin:1.5rem 0}
+    .highlight-box p{margin:0;color:var(--text)}
+    .game-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.2rem 1.5rem;margin:1rem 0;display:flex;align-items:flex-start;gap:1rem}
+    .game-card-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--accent);line-height:1;min-width:48px}
+    .game-card-info h4{font-family:'Barlow',sans-serif;font-weight:600;font-size:1rem;color:var(--text);margin-bottom:4px}
+    .game-card-info p{font-size:.85rem;color:var(--muted);margin:0;line-height:1.5}
+    .article-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border)}
+    .article-tag{background:var(--bg2);border:1px solid var(--border);border-radius:3px;padding:4px 10px;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.08em}
+    .related-section{background:var(--bg2);padding:clamp(2rem,6vw,4rem) clamp(1.5rem,6vw,4rem);border-top:1px solid var(--border)}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:1.5rem}
+
+    /* ANIM */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+    @keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);transform-origin:top;opacity:1}100%{transform:scaleY(1);transform-origin:bottom;opacity:0}}
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" onclick="showHome()">
+    <img src="https://nagcoop.github.io/assets/logo.jpg" alt="Nagcoop"/>
+    <span>Nagcoop</span>
+  </div>
+  <ul class="nav-links">
+    <li class="hide-sm"><a onclick="showHome();setTimeout(()=>goTo('#videos'),100)">Vídeos</a></li>
+    <li class="hide-sm"><a onclick="showHome();setTimeout(()=>goTo('#blog'),100)">Blog</a></li>
+    <li><a href="emulator.html">Emulator</a></li>
+    <li><a href="downloads.html">Downloads</a></li>
+    <li><a href="https://www.youtube.com/@Nagcoop?sub_confirmation=1" target="_blank" rel="noopener">YouTube ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-bg"></div><div class="hero-grid"></div>
+    <p class="hero-tag">Canal de games · Co-op · Heavy vibe</p>
+    <h1>NAG<br><span class="ay">COOP</span></h1>
+    <p class="hero-sub">Co-op mayhem, notícias rápidas de games e uma vibe pesada que não pede licença. Inscreve-se.</p>
+    <div class="hero-ctas">
+      <a href="https://www.youtube.com/@Nagcoop?sub_confirmation=1" target="_blank" rel="noopener" class="btn btn-primary">▶ Inscrever no canal</a>
+      <button class="btn btn-outline" onclick="goTo('#videos')">Ver vídeos</button>
+      <a href="emulator.html" class="btn btn-ghost">Emulador web ⚡</a>
+    </div>
+    <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num" id="sub-count">—</div><div class="stat-label">Inscritos</div></div>
+    <div class="stat"><div class="stat-num" id="vid-count">—</div><div class="stat-label">Vídeos</div></div>
+    <div class="stat"><div class="stat-num">10</div><div class="stat-label">Artigos</div></div>
+    <div class="stat"><div class="stat-num">FREE</div><div class="stat-label">Sempre grátis</div></div>
+  </div>
+
+  <section id="videos">
+    <div class="section-label reveal"><span>Últimos vídeos</span></div>
+    <div class="section-title reveal">Assista agora</div>
+    <div class="yt-grid" id="yt-grid"><div class="yt-loading">Carregando vídeos...</div></div>
+    <div class="yt-cta-wrap reveal"><a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener" class="btn btn-outline">Ver todos os vídeos ↗</a></div>
+  </section>
+
+  <section class="blog-section" id="blog">
+    <div class="section-label reveal"><span>Blog & Artigos</span></div>
+    <div class="section-title reveal">Últimas do mundo gamer</div>
+    <div class="blog-grid" id="blog-grid"></div>
+  </section>
+
+  <section class="emu-section">
+    <div class="emu-inner reveal">
+      <div class="emu-visual">
+        <div class="emu-screen"><div class="emu-scanlines"></div><span class="emu-logo-text">PLAY</span></div>
+        <div class="emu-systems">
+          <span class="emu-tag">NES</span><span class="emu-tag">SNES</span><span class="emu-tag">N64</span>
+          <span class="emu-tag">GBA</span><span class="emu-tag">Game Boy</span><span class="emu-tag">Mega Drive</span>
+          <span class="emu-tag">Master System</span><span class="emu-tag">PS1</span><span class="emu-tag">Game Gear</span>
+        </div>
+      </div>
+      <div class="emu-text">
+        <h2>Emulador<br><span style="color:var(--accent)">Web</span><br>Grátis</h2>
+        <p>Roda direto no browser. Sem download, sem instalação. Carrega ROM local ou via URL. Mobile com controle na tela. Dark. 🤘</p>
+        <a href="emulator.html" class="btn btn-primary">Abrir emulador ⚡</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter-section" id="newsletter">
+    <div class="newsletter-inner reveal">
+      <div class="section-label" style="justify-content:center"><span>Newsletter</span></div>
+      <div class="section-title">Fica por dentro</div>
+      <p>Novidades do canal, drops de conteúdo e news de games direto no seu email. Sem spam.</p>
+      <div class="newsletter-form">
+        <input type="email" id="nl-email" placeholder="seu@email.com" autocomplete="email"/>
+        <button class="btn btn-primary" onclick="subscribeNL()">Entrar</button>
+      </div>
+      <div id="nl-status"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand"><span>Nagcoop</span><p>Games & News · Dark vibe · Heavy energy ⚡</p></div>
+    <nav class="footer-links">
+      <a onclick="showHome()">Home</a>
+      <a onclick="showHome();setTimeout(()=>goTo('#blog'),100)">Blog</a>
+      <a href="emulator.html">Emulator</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="https://www.youtube.com/@Nagcoop" target="_blank" rel="noopener">YouTube</a>
+    </nav>
+    <div class="footer-copy">© 2025 Nagcoop · Todos os direitos reservados · Feito com ⚡ e muito co-op</div>
+  </footer>
+</div>
+
+<!-- ARTICLE PAGE -->
+<div id="page-article" class="page">
+  <div class="article-hero">
+    <button class="back-btn" onclick="showHome()">← Voltar ao blog</button>
+    <div class="article-hero-badge" id="art-badge"></div>
+    <h1 id="art-title"></h1>
+    <div class="article-hero-meta">
+      <span id="art-date"></span><span id="art-rt"></span><span>by Nagcoop</span>
+    </div>
+    <p class="article-hero-desc" id="art-desc"></p>
+  </div>
+  <div class="article-content" id="art-body"></div>
+  <div style="max-width:780px;margin:0 auto;padding:0 clamp(1.5rem,6vw,4rem) 2rem">
+    <div class="article-tags" id="art-tags"></div>
+  </div>
+  <section class="related-section">
+    <div class="section-label"><span>Leia também</span></div>
+    <div class="related-grid" id="related-grid"></div>
+  </section>
+  <footer>
+    <div class="footer-brand"><span>Nagcoop</span><p>Games & News · Dark vibe ⚡</p></div>
+    <nav class="footer-links">
+      <a onclick="showHome()">Home</a>
+      <a href="emulator.html">Emulator</a>
+      <a href="https://www.youtube.com/@Nagcoop" target="_blank">YouTube</a>
+    </nav>
+    <div class="footer-copy">© 2025 Nagcoop · Todos os direitos reservados</div>
+  </footer>
+</div>
+
+<script>
+const A=[
+{id:'melhores-jogos-coop-2025',title:'Os 10 Melhores Jogos Co-op de 2025',badge:'Co-op',bc:'badge-coop',cat:'Co-op',date:'20 Mar 2025',rt:'8 min',desc:'Uma seleção pesada dos melhores títulos cooperativos que dominaram 2025 — de Indies brutais a AAAs que finalmente entregaram.',bg:'CO-OP',bgc:'#0d1f0d',tags:['co-op','multiplayer','2025','games'],body:`
+<h2>Por que jogar em co-op é melhor em 2025</h2>
+<p>Se tem uma coisa que 2025 entregou de bandeja foi uma safra absurda de jogos cooperativos. Depois de anos de live service genérico e battle royale saturado, o mercado acordou para o que sempre foi a melhor forma de jogar: ao lado de um amigo.</p>
+<div class="highlight-box"><p>💡 Todos os jogos dessa lista têm suporte a co-op nativo — sem mods, sem RemotePlay Together, sem gambiarra.</p></div>
+<h2>A Lista Definitiva</h2>
+<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>It Takes Two</h4><p>Ainda referência absoluta de design cooperativo. Cada fase reinventa o gameplay. Obrigatório para qualquer dupla.</p></div></div>
+<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Elden Ring — Nightreign</h4><p>FromSoftware abraçou o co-op de vez. Três jogadores, mundo compartilhado, dificuldade brutal. Perfeito.</p></div></div>
+<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>Deep Rock Galactic</h4><p>Quatro anões, uma missão, mil inimigos. Caos organizado e incrivelmente viciante.</p></div></div>
+<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Helldivers 2</h4><p>O fenômeno que continuou dominando 2025. Democracia gerenciada e friendly fire acidental nunca foram tão divertidos.</p></div></div>
+<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Remnant II</h4><p>Co-op soulslike com geração procedural de mapas. Cada run é diferente, cada sessão com amigos é única.</p></div></div>
+<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Baldur's Gate 3</h4><p>O RPG definitivo com co-op estável e polido. Quatro jogadores fazendo escolhas completamente diferentes é pura anarquia.</p></div></div>
+<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Monster Hunter Wilds</h4><p>A entrada da série no mundo aberto chegou com co-op fluido e caças épicas que pedem companhia.</p></div></div>
+<div class="game-card"><div class="game-card-num">08</div><div class="game-card-info"><h4>Hades II</h4><p>O Early Access trouxe co-op como novidade bombástica. Dois jogadores, um submundo, caos mítico.</p></div></div>
+<div class="game-card"><div class="game-card-num">09</div><div class="game-card-info"><h4>Palworld</h4><p>Servidor co-op com amigos continuou sendo uma das experiências mais absurdamente divertidas do ano.</p></div></div>
+<div class="game-card"><div class="game-card-num">10</div><div class="game-card-info"><h4>Content Warning</h4><p>Quatro jogadores, câmera de vídeo, monstros e internet para viralizar. O jogo social mais criativo de 2025.</p></div></div>
+<h2>Conclusão</h2>
+<p>2025 foi o ano que comprovou de vez: co-op não é nicho, é o futuro. Com amigos certos e um headset na cabeça, qualquer jogo dessa lista entrega mais de 100 horas de diversão garantida. Qual desses você já jogou? Comenta no YouTube!</p>`},
+
+{id:'emulacao-browser-guia-completo',title:'Emulação no Browser: Guia Completo para Jogar Clássicos Online',badge:'Retro',bc:'badge-retro',cat:'Emulação',date:'15 Mar 2025',rt:'10 min',desc:'Tudo que você precisa saber para jogar SNES, N64, PS1 e muito mais direto no browser, sem instalar nada.',bg:'RETRO',bgc:'#1a0d2a',tags:['emulação','retro','browser','ROM','SNES','PS1'],body:`
+<h2>O Renascimento dos Clássicos</h2>
+<p>Com a evolução do WebAssembly e APIs modernas dos browsers, é possível rodar jogos de SNES, Nintendo 64, PS1 e GBA direto na aba do Chrome — sem instalar nada, sem emulador externo, sem configuração complicada. O emulador web do Nagcoop usa exatamente essa tecnologia.</p>
+<div class="highlight-box"><p>⚡ Importante: use apenas ROMs de jogos que você possui fisicamente. A emulação é legal; o download de ROMs protegidas por copyright não é.</p></div>
+<h2>Sistemas Suportados</h2>
+<h3>Super Nintendo (SNES)</h3>
+<p>Considerada por muitos a melhor biblioteca da história dos games. Chrono Trigger, Super Metroid, Street Fighter II, Zelda: A Link to the Past. No browser, roda suave na maioria dos títulos.</p>
+<h3>Nintendo 64</h3>
+<p>Mais pesado de emular, mas títulos como Mario 64, Zelda OoT e GoldenEye rodam bem em PCs modernos mesmo via browser. Recomenda-se Chrome ou Edge para melhor performance.</p>
+<h3>Game Boy / GBA</h3>
+<p>Emulação perfeita no browser. Pokémon, Metroid Fusion, Castlevania: Aria of Sorrow — tudo funciona impecavelmente.</p>
+<h3>Mega Drive / Genesis</h3>
+<p>Sonic, Streets of Rage, Mortal Kombat — emulação precisa e rápida da biblioteca Sega.</p>
+<h3>PlayStation 1</h3>
+<p>Requer a BIOS do console (scph1001.bin) extraída do seu PS1 original. Com ela, Final Fantasy VII, Metal Gear Solid e Crash Bandicoot rodam bem.</p>
+<h2>Como Usar o Emulador Nagcoop</h2>
+<ol>
+<li>Acesse a página Emulator no menu</li>
+<li>Selecione o sistema no dropdown</li>
+<li>Clique em "Run local ROM" e selecione o arquivo do seu jogo</li>
+<li>Para PS1, adicione o arquivo de BIOS antes de carregar o jogo</li>
+<li>Use o controle na tela (mobile) ou teclado/gamepad (PC)</li>
+</ol>
+<h2>Dicas de Performance</h2>
+<ul>
+<li>Use Chrome ou Edge — melhor suporte a WebAssembly</li>
+<li>Feche abas desnecessárias para liberar RAM</li>
+<li>Para N64 e PS1, prefira tela cheia com F11</li>
+<li>Em mobile, gire para paisagem para melhor experiência</li>
+</ul>
+<h2>Homebrews: Jogos Legais e Gratuitos</h2>
+<p>Uma das partes mais interessantes da emulação moderna são os homebrews — jogos desenvolvidos pela comunidade para consoles antigos, distribuídos gratuitamente e legalmente. O botão "Load demo" no emulador do Nagcoop carrega homebrews selecionados para você experimentar sem precisar de nenhum arquivo externo.</p>`},
+
+{id:'jogos-indie-que-valem-pena-2025',title:'8 Jogos Indie que Valem Cada Centavo em 2025',badge:'Indie',bc:'badge-indie',cat:'Indie',date:'10 Mar 2025',rt:'7 min',desc:'Os melhores indies de 2025 que passaram voando pelo radar mas entregam experiências melhores que muitos AAAs.',bg:'INDIE',bgc:'#2a1a0d',tags:['indie','2025','recomendação','games'],body:`
+<h2>O Ano dos Indies</h2>
+<p>Enquanto as grandes publishers se debatem entre live service fracassado e remakes desnecessários, os estúdios independentes continuam entregando as experiências mais criativas e corajosas do mercado. 2025 foi um ano excepcional para quem sabe onde olhar.</p>
+<div class="highlight-box"><p>🎯 Critério: apenas jogos com avaliação "Muito Positiva" ou superior na Steam, lançados ou com major update em 2025.</p></div>
+<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Animal Well</h4><p>Metroidvania de exploração pura. Sem tutorial, sem mapa, sem mão na luva. Cada pixel esconde um segredo.</p></div></div>
+<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Balatro</h4><p>Jogo de cartas roguelike baseado em poker diferente de tudo. Impossível de parar. Disponível no mobile também.</p></div></div>
+<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>UFO 50</h4><p>Cinquenta jogos completos num único pacote, todos simulando games dos anos 80. Uma obra de amor ao retrogaming.</p></div></div>
+<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Neva</h4><p>Uma história de família e sobrevivência com visual de quadrinhos e combate fluido. Curto mas impactante.</p></div></div>
+<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Caves of Qud</h4><p>O roguelike mais ambicioso já feito. Ficção científica pós-apocalíptica com profundidade RPG absurda.</p></div></div>
+<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Mouthwashing</h4><p>Horror psicológico narrativo com arte perturbadora. Curto (3-4h), denso e inesquecível.</p></div></div>
+<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Pacific Drive</h4><p>Survival com carro num mundo distorcido e misterioso. A sensação de dirigir numa tempestade de anomalias é ímpar.</p></div></div>
+<div class="game-card"><div class="game-card-num">08</div><div class="game-card-info"><h4>Tactical Breach Wizards</h4><p>Estratégia por turnos com mecânicas de mago e senso de humor afiado. Puzzle e táticas no mesmo pacote.</p></div></div>
+<h2>Por Que Apoiar Indies?</h2>
+<p>Cada cópia de jogo indie que você compra é uma decisão criativa sendo viabilizada. Enquanto grandes publishers tomam decisões baseadas em métricas de engajamento, estúdios independentes ainda fazem jogos porque têm algo a dizer — e muitas vezes dizem mais com menos orçamento do que qualquer blockbuster de $200 milhões.</p>`},
+
+{id:'melhores-jogos-coop-local-sofa',title:'Co-op de Sofá: Os Melhores para Jogar com Quem Está do Lado',badge:'Co-op',bc:'badge-coop',cat:'Co-op',date:'05 Mar 2025',rt:'6 min',desc:'Couch co-op ainda é a melhor forma de jogar. Aqui estão os títulos que fazem isso melhor em 2025.',bg:'SOFA',bgc:'#0d1f0d',tags:['co-op','couch co-op','local','multiplayer'],body:`
+<h2>A Magia do Co-op Local</h2>
+<p>Headset, lag, conexão caindo — nada disso existe quando você e um amigo estão no mesmo sofá, olhando pro mesmo monitor. O couch co-op é a forma mais pura de jogar junto, e felizmente a indústria não abandonou esse formato.</p>
+<h2>Para Casais e Duplas Casuais</h2>
+<div class="game-card"><div class="game-card-num">⭐</div><div class="game-card-info"><h4>It Takes Two</h4><p>O padrão ouro do gênero. Projetado do zero para duas pessoas. Criativo, emocionante e surpreendente até o final.</p></div></div>
+<div class="game-card"><div class="game-card-num">⭐</div><div class="game-card-info"><h4>Overcooked! 2</h4><p>Caos culinário colaborativo que testa amizades. Simples de aprender, absurdamente difícil de dominar.</p></div></div>
+<div class="game-card"><div class="game-card-num">⭐</div><div class="game-card-info"><h4>Moving Out 2</h4><p>Física caótica de mudança. Você e um amigo tentando tirar um sofá pela janela nunca foi tão hilário.</p></div></div>
+<h2>Para Hardcores</h2>
+<div class="game-card"><div class="game-card-num">💀</div><div class="game-card-info"><h4>Cuphead</h4><p>Dificuldade brutal com visual de animação dos anos 30. Co-op local adiciona caos e diversão em partes iguais.</p></div></div>
+<div class="game-card"><div class="game-card-num">💀</div><div class="game-card-info"><h4>Streets of Rage 4</h4><p>O retorno glorioso da franquia beat'em up da Sega. Co-op local para até 4 jogadores. Trilha sonora pesada.</p></div></div>
+<div class="game-card"><div class="game-card-num">💀</div><div class="game-card-info"><h4>TMNT: Shredder's Revenge</h4><p>Beat'em up old school perfeito. Referência dos anos 90 executada com maestria. Até 6 jogadores local.</p></div></div>
+<h2>Para Grupos de 3-4</h2>
+<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Pummel Party</h4><p>Mario Party mas sem filtro. Minigames caóticos e traição garantida. Melhor com quatro pessoas.</p></div></div>
+<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Nidhogg 2</h4><p>Duelo minimalista de esgrima que vicia absurdamente. Melhor jogo de 1v1 local da última década.</p></div></div>
+<h2>Setup Ideal para Couch Co-op no PC</h2>
+<ul>
+<li>Dois controles USB ou Bluetooth (Xbox Series X funciona nativamente no Windows)</li>
+<li>Monitor ou TV de pelo menos 40" para split-screen confortável</li>
+<li>Steam Big Picture Mode para navegação na TV com controle</li>
+<li>Steam Remote Play Together para co-op online com jogos sem suporte nativo</li>
+</ul>`},
+
+{id:'classicos-snes',title:'12 Clássicos do SNES que Você Precisa Jogar em 2025',badge:'Retro',bc:'badge-retro',cat:'Emulação',date:'28 Fev 2025',rt:'9 min',desc:'A biblioteca do Super Nintendo é considerada a melhor da história. Esses são os títulos que todo gamer precisa conhecer.',bg:'SNES',bgc:'#1a0d2a',tags:['SNES','retro','Super Nintendo','clássicos','emulação'],body:`
+<h2>Por que o SNES ainda importa?</h2>
+<p>Lançado em 1990, o Super Nintendo revolucionou os games com gráficos de modo 7, som de qualidade cinematográfica e uma biblioteca que estabeleceu franquias que existem até hoje. Com o emulador web do Nagcoop, você pode jogar todos esses clássicos direto no browser.</p>
+<h2>Os Imprescindíveis</h2>
+<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Chrono Trigger (1995)</h4><p>O RPG perfeito. Sistema ATB inovador, múltiplos finais, narrativa temporal e trilha sonora de Yasunori Mitsuda que ainda arrepia. Frequentemente apontado como o melhor jogo de todos os tempos.</p></div></div>
+<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Super Metroid (1994)</h4><p>Pai do gênero metroidvania. Atmosfera opressiva, exploração não-linear e design de mapa copiado por décadas.</p></div></div>
+<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>Zelda: A Link to the Past (1991)</h4><p>O template definitivo dos Zeldas 2D. Mundo duplo, dungeons elaboradas e narrativa clássica. Perfeito do início ao fim.</p></div></div>
+<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Final Fantasy VI (1994)</h4><p>O auge da era 16 bits dos JRPGs. Conjunto de personagens extraordinário, opera icônica, vilão inesquecível.</p></div></div>
+<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Super Mario World (1990)</h4><p>O jogo de lançamento que definiu a era. Yoshi, Cape Feather, mundos secretos. Ainda um dos melhores plataformas já feitos.</p></div></div>
+<h2>Ação e Beat'em Up</h2>
+<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Contra III: The Alien Wars</h4><p>Run and gun frenético. Dois jogadores, dificuldade brutal. O co-op mais selvagem do SNES.</p></div></div>
+<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Castlevania IV (1991)</h4><p>Gothic horror perfeito. Controles responsivos, level design impecável e trilha sonora arrepiante.</p></div></div>
+<div class="game-card"><div class="game-card-num">08</div><div class="game-card-info"><h4>Street Fighter II Turbo (1992)</h4><p>O fighting game que definiu o gênero no console. Todos os personagens e modos do arcade.</p></div></div>
+<h2>Joias Escondidas</h2>
+<div class="game-card"><div class="game-card-num">09</div><div class="game-card-info"><h4>Earthbound (1994)</h4><p>RPG excêntrico e genial ambientado em mundo contemporâneo. Humor surreal e crítica social única.</p></div></div>
+<div class="game-card"><div class="game-card-num">10</div><div class="game-card-info"><h4>Secret of Mana (1993)</h4><p>Action RPG com co-op em tempo real para até 3 jogadores. Inovador e belo para os padrões da época.</p></div></div>
+<div class="game-card"><div class="game-card-num">11</div><div class="game-card-info"><h4>Donkey Kong Country 2 (1995)</h4><p>O melhor da trilogia DKC. Level design criativo, trilha sonora excepcional de David Wise.</p></div></div>
+<div class="game-card"><div class="game-card-num">12</div><div class="game-card-info"><h4>Mega Man X (1993)</h4><p>A evolução perfeita da fórmula Mega Man. Mais rápido, mais estiloso, com dash e wall jump.</p></div></div>
+<h2>Como Jogar Hoje</h2>
+<p>O emulador web do Nagcoop suporta ROMs de SNES nativamente. Basta selecionar SNES no dropdown, carregar seu arquivo .smc ou .sfc e começar a jogar. Sem configuração, sem driver, sem nada.</p>`},
+
+{id:'monster-hunter-wilds-review',title:'Monster Hunter Wilds: A Melhor Entrada da Franquia?',badge:'News',bc:'badge-news',cat:'Lançamentos',date:'22 Fev 2025',rt:'8 min',desc:'Monster Hunter Wilds chegou prometendo revolução. Depois de 60 horas de gameplay, aqui está nossa análise completa.',bg:'MH',bgc:'#3a1a1a',tags:['Monster Hunter','Wilds','review','2025','co-op'],body:`
+<h2>A Promessa de um Mundo Vivo</h2>
+<p>Quando a Capcom revelou Monster Hunter Wilds, a promessa era clara: um mundo aberto de verdade, onde os monstros existem em ecossistemas reais, interagem entre si e com o ambiente. Depois de mais de 60 horas com o jogo: eles entregaram. Quase que completamente.</p>
+<div class="highlight-box"><p>🎮 Testado em PC (RTX 3080, i9-12900K, 32GB RAM) e PS5. Review baseado em campanha solo e co-op até 4 jogadores.</p></div>
+<h2>O que Funciona Muito Bem</h2>
+<h3>O Mundo como Personagem</h3>
+<p>Os biomas de Wilds são vivos de uma forma que Monster Hunter World nunca conseguiu. Tempestades mudam o comportamento dos monstros. Monstros migram entre regiões em busca de presas. Um Rathalos ferido pode recuar para se recuperar antes que você termine a caça.</p>
+<h3>O Co-op Mais Fluido da Série</h3>
+<p>Histórico problema da franquia, o multijogador finalmente funciona sem atrito. Entrar na caça de um amigo, o sistema de SOS renovado, o crossplay entre PC e consoles — tudo foi polido. Caçar em grupo de quatro é agora a experiência mais recomendada.</p>
+<h3>14 Armas Revisadas</h3>
+<p>Cada categoria recebeu revisões substanciais. A Espada e Escudo ganhou mecânicas de escudo perfeito, a Great Sword continua sendo a catarse de dano mais satisfatória dos games, e a Insect Glaive foi completamente remodelada com foco em mobilidade aérea.</p>
+<h2>O que Poderia Ser Melhor</h2>
+<h3>Performance no PC</h3>
+<p>O lançamento no PC foi turbulento. Stutters em áreas abertas, Ray Tracing exigente e o infame problema de compilação de shaders que trava os primeiros minutos de jogo. Patches melhoraram mas não resolveram completamente.</p>
+<h3>Endgame Familiar</h3>
+<p>Se você jogou World e Iceborne, o loop de endgame vai parecer familiar demais. Funciona, mas não inova.</p>
+<h2>Veredicto</h2>
+<p>Monster Hunter Wilds é o jogo mais acessível da franquia sem perder a profundidade que faz a série especial. Os problemas de performance no PC e o endgame previsível são ressalvas reais, mas não comprometem uma das melhores experiências de 2025.</p>
+<div class="highlight-box"><p>⭐ Nota: 9/10 — Obrigatório para fãs da franquia e recomendado para iniciantes.</p></div>`},
+
+{id:'ps1-classicos-remake',title:'7 Jogos de PS1 que Merecem um Remake em 2025',badge:'Retro',bc:'badge-retro',cat:'Emulação',date:'18 Fev 2025',rt:'7 min',desc:'Enquanto esperamos remakes que talvez nunca venham, esses clássicos do PS1 ainda podem ser jogados hoje via emulação.',bg:'PS1',bgc:'#1a0d2a',tags:['PS1','PlayStation','retro','remake','clássicos'],body:`
+<h2>A Era de Ouro do PS1</h2>
+<p>O PlayStation original foi um divisor de águas. Primeiro console a usar CDs, protagonizou a transição do 2D para o 3D e abrigou algumas das melhores franquias da história dos games. Enquanto Sony foca em remasters de PS4, esses clássicos seguem esperando por atenção.</p>
+<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Vagrant Story (2000)</h4><p>Action RPG de Yasumi Matsuno com sistema de crafting de armas absurdamente profundo e narrativa adulta e densa. Nunca teve sequência, nunca teve remake. Crime.</p></div></div>
+<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Parasite Eve (1998)</h4><p>Horror de ficção científica baseado no romance japonês. Combate em tempo real com elementos de RPG. Aya Brea é uma das melhores heroínas da era.</p></div></div>
+<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>Legend of Dragoon (1999)</h4><p>JRPG de 4 CDs com sistema de batalha baseado em timing perfeito. A Sony tentou criar sua resposta ao Final Fantasy e quase conseguiu.</p></div></div>
+<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Xenogears (1998)</h4><p>RPG filosófico que mistura consciência, religião e humanidade. Ambicioso demais para sua época — precisa de remake para completar a visão original.</p></div></div>
+<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Bushido Blade (1997)</h4><p>Fighting game de samurai onde um golpe pode matar. Sistema de dano localizado que nunca foi replicado com a mesma fidelidade. Único até hoje.</p></div></div>
+<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Fear Effect (2000)</h4><p>Action adventure de cyberpunk com estética animê e narrativa noir. Visual único e atmosfera incomparável para a época.</p></div></div>
+<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Threads of Fate (1999)</h4><p>Action RPG da Squaresoft com dois protagonistas com histórias diferentes. Charme, humor e gameplay sólido que merecia mais atenção.</p></div></div>
+<h2>Como Jogar PS1 no Emulador Nagcoop</h2>
+<ol>
+<li>Extraia a BIOS do seu PS1 original (arquivo scph1001.bin)</li>
+<li>Na página do Emulator, selecione PlayStation (PS1)</li>
+<li>Adicione o arquivo de BIOS no campo específico</li>
+<li>Carregue o arquivo .bin ou .iso do seu jogo</li>
+</ol>
+<p>A performance de PS1 no browser é excelente em PCs modernos. Final Fantasy VII, Metal Gear Solid e Castlevania: Symphony of the Night rodam perfeitamente.</p>`},
+
+{id:'nightreign-fromsoft-coop',title:'Elden Ring Nightreign: FromSoftware Acertou no Co-op?',badge:'News',bc:'badge-news',cat:'Lançamentos',date:'10 Fev 2025',rt:'7 min',desc:'A FromSoftware sempre resistiu ao co-op fácil. Nightreign é a virada de chave que fãs esperavam.',bg:'ELDEN',bgc:'#3a1a1a',tags:['Elden Ring','Nightreign','FromSoftware','co-op','review'],body:`
+<h2>A FromSoftware e o Co-op: Uma Relação Complicada</h2>
+<p>Durante anos, a FromSoftware tratou o multijogador como elemento periférico. O sistema de invocação via Destilados, as restrições de área, a ausência de voz — tudo comunicava que o Soulslike foi concebido como experiência solitária. Nightreign muda isso. De forma drástica.</p>
+<h2>O Que é Nightreign</h2>
+<p>Nightreign é um spin-off de Elden Ring construído do zero para co-op de três jogadores. Funciona como roguelite: cada sessão dura entre 30 e 60 minutos, com mapa gerado proceduralmente e um boss final que exige coordenação real entre os jogadores.</p>
+<div class="highlight-box"><p>⚡ Diferente do Elden Ring base, Nightreign é desenhado EXCLUSIVAMENTE para três jogadores. Jogar solo é possível mas claramente não é a experiência pretendida.</p></div>
+<h2>O que Funciona</h2>
+<h3>O Loop de 3 Rounds</h3>
+<p>Cada sessão tem três rodadas: exploração e coleta de recursos, confronto com boss intermediário e boss final. O ciclo dia/noite cria urgência real — você precisa estar forte o suficiente antes da noite cair ou é morte garantida.</p>
+<h3>8 Classes Distintas (Nightfarers)</h3>
+<p>Os Nightfarers têm estilos radicalmente diferentes. A Wylder é guerreiro versátil, a Duchess especialista em velocidade, o Recluse mago de suporte. A sinergia entre classes é parte central do design.</p>
+<h2>O que Divide Opiniões</h2>
+<h3>Sem o Solo Experience Soulslike</h3>
+<p>Fãs que amam FromSoftware pela solidão e tensão solo vão encontrar um jogo diferente. Nightreign é barulhento, rápido e cooperativo por natureza. É ótimo no que propõe, mas não substitui Elden Ring.</p>
+<h2>Veredicto</h2>
+<p>Nightreign é a melhor experiência de co-op que a FromSoftware já criou, mas não é o mesmo tipo de jogo que os Soulslikes tradicionais. É diferente — e bom diferente.</p>
+<div class="highlight-box"><p>⭐ Nota: 8.5/10 — Essencial para quem tem dois amigos dispostos a montar um grupo fixo.</p></div>`},
+
+{id:'coop-gratuito-freetoplay',title:'Co-op Gratuito: Os Melhores Free-to-Play para Jogar com Amigos',badge:'Co-op',bc:'badge-coop',cat:'Co-op',date:'03 Fev 2025',rt:'6 min',desc:'Sem gastar nada: os melhores jogos cooperativos gratuitos disponíveis agora para jogar com a galera.',bg:'FREE',bgc:'#0d1f0d',tags:['free-to-play','gratuito','co-op','multiplayer','f2p'],body:`
+<h2>Co-op de Graça Existe e é Bom</h2>
+<p>A percepção de que free-to-play é sinônimo de pay-to-win e experiência degradada foi derrubada por vários títulos nos últimos anos. Existe co-op gratuito de qualidade — você só precisa saber onde encontrar.</p>
+<div class="game-card"><div class="game-card-num">🔥</div><div class="game-card-info"><h4>Warframe</h4><p>Co-op de ação espacial com 10 anos de conteúdo gratuito. Nenhum conteúdo principal bloqueado por paywall. Um dos melhores F2P já feitos.</p></div></div>
+<div class="game-card"><div class="game-card-num">🔥</div><div class="game-card-info"><h4>Path of Exile 2</h4><p>O ARPG mais profundo do mercado está em Early Access mas é gratuito. Co-op para até 6 jogadores. Complexidade de build absurda e satisfatória.</p></div></div>
+<div class="game-card"><div class="game-card-num">🔥</div><div class="game-card-info"><h4>Genshin Impact</h4><p>JRPG de mundo aberto com monetização controversa mas conteúdo principal gratuito e extenso. Co-op funcional para exploração e bosses.</p></div></div>
+<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Destiny 2 (Free Content)</h4><p>A campanha New Light e atividades básicas são gratuitas. Conteúdo suficiente para centenas de horas antes de precisar de expansão.</p></div></div>
+<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Dauntless</h4><p>Monster Hunter free-to-play com co-op de até 4 jogadores. Mais acessível que MH e totalmente gratuito com crossplay entre todas as plataformas.</p></div></div>
+<h2>Steam Remote Play Together</h2>
+<p>Tecnologia da Steam que permite jogar co-op local com amigos online. Se você tem o jogo, seu amigo não precisa — ele acessa via streaming. Basicamente transforma qualquer jogo com co-op local em co-op online gratuito para o convidado. Um dos recursos mais subutilizados da plataforma.</p>`},
+
+{id:'lancamentos-2025-calendario',title:'Calendário de Lançamentos Esperados para o Resto de 2025',badge:'News',bc:'badge-news',cat:'Lançamentos',date:'28 Jan 2025',rt:'8 min',desc:'Tudo que ainda vem por aí em 2025 — os lançamentos mais esperados organizados por mês, com foco em co-op e multiplayer.',bg:'2025',bgc:'#3a1a1a',tags:['2025','lançamentos','preview','upcoming'],body:`
+<h2>O Que Ainda Vem em 2025</h2>
+<p>2025 já entregou Monster Hunter Wilds, Elden Ring Nightreign e uma safra excelente de indies. Mas o ano ainda não acabou, e tem muita coisa boa confirmada para os próximos meses. Aqui está o radar de lançamentos relevantes com foco em co-op e multiplayer.</p>
+<div class="highlight-box"><p>📅 Datas podem mudar. O "adiamento de última hora" é uma tradição do mercado — sempre confirme próximo do lançamento.</p></div>
+<h2>2º Trimestre (Abr — Jun)</h2>
+<div class="game-card"><div class="game-card-num">ABR</div><div class="game-card-info"><h4>Death Stranding 2: On the Beach</h4><p>Kojima continua conectando o mundo em co-op assíncrono. O primeiro foi divisivo mas único. O segundo promete escalar tudo que funcionou.</p></div></div>
+<div class="game-card"><div class="game-card-num">JUN</div><div class="game-card-info"><h4>Split Fiction (EA Motive)</h4><p>Do criador de It Takes Two, novo co-op obrigatório de dois jogadores. Josef Fares prometendo "o melhor co-op já feito". Expectativa altíssima.</p></div></div>
+<h2>3º Trimestre (Jul — Set)</h2>
+<div class="game-card"><div class="game-card-num">JUL</div><div class="game-card-info"><h4>Borderlands 4</h4><p>A franquia co-op de looter shooter está de volta. 4 jogadores, novo planeta e muito loot absurdo.</p></div></div>
+<div class="game-card"><div class="game-card-num">AGO</div><div class="game-card-info"><h4>Hades II (Full Release)</h4><p>O Early Access do roguelite da Supergiant deve sair do acesso antecipado com a versão completa e o modo co-op finalizado.</p></div></div>
+<div class="game-card"><div class="game-card-num">SET</div><div class="game-card-info"><h4>Ghost of Yōtei</h4><p>Sequência de Ghost of Tsushima. Detalhes sobre co-op ainda escassos, mas o original tinha modo Legends excelente.</p></div></div>
+<h2>4º Trimestre (Out — Dez)</h2>
+<div class="game-card"><div class="game-card-num">OUT</div><div class="game-card-info"><h4>GTA VI</h4><p>O elefante na sala. Rockstar confirmou 2025. Online co-op desde o dia 1 desta vez? Tudo indica que sim.</p></div></div>
+<div class="game-card"><div class="game-card-num">NOV</div><div class="game-card-info"><h4>Fable (Xbox)</h4><p>O reboot do clássico da Lionhead. Co-op online confirmado. Expectativa cautelosa após anos de desenvolvimento.</p></div></div>
+<h2>Indie Radar</h2>
+<ul>
+<li><strong>Clair Obscur: Expedition 33</strong> — JRPG francês com visual espetacular e combate por turnos renovado</li>
+<li><strong>Blue Prince</strong> — puzzle de geração procedural de mansão. Único e inventivo</li>
+<li><strong>Hollow Knight: Silksong</strong> — sem data confirmada mas o eterno "2025 TBD" persiste</li>
+</ul>
+<p>Acompanhe o canal no YouTube para gameplays e first looks de todos esses títulos assim que saírem. Inscreve-se para não perder nada!</p>`}
+];
+
+// RENDER BLOG GRID
+function renderBlog(){
+  const g=document.getElementById('blog-grid');
+  g.innerHTML=A.map(a=>`
+    <article class="article-card reveal" onclick="openArt('${a.id}')">
+      <div class="article-card-top" style="background:${a.bgc}">
+        <div class="bg-text">${a.bg}</div>
+        <span class="article-badge ${a.bc}">${a.badge}</span>
+      </div>
+      <div class="article-body">
+        <div class="article-cat">${a.cat}</div>
+        <h3>${a.title}</h3>
+        <p>${a.desc}</p>
+      </div>
+      <div class="article-footer">
+        <span class="article-date">${a.date} · ${a.rt}</span>
+        <span class="article-read">Ler →</span>
+      </div>
+    </article>`).join('');
+  document.querySelectorAll('.reveal:not(.obs)').forEach(el=>{el.classList.add('obs');obs.observe(el);});
+}
+
+// OPEN ARTICLE
+function openArt(id){
+  const a=A.find(x=>x.id===id);if(!a)return;
+  document.getElementById('art-badge').textContent=a.cat;
+  document.getElementById('art-badge').className='article-hero-badge '+a.bc;
+  document.getElementById('art-title').textContent=a.title;
+  document.getElementById('art-date').textContent=a.date;
+  document.getElementById('art-rt').textContent=a.rt;
+  document.getElementById('art-desc').textContent=a.desc;
+  document.getElementById('art-body').innerHTML=a.body;
+  document.getElementById('art-tags').innerHTML=a.tags.map(t=>`<span class="article-tag">#${t}</span>`).join('');
+  const rel=[...A.filter(x=>x.id!==id&&x.cat===a.cat),...A.filter(x=>x.id!==id&&x.cat!==a.cat)].slice(0,3);
+  document.getElementById('related-grid').innerHTML=rel.map(r=>`
+    <article class="article-card" onclick="openArt('${r.id}')">
+      <div class="article-card-top" style="background:${r.bgc};aspect-ratio:16/6">
+        <div class="bg-text" style="font-size:3rem">${r.bg}</div>
+        <span class="article-badge ${r.bc}">${r.badge}</span>
+      </div>
+      <div class="article-body"><div class="article-cat">${r.cat}</div><h3>${r.title}</h3></div>
+      <div class="article-footer"><span class="article-date">${r.date}</span><span class="article-read">Ler →</span></div>
+    </article>`).join('');
+  document.getElementById('page-home').classList.remove('active');
+  document.getElementById('page-article').classList.add('active');
+  window.scrollTo(0,0);
+  document.title=a.title+' — Nagcoop';
+}
+
+function showHome(){
+  document.getElementById('page-article').classList.remove('active');
+  document.getElementById('page-home').classList.add('active');
+  document.title='Nagcoop — Games, Co-op & News';
+  window.scrollTo(0,0);
+}
+
+function goTo(sel){const el=document.querySelector(sel);if(el)el.scrollIntoView({behavior:'smooth'});}
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>{el.classList.add('obs');obs.observe(el);});
+
+// YOUTUBE
+async function loadVideos(){
+  const grid=document.getElementById('yt-grid');
+  const CHANNEL_ID='UCk9JVfLBxEgjuEIZcuvCJuQ';
+  try{
+    const rss=`https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
+    const res=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(rss)}`,{signal:AbortSignal.timeout(5000)});
+    const xml=new DOMParser().parseFromString(await res.text(),'text/xml');
+    const entries=[...xml.querySelectorAll('entry')].slice(0,6);
+    if(!entries.length)throw 0;
+    grid.innerHTML=entries.map(e=>{
+      const vid=e.querySelector('videoId')?.textContent||'';
+      const title=e.querySelector('title')?.textContent||'';
+      const pub=e.querySelector('published')?.textContent||'';
+      const date=pub?new Date(pub).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}):'';
+      return`<a class="yt-card" href="https://www.youtube.com/watch?v=${vid}" target="_blank" rel="noopener">
+        <div class="yt-thumb"><img src="https://img.youtube.com/vi/${vid}/mqdefault.jpg" alt="${title}" loading="lazy"/>
+          <div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="yt-info"><h3>${title}</h3><div class="yt-meta">${date}</div></div></a>`;
+    }).join('');
+    document.getElementById('vid-count').textContent=entries.length+'+';
+  }catch{
+    grid.innerHTML=['Gameplay co-op — em breve novos vídeos! ⚡','Inscreva-se para não perder nada 🤘','Emulador web disponível agora no site'].map(t=>`
+      <a class="yt-card" href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener">
+        <div class="yt-thumb" style="background:var(--bg3);display:flex;align-items:center;justify-content:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--border)">▶</div></div>
+        <div class="yt-info"><h3>${t}</h3><div class="yt-meta">nagcoop · youtube</div></div></a>`).join('');
+  }
+}
+
+// NEWSLETTER
+function subscribeNL(){
+  const el=document.getElementById('nl-email'),st=document.getElementById('nl-status'),v=el.value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){st.textContent='// email inválido — tenta de novo';st.className='nl-err';return;}
+  const s=JSON.parse(localStorage.getItem('nagcoop_subs')||'[]');
+  if(s.includes(v)){st.textContent='// você já está na lista ✓';st.className='nl-ok';return;}
+  s.push(v);localStorage.setItem('nagcoop_subs',JSON.stringify(s));
+  el.value='';st.textContent='// inscrito com sucesso! ⚡ boas vindas à lista';st.className='nl-ok';
+}
+document.getElementById('nl-email').addEventListener('keydown',e=>{if(e.key==='Enter')subscribeNL();});
+
+renderBlog();
+loadVideos();
+</script>
+</body>
+</html>
