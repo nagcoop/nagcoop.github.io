@@ -14,38 +14,71 @@
 <style>
 :root{
   --bg:#0b0f12; --panel:#12171d; --muted:#9aa4af;
-  --brand:#ffd166; --line:#9f1239; --ar: 4 / 3; /* default AR */
+  --brand:#ffd166; --line:#9f1239; --ar: 4 / 3;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial}
 a{color:#ffd166;text-decoration:none}
-.wrap{max-width:1100px;margin:auto;padding:16px}
+.wrap{max-width:1200px;margin:auto;padding:16px}
 header{border-bottom:2px solid var(--line);background:linear-gradient(180deg,rgba(159,18,57,.15),transparent)}
 .brand{display:flex;align-items:center;gap:12px}
 .brand h1{font-family:'Metal Mania',cursive;color:var(--brand);margin:0}
 .brand img{height:48px;border:2px solid var(--line);border-radius:8px}
 nav a{margin-left:16px}
 nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
-.panel{background:var(--panel);border:1px solid #222a33;border-radius:12px;padding:14px}
+.panel{background:var(--panel);border:1px solid #222a33;border-radius:12px;padding:14px;margin-bottom:14px}
 .muted{color:var(--muted);font-size:.95rem}
 .controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
-.controls > *{font:inherit}
-.btn{padding:9px 14px;border-radius:10px;border:1px solid #2a3340;background:#171e26;color:#e5e7eb;cursor:pointer;transition:transform .08s ease}
-.btn:hover{transform:translateY(-1px)}
+.btn{padding:9px 14px;border-radius:10px;border:1px solid #2a3340;background:#171e26;color:#e5e7eb;cursor:pointer;transition:all .12s ease;font:inherit}
+.btn:hover{transform:translateY(-1px);border-color:#3a4555}
 .btn.primary{background:linear-gradient(180deg,#9f1239,#6b0e28);border-color:#9f1239}
-select,input[type="file"],input[type="url"]{background:#0f141a;color:#e5e7eb;border:1px solid #2a3340;border-radius:10px;padding:9px 10px}
+.btn.primary:hover{box-shadow:0 0 18px rgba(159,18,57,.5)}
+select,input[type="file"],input[type="url"],input[type="text"]{background:#0f141a;color:#e5e7eb;border:1px solid #2a3340;border-radius:10px;padding:9px 10px;font:inherit}
 input[type="range"]{accent-color:#ffd166}
+
+.cat-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.cat-title{font-family:'Metal Mania',cursive;color:var(--brand);margin:0;font-size:1.6rem}
+.search-box{flex:1;min-width:200px;max-width:320px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.chip{padding:6px 12px;border-radius:999px;border:1px solid #2a3340;background:#0f141a;color:var(--muted);cursor:pointer;font-size:.85rem;transition:all .12s ease}
+.chip:hover{border-color:#9f1239;color:#fff}
+.chip.active{background:#9f1239;color:#fff;border-color:#9f1239}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.card{background:#0f141a;border:1px solid #2a3340;border-radius:10px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:all .15s ease;position:relative}
+.card:hover{transform:translateY(-3px);border-color:#ffd166;box-shadow:0 6px 20px rgba(255,209,102,.15)}
+.cover{aspect-ratio:3/4;background:#000;display:flex;align-items:center;justify-content:center;font-family:'Metal Mania',cursive;font-size:1.4rem;color:#fff;text-align:center;padding:14px;position:relative;overflow:hidden}
+.cover img{width:100%;height:100%;object-fit:cover;display:block}
+.cover.placeholder{background:linear-gradient(135deg,#9f1239 0%,#6b0e28 50%,#1a0608 100%);box-shadow:inset 0 0 60px rgba(0,0,0,.6)}
+.cover.placeholder::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 2px,rgba(0,0,0,.2) 2px 3px);pointer-events:none}
+.card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:4px}
+.card-title{font-weight:600;font-size:.95rem;line-height:1.2}
+.card-meta{font-size:.75rem;color:var(--muted);display:flex;justify-content:space-between}
+.sys-badge{display:inline-block;font-size:.65rem;padding:2px 6px;border-radius:4px;background:rgba(255,209,102,.15);color:var(--brand);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+.example-tag{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.7);color:#fbbf24;font-size:.65rem;padding:2px 6px;border-radius:4px;font-weight:700;letter-spacing:.5px;z-index:2}
+
 .player{position:relative;width:100%;background:#000;border:1px solid #222a33;border-radius:12px;overflow:hidden;aspect-ratio:var(--ar);max-height:78vh}
 #game{position:absolute;inset:0}
+.now-playing{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.np-title{font-family:'Metal Mania',cursive;color:var(--brand);font-size:1.4rem;margin:0}
+
 .tip{margin:8px 0 0}
 .warn{color:#fbbf24;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);padding:8px 12px;border-radius:8px;margin:8px 0;font-size:.9rem}
+.warn code{background:rgba(0,0,0,.4);padding:1px 6px;border-radius:3px;color:#ffd166}
 .hidden{display:none}
 .row-label{color:var(--muted);font-size:.9rem;margin-right:4px}
+details{margin-top:14px;border-top:1px solid #1b222c;padding-top:14px}
+details summary{cursor:pointer;color:var(--muted);user-select:none;padding:6px 0}
+details summary:hover{color:#fff}
 footer{border-top:1px solid #1b222c;color:#9aa4af;padding:24px 0;margin-top:24px}
+
 @media (max-width:620px){
   nav{display:flex;gap:12px}
   .controls{flex-direction:column;align-items:stretch}
-  .btn,select,input[type="file"],input[type="url"]{width:100%}
+  .btn,select,input[type="file"],input[type="url"],input[type="text"]{width:100%}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+  .cover{font-size:1.1rem}
 }
 </style>
 </head>
@@ -69,92 +102,150 @@ footer{border-top:1px solid #1b222c;color:#9aa4af;padding:24px 0;margin-top:24px
 </header>
 
 <main class="wrap">
-  <section class="panel">
-    <h2 style="font-family:'Metal Mania',cursive;margin:10px 0">🎮 Web Emulator</h2>
-    <p class="muted">Use only your own legal backups/homebrews. Nothing is uploaded: the ROM runs locally in your browser.</p>
 
-    <!-- ===== ROW 1: SYSTEM + ROM ===== -->
-    <div class="controls">
-      <span class="row-label">System:</span>
-      <select id="system">
-        <optgroup label="Arcade">
-          <option value="arcade">Arcade (FBNeo) — Neo Geo / CPS1 / CPS2</option>
-          <option value="mame2003">Arcade (MAME 2003 • set 0.78)</option>
-          <option value="neogeo">Neo Geo (FBNeo + BIOS)</option>
-        </optgroup>
-        <optgroup label="Nintendo">
-          <option value="nes">NES</option>
-          <option value="snes">SNES</option>
-          <option value="n64">Nintendo 64</option>
-          <option value="gb">Game Boy</option>
-          <option value="gbc">Game Boy Color</option>
-          <option value="gba" selected>Game Boy Advance</option>
-        </optgroup>
-        <optgroup label="SEGA">
-          <option value="segaMD">Mega Drive / Genesis</option>
-          <option value="segaMS">Master System</option>
-          <option value="segaGG">Game Gear</option>
-        </optgroup>
-        <optgroup label="Sony">
-          <option value="psx">PlayStation (PS1)</option>
-          <option value="ps2" disabled>PlayStation 2 — not supported in browser</option>
-        </optgroup>
-      </select>
+  <!-- ============================================================
+       CATALOG
+       ============================================================ -->
+  <section class="panel" id="catalogSection">
+    <div class="cat-head">
+      <h2 class="cat-title">🎮 Game Catalog</h2>
+      <input type="text" id="search" class="search-box" placeholder="Search games…" />
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty hidden" id="empty">No games match your search/filter.</div>
+  </section>
 
-      <input type="file" id="rom" accept=".bin,.gen,.md,.smd,.sms,.gg,.nes,.smc,.sfc,.z64,.n64,.v64,.gb,.gbc,.gba,.chd,.cue,.iso,.rom,.zip,.7z" />
-      <button class="btn primary" id="btn-run">Run local ROM</button>
-
-      <input type="url" id="romUrl" placeholder="or paste a direct ROM link (https://…)" />
-      <button class="btn" id="btn-run-url">Run via URL</button>
-
-      <button class="btn" id="btn-demo">Load demo</button>
-      <button class="btn" id="btn-full">Full screen</button>
+  <!-- ============================================================
+       PLAYER
+       ============================================================ -->
+  <section class="panel hidden" id="playerSection">
+    <div class="now-playing">
+      <h2 class="np-title" id="npTitle">Now Playing</h2>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn" id="btn-back">← Back to catalog</button>
+        <button class="btn" id="btn-full">Full screen</button>
+      </div>
     </div>
 
-    <!-- ===== ROW 2: BIOS (PS1 / Neo Geo) ===== -->
-    <div class="controls hidden" id="biosRow">
-      <span class="row-label" id="biosLabel">PS1 BIOS (e.g., scph1001.bin):</span>
-      <input type="file" id="bios" accept=".bin,.rom,.zip" />
-    </div>
-
-    <!-- ===== ROW 3: ARCADE PARENT ROM (optional) ===== -->
-    <div class="controls hidden" id="parentRow">
-      <span class="row-label">Parent ROM (optional, for clones):</span>
-      <input type="file" id="parent" accept=".zip,.7z" />
-    </div>
-
-    <!-- ===== ROW 4: RESHADE / CRT / VOLUME ===== -->
     <div class="controls">
       <span class="row-label">🎨 Reshade:</span>
       <select id="shader">
         <option value="">Off (raw pixels)</option>
-        <option value="2xScaleHQ.glslp">2× ScaleHQ (sharp upscale)</option>
-        <option value="4xScaleHQ.glslp">4× ScaleHQ (sharp upscale)</option>
+        <option value="2xScaleHQ.glslp">2× ScaleHQ</option>
+        <option value="4xScaleHQ.glslp">4× ScaleHQ</option>
         <option value="crt-easymode.glslp" selected>CRT EasyMode (recommended)</option>
-        <option value="crt-aperture.glslp">CRT Aperture (RGB grille)</option>
+        <option value="crt-aperture.glslp">CRT Aperture</option>
         <option value="crt-geom.glslp">CRT Geom (curved tube)</option>
         <option value="crt-lottes.glslp">CRT Lottes (heavy bloom)</option>
         <option value="crt-mattias.glslp">CRT Mattias</option>
-        <option value="crt-yeetron.glslp">CRT Yeetron (slot mask)</option>
-        <option value="crt-zfast.glslp">CRT zfast (mobile-friendly)</option>
+        <option value="crt-yeetron.glslp">CRT Yeetron</option>
+        <option value="crt-zfast.glslp">CRT zfast (mobile)</option>
       </select>
 
       <span class="row-label">🔊 Volume:</span>
       <input type="range" id="volume" min="0" max="100" value="80" style="width:120px" />
-      <span class="muted" id="volLabel" style="min-width:30px">80%</span>
+      <span class="muted" id="volLabel" style="min-width:36px">80%</span>
 
-      <button class="btn" id="btn-apply">Apply &amp; reload</button>
+      <span class="muted" style="font-size:.85rem">Reload the game to apply new shader/volume</span>
     </div>
 
-    <!-- ===== TIPS / WARNINGS ===== -->
-    <div class="tip muted" id="tip"></div>
-    <div class="warn hidden" id="neoWarn">
-      ⚠️ <strong>Neo Geo:</strong> you must load <code>neogeo.zip</code> as BIOS (MAME-format).
-      Use a romset compatible with FBNeo (0.2.97.39+) or MAME 0.78 if you switch to MAME core.
+    <div class="warn hidden" id="biosNeededWarn"></div>
+    <div class="warn hidden" id="arcadeWarn">
+      ⚠️ <strong>Arcade tip:</strong> the file name MUST be the FBNeo / MAME short-name (e.g., <code>sf2.zip</code>, <code>mslug.zip</code>, <code>mvsc.zip</code>) — not the full title. Wrong name or wrong romset version → "Romset is unknown".
+    </div>
+    <div class="warn hidden" id="heavyWarn">
+      ⚠️ <strong>Heavy core:</strong> this system is demanding even on PC. Expect lower framerate on mobile. Close other tabs.
     </div>
 
-    <!-- ===== PLAYER ===== -->
     <div class="player" id="playerBox"><div id="game"></div></div>
+    <div class="tip muted" id="tip"></div>
+  </section>
+
+  <!-- ============================================================
+       MANUAL UPLOADER
+       ============================================================ -->
+  <section class="panel">
+    <details>
+      <summary>⚙️ Advanced — Load a custom ROM (not in catalog)</summary>
+      <p class="muted" style="margin-top:10px">Use only your own legal backups/homebrews. Nothing is uploaded: the ROM runs locally in your browser.</p>
+
+      <div class="warn" style="background:rgba(0,255,247,.06);border-color:rgba(0,255,247,.25);color:#cffafe">
+        💡 <strong>For arcade ROMs (FBNeo / MAME / Neo Geo):</strong> the .zip filename must be the official short-name. Examples:
+        <br><code>sf2.zip</code> · <code>sf2ce.zip</code> · <code>ssf2t.zip</code> · <code>mvsc.zip</code> · <code>xmcota.zip</code>
+        <br><code>mslug.zip</code> · <code>mslug2.zip</code> · <code>mslugx.zip</code> · <code>mslug3.zip</code>
+        <br><code>kof94.zip</code> · <code>kof97.zip</code> · <code>kof98.zip</code> · <code>kof2002.zip</code>
+        <br><code>garou.zip</code> · <code>samsho2.zip</code> · <code>fatfursp.zip</code> · <code>rbff2.zip</code>
+        <br>Don't rename the file. If your file came named differently, rename it to the short-name first.
+      </div>
+
+      <div class="controls">
+        <span class="row-label">System:</span>
+        <select id="manualSystem">
+          <optgroup label="Arcade">
+            <option value="arcade">Arcade (FBNeo) — Neo Geo / CPS1 / CPS2</option>
+            <option value="mame2003">Arcade (MAME 2003 • set 0.78)</option>
+            <option value="neogeo">Neo Geo (FBNeo + BIOS)</option>
+          </optgroup>
+          <optgroup label="Nintendo">
+            <option value="nes">NES / Famicom</option>
+            <option value="snes">SNES / Super Famicom</option>
+            <option value="n64">Nintendo 64</option>
+            <option value="gb">Game Boy</option>
+            <option value="gbc">Game Boy Color</option>
+            <option value="gba" selected>Game Boy Advance</option>
+            <option value="vb">Virtual Boy</option>
+            <option value="nds">Nintendo DS</option>
+          </optgroup>
+          <optgroup label="SEGA">
+            <option value="segaMD">Mega Drive / Genesis</option>
+            <option value="segaMS">Master System</option>
+            <option value="segaGG">Game Gear</option>
+            <option value="segaCD">Sega CD / Mega CD</option>
+            <option value="sega32x">Sega 32X</option>
+            <option value="segaSaturn">Sega Saturn</option>
+          </optgroup>
+          <optgroup label="Sony">
+            <option value="psx">PlayStation 1</option>
+            <option value="psp">PSP (heavy)</option>
+          </optgroup>
+          <optgroup label="SNK / NEC">
+            <option value="ngp">Neo Geo Pocket / Color</option>
+            <option value="pce">PC Engine / TurboGrafx-16</option>
+            <option value="pcfx">PC-FX</option>
+          </optgroup>
+          <optgroup label="Atari">
+            <option value="atari2600">Atari 2600</option>
+            <option value="atari5200">Atari 5200</option>
+            <option value="atari7800">Atari 7800</option>
+            <option value="lynx">Atari Lynx</option>
+            <option value="jaguar">Atari Jaguar</option>
+          </optgroup>
+          <optgroup label="Other Consoles">
+            <option value="3do">3DO</option>
+            <option value="coleco">ColecoVision</option>
+            <option value="ws">WonderSwan / Color</option>
+          </optgroup>
+          <optgroup label="Retro Computers">
+            <option value="c64">Commodore 64</option>
+            <option value="amiga">Commodore Amiga</option>
+          </optgroup>
+        </select>
+
+        <input type="file" id="manualRom" />
+        <button class="btn primary" id="btn-manualRun">Run local ROM</button>
+      </div>
+
+      <div class="controls hidden" id="manualBiosRow">
+        <span class="row-label" id="manualBiosLabel">BIOS:</span>
+        <input type="file" id="manualBios" accept=".bin,.rom,.zip" />
+      </div>
+
+      <div class="controls hidden" id="manualParentRow">
+        <span class="row-label">Parent ROM (optional, for arcade clones):</span>
+        <input type="file" id="manualParent" accept=".zip,.7z" />
+      </div>
+    </details>
   </section>
 </main>
 
@@ -162,291 +253,397 @@ footer{border-top:1px solid #1b222c;color:#9aa4af;padding:24px 0;margin-top:24px
 
 <script>
 /* =====================================================================
-   EmulatorJS loader config (official CDN)
-   loader.js and the /data/ folder must live on the same host.
+   NAGCOOP ARCADE — Catalog-driven web emulator
+   Engine: EmulatorJS (libretro WASM cores)
+   Coverage: every retro system up to PS1 / N64 / Saturn era + retro PCs
    ===================================================================== */
+
 const EJS_CDN = "https://cdn.emulatorjs.org/stable/data/";
+const CATALOG_URL = "games.json";
 
-// ===== Element refs =====
-const box       = document.getElementById('playerBox');
-const gameDiv   = document.getElementById('game');
-const tipEl     = document.getElementById('tip');
-const system    = document.getElementById('system');
-const romFile   = document.getElementById('rom');
-const romUrl    = document.getElementById('romUrl');
-const biosRow   = document.getElementById('biosRow');
-const biosLabel = document.getElementById('biosLabel');
-const biosInp   = document.getElementById('bios');
-const parentRow = document.getElementById('parentRow');
-const parentInp = document.getElementById('parent');
-const shaderSel = document.getElementById('shader');
-const volInp    = document.getElementById('volume');
-const volLabel  = document.getElementById('volLabel');
-const neoWarn   = document.getElementById('neoWarn');
-const btnRun    = document.getElementById('btn-run');
-const btnRunUrl = document.getElementById('btn-run-url');
-const btnDemo   = document.getElementById('btn-demo');
-const btnFull   = document.getElementById('btn-full');
-const btnApply  = document.getElementById('btn-apply');
+/* DOM */
+const catalogSection = document.getElementById('catalogSection');
+const playerSection  = document.getElementById('playerSection');
+const grid           = document.getElementById('grid');
+const empty          = document.getElementById('empty');
+const chipsEl        = document.getElementById('chips');
+const searchEl       = document.getElementById('search');
+const box            = document.getElementById('playerBox');
+const gameDiv        = document.getElementById('game');
+const tipEl          = document.getElementById('tip');
+const npTitle        = document.getElementById('npTitle');
+const biosNeededWarn = document.getElementById('biosNeededWarn');
+const arcadeWarn     = document.getElementById('arcadeWarn');
+const heavyWarn      = document.getElementById('heavyWarn');
+const shaderSel      = document.getElementById('shader');
+const volInp         = document.getElementById('volume');
+const volLabel       = document.getElementById('volLabel');
+const btnBack        = document.getElementById('btn-back');
+const btnFull        = document.getElementById('btn-full');
+const manualSystem   = document.getElementById('manualSystem');
+const manualRom      = document.getElementById('manualRom');
+const manualBios     = document.getElementById('manualBios');
+const manualBiosRow  = document.getElementById('manualBiosRow');
+const manualBiosLabel= document.getElementById('manualBiosLabel');
+const manualParent   = document.getElementById('manualParent');
+const manualParentRow= document.getElementById('manualParentRow');
+const btnManualRun   = document.getElementById('btn-manualRun');
 
-// ===== Aspect ratio per system =====
-const ASPECT = {
-  arcade:   "4 / 3",
-  mame2003: "4 / 3",
-  neogeo:   "4 / 3",
-  nes:      "4 / 3",
-  snes:     "4 / 3",
-  n64:      "4 / 3",
-  gb:       "10 / 9",
-  gbc:      "10 / 9",
-  gba:      "3 / 2",
-  segaMD:   "4 / 3",
-  segaMS:   "4 / 3",
-  segaGG:   "4 / 3",
-  psx:      "4 / 3"
+/* =====================================================================
+                    SYSTEM DATABASE
+   id        = key used in this UI / games.json
+   core      = the actual EJS_core string passed to EmulatorJS
+   label     = pretty name shown to user
+   aspect    = CSS aspect-ratio for the player box
+   accept    = file input "accept" attribute
+   bios      = required BIOS description (null = none needed)
+   heavy     = true if the core needs warning ("close other tabs")
+   isArcade  = uses romset short-name conventions
+   ===================================================================== */
+const SYSTEMS = {
+  // ===== Arcade =====
+  arcade:    { core:'arcade',          label:'Arcade (FBNeo)', aspect:'4 / 3', accept:'.zip,.7z', isArcade:true },
+  mame2003:  { core:'mame2003',        label:'MAME',           aspect:'4 / 3', accept:'.zip,.7z', isArcade:true },
+  neogeo:    { core:'arcade',          label:'Neo Geo',        aspect:'4 / 3', accept:'.zip,.7z', isArcade:true,
+               bios:'neogeo.zip (MAME-format Neo Geo BIOS)' },
+
+  // ===== Nintendo =====
+  nes:       { core:'nes',             label:'NES',            aspect:'4 / 3', accept:'.nes,.zip' },
+  snes:      { core:'snes',            label:'SNES',           aspect:'4 / 3', accept:'.smc,.sfc,.zip' },
+  n64:       { core:'n64',             label:'N64',            aspect:'4 / 3', accept:'.z64,.n64,.v64,.zip', heavy:true },
+  gb:        { core:'gb',              label:'Game Boy',       aspect:'10 / 9', accept:'.gb,.zip' },
+  gbc:       { core:'gbc',             label:'Game Boy Color', aspect:'10 / 9', accept:'.gbc,.zip' },
+  gba:       { core:'gba',             label:'GBA',            aspect:'3 / 2',  accept:'.gba,.zip' },
+  vb:        { core:'vb',              label:'Virtual Boy',    aspect:'4 / 3',  accept:'.vb,.vboy,.bin,.zip' },
+  nds:       { core:'nds',             label:'Nintendo DS',    aspect:'4 / 3',  accept:'.nds,.zip', heavy:true },
+
+  // ===== Sega =====
+  segaMD:    { core:'segaMD',          label:'Mega Drive',     aspect:'4 / 3', accept:'.bin,.gen,.md,.smd,.zip' },
+  segaMS:    { core:'segaMS',          label:'Master System',  aspect:'4 / 3', accept:'.sms,.zip' },
+  segaGG:    { core:'segaGG',          label:'Game Gear',      aspect:'4 / 3', accept:'.gg,.zip' },
+  segaCD:    { core:'segaCD',          label:'Sega CD',        aspect:'4 / 3', accept:'.chd,.cue,.iso,.bin,.zip',
+               bios:'Sega CD BIOS (US/EU/JP, depending on region)' },
+  sega32x:   { core:'sega32x',         label:'Sega 32X',       aspect:'4 / 3', accept:'.32x,.bin,.zip' },
+  segaSaturn:{ core:'segaSaturn',      label:'Sega Saturn',    aspect:'4 / 3', accept:'.chd,.cue,.iso,.bin,.zip',
+               bios:'Saturn BIOS', heavy:true },
+
+  // ===== Sony =====
+  psx:       { core:'psx',             label:'PS1',            aspect:'4 / 3', accept:'.chd,.cue,.iso,.bin,.zip',
+               bios:'PS1 BIOS (e.g., scph1001.bin)' },
+  psp:       { core:'psp',             label:'PSP',            aspect:'16 / 9', accept:'.iso,.cso,.pbp,.zip', heavy:true },
+
+  // ===== SNK / NEC =====
+  ngp:       { core:'ngp',             label:'Neo Geo Pocket', aspect:'20 / 19', accept:'.ngp,.ngc,.zip' },
+  pce:       { core:'pce',             label:'PC Engine',      aspect:'4 / 3', accept:'.pce,.zip' },
+  pcfx:      { core:'pcfx',            label:'PC-FX',          aspect:'4 / 3', accept:'.chd,.cue,.iso,.zip',
+               bios:'PC-FX BIOS' },
+
+  // ===== Atari =====
+  atari2600: { core:'atari2600',       label:'Atari 2600',     aspect:'4 / 3', accept:'.a26,.bin,.zip' },
+  atari5200: { core:'atari5200',       label:'Atari 5200',     aspect:'4 / 3', accept:'.a52,.bin,.zip' },
+  atari7800: { core:'atari7800',       label:'Atari 7800',     aspect:'4 / 3', accept:'.a78,.bin,.zip' },
+  lynx:      { core:'lynx',            label:'Atari Lynx',     aspect:'80 / 51', accept:'.lnx,.zip' },
+  jaguar:    { core:'jaguar',          label:'Atari Jaguar',   aspect:'4 / 3', accept:'.j64,.jag,.zip' },
+
+  // ===== Other =====
+  '3do':     { core:'3do',             label:'3DO',            aspect:'4 / 3', accept:'.chd,.cue,.iso,.zip',
+               bios:'3DO BIOS', heavy:true },
+  coleco:    { core:'coleco',          label:'ColecoVision',   aspect:'4 / 3', accept:'.col,.bin,.rom,.zip' },
+  ws:        { core:'ws',              label:'WonderSwan',     aspect:'14 / 9', accept:'.ws,.wsc,.zip' },
+
+  // ===== Retro PCs =====
+  c64:       { core:'c64',             label:'Commodore 64',   aspect:'4 / 3', accept:'.d64,.t64,.tap,.prg,.zip' },
+  amiga:     { core:'amiga',           label:'Amiga',          aspect:'4 / 3', accept:'.adf,.adz,.dms,.ipf,.zip',
+               bios:'Kickstart ROM (e.g., kick13.rom)', heavy:true }
 };
 
-// ===== Hints per system =====
-const HINT = {
-  arcade:   "Arcade (FBNeo): .zip romset compatible with FBNeo 0.2.97.39+. Some games need a parent ROM.",
-  mame2003: "MAME 2003: .zip romset compatible with MAME 0.78 (mame2003 set).",
-  neogeo:   "Neo Geo: jogo .zip + neogeo.zip (BIOS, obrigatório). Recommended romset: FBNeo.",
-  nes:      "NES: .nes",
-  snes:     "SNES: .sfc/.smc",
-  n64:      "N64: .z64/.n64/.v64",
-  gb:       "GB: .gb",
-  gbc:      "GBC: .gbc",
-  gba:      "GBA: .gba",
-  segaMD:   "Mega Drive/Genesis: .bin/.gen (avoid .md/.smd)",
-  segaMS:   "Master System: .sms",
-  segaGG:   "Game Gear: .gg",
-  psx:      "PS1: .chd (recommended) or .bin/.cue/.iso + BIOS (e.g., scph1001.bin)."
-};
+const SYS_KEYS = Object.keys(SYSTEMS);
 
-// ===== Demo ROMs (public/homebrew) =====
-const DEMOS = {
-  nes:    "https://demo.emulatorjs.org/roms/nes/Contra%20(U).nes",
-  snes:   "https://demo.emulatorjs.org/roms/snes/F-Zero%20(USA).sfc",
-  n64:    "https://demo.emulatorjs.org/roms/n64/Super%20Mario%2064%20(USA).n64",
-  gb:     "https://demo.emulatorjs.org/roms/gb/Tetris%20(WW).gb",
-  gbc:    "https://demo.emulatorjs.org/roms/gbc/Tetris%20DX%20(WW).gbc",
-  gba:    "https://demo.emulatorjs.org/roms/gba/FlappyBird.gba",
-  segaMD: "https://demo.emulatorjs.org/roms/megadrive/Columns%20(World).bin",
-  segaMS: "https://demo.emulatorjs.org/roms/mastersystem/Snail%20Maze%20(World).sms",
-  segaGG: "https://demo.emulatorjs.org/roms/gamegear/Sonic%20The%20Hedgehog.gg"
-  // psx / arcade / neogeo: no public demo — use your own backup + BIOS
-};
+/* Helpers */
+function resolveCore(uiCore){ return (SYSTEMS[uiCore] && SYSTEMS[uiCore].core) || uiCore; }
+function isArcadeFamily(uiCore){ return !!(SYSTEMS[uiCore] && SYSTEMS[uiCore].isArcade); }
+function biosOf(uiCore){ return SYSTEMS[uiCore] && SYSTEMS[uiCore].bios || null; }
+function aspectOf(uiCore){ return (SYSTEMS[uiCore] && SYSTEMS[uiCore].aspect) || '4 / 3'; }
+function labelOf(uiCore){ return (SYSTEMS[uiCore] && SYSTEMS[uiCore].label) || uiCore; }
+function isHeavy(uiCore){ return !!(SYSTEMS[uiCore] && SYSTEMS[uiCore].heavy); }
+function acceptOf(uiCore){ return (SYSTEMS[uiCore] && SYSTEMS[uiCore].accept) || ''; }
 
-/* ---------------------------------------------------------------------
-   Map our UI core key to the actual EmulatorJS core string.
-   "neogeo" is just a UX alias for the FBNeo arcade core that forces a
-   BIOS field — internally it still uses EJS_core = 'arcade' (FBNeo).
-   --------------------------------------------------------------------- */
-function resolveCore(uiCore){
-  if (uiCore === 'neogeo')   return 'arcade';   // FBNeo
-  if (uiCore === 'arcade')   return 'arcade';   // FBNeo
-  if (uiCore === 'mame2003') return 'mame2003'; // MAME 0.78
-  return uiCore;
+function shortHint(uiCore){
+  const s = SYSTEMS[uiCore]; if (!s) return uiCore;
+  let h = s.label;
+  if (s.isArcade) h += ' — file name must be the official short-name (e.g., sf2.zip).';
+  if (s.bios)     h += ' — BIOS required: ' + s.bios + '.';
+  return h;
 }
 
-/* ---------------------------------------------------------------------
-   UI sync: aspect ratio, BIOS row visibility, parent row visibility,
-   tips and warnings.
-   --------------------------------------------------------------------- */
-function updateUI(){
-  const core = system.value;
-  box.style.setProperty("--ar", ASPECT[core] || "4 / 3");
+/* =====================================================================
+                         CATALOG (games.json)
+   ===================================================================== */
+let CATALOG = [];
+let activeFilter = 'all';
+let searchTerm   = '';
 
-  // BIOS row visible for PS1 and Neo Geo
-  if (core === "psx") {
-    biosRow.classList.remove("hidden");
-    biosLabel.textContent = "PS1 BIOS (e.g., scph1001.bin):";
-  } else if (core === "neogeo") {
-    biosRow.classList.remove("hidden");
-    biosLabel.textContent = "Neo Geo BIOS (neogeo.zip):";
-  } else {
-    biosRow.classList.add("hidden");
+async function loadCatalog(){
+  try {
+    const res = await fetch(CATALOG_URL + '?v=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    CATALOG = (data.games || []).filter(g => g.id && g.title && g.system && g.rom);
+    renderChips();
+    renderGrid();
+    handleDeepLink();
+  } catch (err) {
+    console.error('Failed to load catalog:', err);
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+    empty.textContent = 'Failed to load games.json — check the file exists at the site root.';
   }
-
-  // Parent ROM row only for arcade variants
-  const isArcade = (core === 'arcade' || core === 'mame2003' || core === 'neogeo');
-  parentRow.classList.toggle("hidden", !isArcade);
-
-  // Neo Geo warning
-  neoWarn.classList.toggle("hidden", core !== "neogeo");
-
-  tipEl.textContent = HINT[core] || "";
 }
-system.addEventListener("change", updateUI);
-updateUI();
 
-// Volume label
-volInp.addEventListener("input", () => {
-  volLabel.textContent = volInp.value + "%";
+function renderChips(){
+  const present = new Set(CATALOG.map(g => g.system));
+  const systems = ['all', ...Array.from(present)];
+  chipsEl.innerHTML = '';
+  systems.forEach(sys => {
+    const chip = document.createElement('button');
+    chip.className = 'chip' + (activeFilter === sys ? ' active' : '');
+    chip.textContent = sys === 'all' ? `All (${CATALOG.length})` :
+      `${labelOf(sys)} (${CATALOG.filter(g => g.system === sys).length})`;
+    chip.addEventListener('click', () => { activeFilter = sys; renderChips(); renderGrid(); });
+    chipsEl.appendChild(chip);
+  });
+}
+
+function renderGrid(){
+  let list = CATALOG;
+  if (activeFilter !== 'all') list = list.filter(g => g.system === activeFilter);
+  if (searchTerm) {
+    const q = searchTerm.toLowerCase();
+    list = list.filter(g =>
+      g.title.toLowerCase().includes(q) ||
+      (g.tags || []).some(t => t.toLowerCase().includes(q))
+    );
+  }
+  grid.innerHTML = '';
+  if (list.length === 0) { empty.classList.remove('hidden'); empty.textContent = 'No games match your search/filter.'; return; }
+  empty.classList.add('hidden');
+  list.forEach(g => grid.appendChild(makeCard(g)));
+}
+
+function makeCard(g){
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.addEventListener('click', () => playGame(g));
+  const cover = document.createElement('div');
+  cover.className = 'cover';
+  if (g.cover) {
+    const img = document.createElement('img');
+    img.src = g.cover; img.alt = g.title; img.loading = 'lazy';
+    img.onerror = () => { cover.innerHTML = ''; cover.classList.add('placeholder'); cover.textContent = g.title; };
+    cover.appendChild(img);
+  } else { cover.classList.add('placeholder'); cover.textContent = g.title; }
+  if (g.id.startsWith('EXAMPLE')) {
+    const tag = document.createElement('span');
+    tag.className = 'example-tag'; tag.textContent = 'EXAMPLE';
+    card.appendChild(tag);
+  }
+  const body = document.createElement('div');
+  body.className = 'card-body';
+  body.innerHTML = `
+    <div class="card-title">${escapeHtml(g.title)}</div>
+    <div class="card-meta">
+      <span class="sys-badge">${labelOf(g.system)}</span>
+      <span>${g.year || ''}</span>
+    </div>`;
+  card.appendChild(cover); card.appendChild(body);
+  return card;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+let searchTimer;
+searchEl.addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => { searchTerm = e.target.value.trim(); renderGrid(); }, 150);
 });
 
-/* ---------------------------------------------------------------------
-   Clear any previous emulator instance before booting a new one.
-   --------------------------------------------------------------------- */
+volInp.addEventListener('input', () => volLabel.textContent = volInp.value + '%');
+
+function handleDeepLink(){
+  const params = new URLSearchParams(location.search);
+  const id = params.get('game');
+  if (!id) return;
+  const g = CATALOG.find(x => x.id === id);
+  if (g) playGame(g, false);
+}
+
+/* =====================================================================
+                              EMULATOR BOOT
+   ===================================================================== */
+
 function clearPlayer(){
   gameDiv.innerHTML = "";
   const old = document.getElementById("ejs-loader");
   if (old) old.remove();
-
-  // Reset all EJS_* globals so stale settings don't leak between sessions
   ['EJS_player','EJS_core','EJS_gameUrl','EJS_biosUrl','EJS_gameParentUrl',
    'EJS_startOnLoaded','EJS_color','EJS_pathtodata','EJS_shader','EJS_volume',
-   'EJS_lightgun','EJS_mouse'
+   'EJS_lightgun','EJS_mouse','EJS_gameName'
   ].forEach(k => { try { delete window[k]; } catch(e){ window[k] = undefined; } });
 }
 
-/* ---------------------------------------------------------------------
-   Boot the emulator. opts may carry biosUrl and parentUrl.
-   --------------------------------------------------------------------- */
-function startEmu(romUrl, uiCore, opts = {}){
+/**
+ * startEmu — launches EmulatorJS with given source.
+ * `romSrc` may be a URL string OR a File object (filename preserved).
+ */
+function startEmu(romSrc, uiCore, opts = {}){
   clearPlayer();
-
-  const realCore = resolveCore(uiCore);
-
-  // EmulatorJS reads these globals when loader.js runs
   window.EJS_player        = "#game";
-  window.EJS_core          = realCore;
-  window.EJS_gameUrl       = romUrl;
+  window.EJS_core          = resolveCore(uiCore);
+  window.EJS_gameUrl       = romSrc;
   window.EJS_startOnLoaded = true;
-  window.EJS_color         = "#9f1239";       // matches site brand line
+  window.EJS_color         = "#9f1239";
   window.EJS_pathtodata    = EJS_CDN;
   window.EJS_volume        = (parseInt(volInp.value, 10) || 80) / 100;
 
-  // Reshade (CRT shader) — empty string = no shader
-  if (shaderSel.value) {
-    window.EJS_shader = shaderSel.value;
+  if (opts.gameName) {
+    window.EJS_gameName = opts.gameName;
+  } else if (romSrc && typeof romSrc === 'object' && romSrc.name) {
+    window.EJS_gameName = romSrc.name.replace(/\.[^.]+$/, '');
   }
-
-  // BIOS (PS1 + Neo Geo)
-  if ((uiCore === "psx" || uiCore === "neogeo") && opts.biosUrl) {
-    window.EJS_biosUrl = opts.biosUrl;
-  }
-
-  // Parent ROM (arcade clones)
-  if (opts.parentUrl) {
-    window.EJS_gameParentUrl = opts.parentUrl;
-  }
+  if (shaderSel.value) window.EJS_shader = shaderSel.value;
+  if (opts.bios)   window.EJS_biosUrl       = opts.bios;
+  if (opts.parent) window.EJS_gameParentUrl = opts.parent;
 
   const s = document.createElement("script");
   s.src = EJS_CDN + "loader.js";
   s.id = "ejs-loader";
-  s.onerror = () => alert("Failed to load the emulator (loader). Check your connection or CDN blocking.");
+  s.onerror = () => alert("Failed to load the emulator (loader). Check your connection.");
   document.body.appendChild(s);
 }
 
-/* ---------------------------------------------------------------------
-   Mobile auto-fullscreen (only on small screens, on user-initiated click)
-   --------------------------------------------------------------------- */
-function maybeFullscreenOnMobile(){
-  if (window.matchMedia("(max-width: 620px)").matches){
+function showPlayerFor(system, title){
+  catalogSection.classList.add('hidden');
+  playerSection.classList.remove('hidden');
+  npTitle.textContent = title;
+  tipEl.textContent = shortHint(system);
+  box.style.setProperty('--ar', aspectOf(system));
+
+  // Contextual warnings
+  arcadeWarn.classList.toggle('hidden', !isArcadeFamily(system));
+  heavyWarn .classList.toggle('hidden', !isHeavy(system));
+  const bios = biosOf(system);
+  if (bios) {
+    biosNeededWarn.innerHTML = `⚠️ <strong>BIOS required:</strong> this system needs <code>${escapeHtml(bios)}</code>. Make sure the BIOS path is correct in <code>games.json</code> or upload it via the Advanced uploader.`;
+    biosNeededWarn.classList.remove('hidden');
+  } else {
+    biosNeededWarn.classList.add('hidden');
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function playGame(g, pushState = true){
+  if (pushState) {
+    const url = new URL(location.href);
+    url.searchParams.set('game', g.id);
+    history.pushState({ gameId: g.id }, '', url);
+  }
+  showPlayerFor(g.system, g.title);
+
+  if (g.id.startsWith('EXAMPLE')) {
+    alert(`"${g.title}" is an example slot. Edit games.json to point to your own ROM at: ${g.rom}`);
+  }
+
+  const opts = { gameName: g.id };
+  if (g.bios)   opts.bios   = g.bios;
+  if (g.parent) opts.parent = g.parent;
+
+  startEmu(g.rom, g.system, opts);
+
+  if (window.matchMedia("(max-width: 620px)").matches) {
     if (box.requestFullscreen) box.requestFullscreen();
   }
 }
 
-/* ---------------------------------------------------------------------
-   Helper: collect optional BIOS + parent ROM as object URLs.
-   Returns null if a required BIOS is missing for the chosen system.
-   --------------------------------------------------------------------- */
-function collectArcadeExtras(uiCore){
-  const extras = {};
-
-  // BIOS (Neo Geo: required, PS1: required)
-  if (uiCore === "neogeo" || uiCore === "psx") {
-    const bios = (biosInp.files && biosInp.files[0]) || null;
-    if (!bios) {
-      const what = uiCore === "neogeo" ? "Neo Geo BIOS (neogeo.zip)" : "PS1 BIOS (e.g., scph1001.bin)";
-      alert(what + " is required. Please pick the BIOS file.");
-      return null;
-    }
-    extras.biosUrl = URL.createObjectURL(bios);
-  }
-
-  // Parent ROM (optional for arcade clones)
-  if (uiCore === "arcade" || uiCore === "mame2003" || uiCore === "neogeo") {
-    const parent = (parentInp.files && parentInp.files[0]) || null;
-    if (parent) extras.parentUrl = URL.createObjectURL(parent);
-  }
-
-  return extras;
-}
-
-/* =====================================================================
-                              EVENT BINDINGS
-   ===================================================================== */
-
-// ===== Run local ROM =====
-btnRun.addEventListener("click", () => {
-  const f = romFile.files && romFile.files[0];
-  if (!f){ alert("Pick a ROM file first."); return; }
-
-  const core = system.value;
-  const rom = URL.createObjectURL(f);
-
-  const extras = collectArcadeExtras(core);
-  if (extras === null) return; // missing required BIOS
-
-  startEmu(rom, core, extras);
-  maybeFullscreenOnMobile();
+btnBack.addEventListener('click', () => {
+  clearPlayer();
+  playerSection.classList.add('hidden');
+  catalogSection.classList.remove('hidden');
+  const url = new URL(location.href);
+  url.searchParams.delete('game');
+  history.pushState({}, '', url);
 });
 
-// ===== Run via URL =====
-btnRunUrl.addEventListener("click", () => {
-  const url = romUrl.value.trim();
-  if (!/^https?:\/\//i.test(url)){
-    alert("Paste a direct http(s) URL to the ROM file.");
-    return;
-  }
-  const core = system.value;
-
-  if (core === "psx" || core === "neogeo"){
-    // PS1 / Neo Geo via URL still need a local BIOS file
-    const extras = collectArcadeExtras(core);
-    if (extras === null) return;
-    startEmu(url, core, extras);
-  } else {
-    startEmu(url, core);
-  }
-  maybeFullscreenOnMobile();
+window.addEventListener('popstate', () => {
+  const params = new URLSearchParams(location.search);
+  const id = params.get('game');
+  if (id) { const g = CATALOG.find(x => x.id === id); if (g) playGame(g, false); }
+  else { clearPlayer(); playerSection.classList.add('hidden'); catalogSection.classList.remove('hidden'); }
 });
 
-// ===== Load demo =====
-btnDemo.addEventListener("click", () => {
-  const core = system.value;
-  if (core === "psx" || core === "arcade" || core === "mame2003" || core === "neogeo"){
-    alert("No public demo for this system. Use your own backup ROM" +
-          (core === "neogeo" || core === "psx" ? " + BIOS." : "."));
-    return;
-  }
-  const demo = DEMOS[core];
-  if (!demo){ alert("No demo for this system."); return; }
-  startEmu(demo, core);
-  maybeFullscreenOnMobile();
-});
-
-// ===== Apply settings (re-launch with new shader/volume) =====
-btnApply.addEventListener("click", () => {
-  // If a game is currently running, the user must reload it manually with the
-  // chosen ROM — shaders are baked at boot. Re-trigger the most recent flow.
-  if (!gameDiv.children.length) {
-    alert("Load a ROM first, then Apply will re-boot with the new shader/volume.");
-    return;
-  }
-  // Easiest reliable path: ask the user to click Run again. We just inform them.
-  alert("Click 'Run local ROM' (or 'Run via URL') again to re-boot with the new shader/volume.");
-});
-
-// ===== Fullscreen =====
-btnFull.addEventListener("click", () => {
-  if (box.requestFullscreen) box.requestFullscreen();
-});
+btnFull.addEventListener("click", () => { if (box.requestFullscreen) box.requestFullscreen(); });
 document.addEventListener('fullscreenchange', () => {
   document.body.style.overflow = document.fullscreenElement ? 'hidden' : '';
 });
+
+/* =====================================================================
+                          MANUAL UPLOADER
+   ===================================================================== */
+
+function syncManualUI(){
+  const sys = manualSystem.value;
+  // Update accept attribute dynamically
+  manualRom.setAttribute('accept', acceptOf(sys));
+
+  const bios = biosOf(sys);
+  if (bios) {
+    manualBiosRow.classList.remove('hidden');
+    manualBiosLabel.textContent = bios + ':';
+  } else {
+    manualBiosRow.classList.add('hidden');
+  }
+  manualParentRow.classList.toggle('hidden', !isArcadeFamily(sys));
+}
+manualSystem.addEventListener('change', syncManualUI);
+syncManualUI();
+
+btnManualRun.addEventListener('click', () => {
+  const f = manualRom.files && manualRom.files[0];
+  if (!f) { alert('Pick a ROM file first.'); return; }
+  const sys = manualSystem.value;
+
+  // Sanity check for arcade systems: warn if filename looks wrong
+  if (isArcadeFamily(sys) && /\s|[A-Z]/.test(f.name.replace(/\.zip$/i,''))) {
+    const ok = confirm(
+      `Warning: the file is named "${f.name}".\n\n` +
+      `Arcade emulators recognize games by the file's short-name ` +
+      `(lowercase, no spaces — e.g. sf2.zip, mslug.zip, kof98.zip).\n\n` +
+      `If your file isn't named with the official short-name, you'll get ` +
+      `"Romset is unknown".\n\nContinue anyway?`
+    );
+    if (!ok) return;
+  }
+
+  const opts = {};
+  if (biosOf(sys)) {
+    const bios = manualBios.files && manualBios.files[0];
+    if (!bios) { alert(biosOf(sys) + ' is required for ' + labelOf(sys) + '.'); return; }
+    opts.bios = bios;
+  }
+  const parent = manualParent.files && manualParent.files[0];
+  if (parent) opts.parent = parent;
+
+  showPlayerFor(sys, 'Custom ROM — ' + f.name);
+  startEmu(f, sys, opts);
+
+  if (window.matchMedia("(max-width: 620px)").matches) {
+    if (box.requestFullscreen) box.requestFullscreen();
+  }
+});
+
+loadCatalog();
 </script>
 </body>
 </html>
