@@ -238,7 +238,7 @@ footer{border-top:1px solid #1b222c;color:#9aa4af;padding:24px 0;margin-top:24px
 
       <div class="controls hidden" id="manualBiosRow">
         <span class="row-label" id="manualBiosLabel">BIOS:</span>
-        <input type="file" id="manualBios" accept=".bin,.rom,.zip" />
+        <input type="file" id="manualBios" accept=".bin,.rom,.zip,.7z" />
       </div>
 
       <div class="controls hidden" id="manualParentRow">
@@ -297,6 +297,7 @@ const btnManualRun   = document.getElementById('btn-manualRun');
    aspect    = CSS aspect-ratio for the player box
    accept    = file input "accept" attribute
    bios      = required BIOS description (null = none needed)
+   biosOptional = true if the core boots without BIOS (built-in HLE / AROS)
    heavy     = true if the core needs warning ("close other tabs")
    isArcade  = uses romset short-name conventions
    ===================================================================== */
@@ -329,7 +330,7 @@ const SYSTEMS = {
 
   // ===== Sony =====
   psx:       { core:'psx',             label:'PS1',            aspect:'4 / 3', accept:'.chd,.cue,.iso,.bin,.zip',
-               bios:'PS1 BIOS (e.g., scph1001.bin)' },
+               bios:'PS1 BIOS (e.g., scph1001.bin)', biosOptional:true },
   psp:       { core:'psp',             label:'PSP',            aspect:'16 / 9', accept:'.iso,.cso,.pbp,.zip', heavy:true },
 
   // ===== SNK / NEC =====
@@ -354,7 +355,7 @@ const SYSTEMS = {
   // ===== Retro PCs =====
   c64:       { core:'c64',             label:'Commodore 64',   aspect:'4 / 3', accept:'.d64,.t64,.tap,.prg,.zip' },
   amiga:     { core:'amiga',           label:'Amiga',          aspect:'4 / 3', accept:'.adf,.adz,.dms,.ipf,.zip',
-               bios:'Kickstart ROM (e.g., kick13.rom)', heavy:true }
+               bios:'Kickstart ROM (e.g., kick13.rom)', biosOptional:true, heavy:true }
 };
 
 const SYS_KEYS = Object.keys(SYSTEMS);
@@ -363,6 +364,7 @@ const SYS_KEYS = Object.keys(SYSTEMS);
 function resolveCore(uiCore){ return (SYSTEMS[uiCore] && SYSTEMS[uiCore].core) || uiCore; }
 function isArcadeFamily(uiCore){ return !!(SYSTEMS[uiCore] && SYSTEMS[uiCore].isArcade); }
 function biosOf(uiCore){ return SYSTEMS[uiCore] && SYSTEMS[uiCore].bios || null; }
+function biosOptional(uiCore){ return !!(SYSTEMS[uiCore] && SYSTEMS[uiCore].biosOptional); }
 function aspectOf(uiCore){ return (SYSTEMS[uiCore] && SYSTEMS[uiCore].aspect) || '4 / 3'; }
 function labelOf(uiCore){ return (SYSTEMS[uiCore] && SYSTEMS[uiCore].label) || uiCore; }
 function isHeavy(uiCore){ return !!(SYSTEMS[uiCore] && SYSTEMS[uiCore].heavy); }
@@ -372,8 +374,83 @@ function shortHint(uiCore){
   const s = SYSTEMS[uiCore]; if (!s) return uiCore;
   let h = s.label;
   if (s.isArcade) h += ' — file name must be the official short-name (e.g., sf2.zip).';
-  if (s.bios)     h += ' — BIOS required: ' + s.bios + '.';
+  if (s.bios)     h += ' — BIOS ' + (s.biosOptional ? 'optional' : 'required') + ': ' + s.bios + '.';
   return h;
+}
+
+/* =====================================================================
+                              BIOS
+   Priority: bios from games.json > visitor's BiosVault > site default
+   ===================================================================== */
+
+/* Site-hosted BIOS files (empty = none hosted). See bios/README.md */
+const DEFAULT_BIOS = {
+  neogeo:'bios/neogeo.zip', psx:'bios/scph1001.bin',
+  segaCD:'', segaSaturn:'', pcfx:'', '3do':'', amiga:''
+};
+
+const _siteBiosCache = {};
+/* Returns the absolute URL of the site BIOS for `sys` if it exists, else null. */
+function siteBios(sys){
+  const path = DEFAULT_BIOS[sys];
+  if (!path) return Promise.resolve(null);
+  if (!_siteBiosCache[sys]) {
+    const url = new URL(path, location.href).href;
+    _siteBiosCache[sys] = fetch(url, { method:'HEAD', cache:'no-cache' })
+      .then(res => res.ok ? url : null)
+      .catch(() => null);
+  }
+  return _siteBiosCache[sys];
+}
+
+/* Visitor's own BIOS files, kept in IndexedDB (falls back to memory if blocked). */
+const BiosVault = (() => {
+  const DB = 'nagcoop_bios', STORE = 'bios';
+  const mem = {};
+  let dbp = null;
+  function open(){
+    if (!dbp) dbp = new Promise((resolve, reject) => {
+      const req = indexedDB.open(DB, 1);
+      req.onupgradeneeded = () => req.result.createObjectStore(STORE);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror   = () => reject(req.error);
+    });
+    return dbp;
+  }
+  async function tx(mode, fn){
+    const db = await open();
+    return new Promise((resolve, reject) => {
+      const t = db.transaction(STORE, mode);
+      const req = fn(t.objectStore(STORE));
+      t.oncomplete = () => resolve(req.result);
+      t.onerror = t.onabort = () => reject(t.error);
+    });
+  }
+  // EmulatorJS relies on the file name (e.g. neogeo.zip), so rebuild a File with it
+  function toFile(rec){ return rec ? new File([rec.blob], rec.name, { type: rec.blob.type || '' }) : null; }
+  async function getRec(sys){
+    try { return (await tx('readonly', s => s.get(sys))) || null; }
+    catch(e){ return mem[sys] || null; }
+  }
+  return {
+    async get(sys){ return toFile(await getRec(sys)); },
+    async set(sys, file){
+      const rec = { name: file.name, blob: file, saved: Date.now() };
+      mem[sys] = rec;
+      try { await tx('readwrite', s => s.put(rec, sys)); }
+      catch(e){ console.warn('BiosVault: IndexedDB unavailable, keeping BIOS for this session only.', e); }
+    },
+    async del(sys){
+      delete mem[sys];
+      try { await tx('readwrite', s => s.delete(sys)); } catch(e){}
+    },
+    async name(sys){ const r = await getRec(sys); return r ? r.name : null; }
+  };
+})();
+
+async function resolveBios(sys, explicit){
+  if (explicit) return explicit;
+  return (await BiosVault.get(sys)) || (await siteBios(sys));
 }
 
 /* =====================================================================
@@ -533,18 +610,50 @@ function showPlayerFor(system, title){
   // Contextual warnings
   arcadeWarn.classList.toggle('hidden', !isArcadeFamily(system));
   heavyWarn .classList.toggle('hidden', !isHeavy(system));
-  const bios = biosOf(system);
-  if (bios) {
-    biosNeededWarn.innerHTML = `⚠️ <strong>BIOS required:</strong> this system needs <code>${escapeHtml(bios)}</code>. Make sure the BIOS path is correct in <code>games.json</code> or upload it via the Advanced uploader.`;
-    biosNeededWarn.classList.remove('hidden');
-  } else {
-    biosNeededWarn.classList.add('hidden');
-  }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function playGame(g, pushState = true){
+/* BIOS panel in the player: status + load/change + remove. `onChange` restarts the game. */
+let biosPanelToken = 0;
+async function renderBiosPanel(system, onChange){
+  const token = ++biosPanelToken;
+  const bios = biosOf(system);
+  if (!bios) { biosNeededWarn.classList.add('hidden'); return; }
+
+  const [saved, site] = await Promise.all([BiosVault.name(system), siteBios(system)]);
+  if (token !== biosPanelToken) return;
+  if (site && !saved) { biosNeededWarn.classList.add('hidden'); return; }
+
+  const optional = biosOptional(system);
+  let status;
+  if (saved) status = `✅ <strong>BIOS loaded:</strong> <code>${escapeHtml(saved)}</code>`;
+  else if (optional) status = `ℹ️ <strong>BIOS optional:</strong> the built-in BIOS is used. For better compatibility, load <code>${escapeHtml(bios)}</code>.`;
+  else status = `⚠️ <strong>BIOS required:</strong> this system needs <code>${escapeHtml(bios)}</code>. Load it below — it stays saved in your browser.`;
+
+  biosNeededWarn.innerHTML = `<div>${status}</div>
+    <div class="controls">
+      <label class="btn">${saved ? '🔄 Change BIOS' : '📂 Load BIOS'}<input type="file" accept=".bin,.rom,.zip,.7z" hidden></label>
+      ${saved ? '<button class="btn" type="button" data-bios-remove>🗑️ Remove</button>' : ''}
+    </div>`;
+  biosNeededWarn.classList.remove('hidden');
+
+  biosNeededWarn.querySelector('input[type="file"]').addEventListener('change', async e => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    await BiosVault.set(system, f);
+    onChange();
+  });
+  const rm = biosNeededWarn.querySelector('[data-bios-remove]');
+  if (rm) rm.addEventListener('click', async () => {
+    await BiosVault.del(system);
+    onChange();
+  });
+}
+
+let playToken = 0;
+async function playGame(g, pushState = true){
+  const token = ++playToken;
   if (pushState) {
     const url = new URL(location.href);
     url.searchParams.set('game', g.id);
@@ -557,8 +666,13 @@ function playGame(g, pushState = true){
   }
 
   const opts = { gameName: g.id };
-  if (g.bios)   opts.bios   = g.bios;
   if (g.parent) opts.parent = g.parent;
+
+  const bios = await resolveBios(g.system, g.bios);
+  if (token !== playToken) return;
+  renderBiosPanel(g.system, () => playGame(g, false));
+  if (bios) opts.bios = bios;
+  else if (biosOf(g.system) && !biosOptional(g.system)) { clearPlayer(); return; }
 
   startEmu(g.rom, g.system, opts);
 
@@ -568,6 +682,7 @@ function playGame(g, pushState = true){
 }
 
 btnBack.addEventListener('click', () => {
+  playToken++;
   clearPlayer();
   playerSection.classList.add('hidden');
   catalogSection.classList.remove('hidden');
@@ -580,7 +695,7 @@ window.addEventListener('popstate', () => {
   const params = new URLSearchParams(location.search);
   const id = params.get('game');
   if (id) { const g = CATALOG.find(x => x.id === id); if (g) playGame(g, false); }
-  else { clearPlayer(); playerSection.classList.add('hidden'); catalogSection.classList.remove('hidden'); }
+  else { playToken++; clearPlayer(); playerSection.classList.add('hidden'); catalogSection.classList.remove('hidden'); }
 });
 
 btnFull.addEventListener("click", () => { if (box.requestFullscreen) box.requestFullscreen(); });
@@ -592,24 +707,34 @@ document.addEventListener('fullscreenchange', () => {
                           MANUAL UPLOADER
    ===================================================================== */
 
-function syncManualUI(){
+async function syncManualUI(){
   const sys = manualSystem.value;
   // Update accept attribute dynamically
   manualRom.setAttribute('accept', acceptOf(sys));
+  manualParentRow.classList.toggle('hidden', !isArcadeFamily(sys));
 
   const bios = biosOf(sys);
-  if (bios) {
-    manualBiosRow.classList.remove('hidden');
-    manualBiosLabel.textContent = bios + ':';
-  } else {
-    manualBiosRow.classList.add('hidden');
-  }
-  manualParentRow.classList.toggle('hidden', !isArcadeFamily(sys));
+  if (!bios) { manualBiosRow.classList.add('hidden'); return; }
+  manualBiosRow.classList.remove('hidden');
+  let text = bios;
+  if (biosOptional(sys)) text += ' (optional)';
+  const saved = await BiosVault.name(sys);
+  if (manualSystem.value !== sys) return;
+  if (saved) text += ' — saved: ' + saved;
+  manualBiosLabel.textContent = text + ':';
 }
 manualSystem.addEventListener('change', syncManualUI);
 syncManualUI();
 
-btnManualRun.addEventListener('click', () => {
+// A BIOS picked here is saved to the visitor's vault automatically
+let manualBiosSave = Promise.resolve();
+manualBios.addEventListener('change', () => {
+  const f = manualBios.files && manualBios.files[0];
+  if (!f || !biosOf(manualSystem.value)) return;
+  manualBiosSave = BiosVault.set(manualSystem.value, f).then(syncManualUI);
+});
+
+btnManualRun.addEventListener('click', async () => {
   const f = manualRom.files && manualRom.files[0];
   if (!f) { alert('Pick a ROM file first.'); return; }
   const sys = manualSystem.value;
@@ -628,14 +753,23 @@ btnManualRun.addEventListener('click', () => {
 
   const opts = {};
   if (biosOf(sys)) {
-    const bios = manualBios.files && manualBios.files[0];
-    if (!bios) { alert(biosOf(sys) + ' is required for ' + labelOf(sys) + '.'); return; }
-    opts.bios = bios;
+    await manualBiosSave;
+    const picked = manualBios.files && manualBios.files[0];
+    const bios = await resolveBios(sys, picked || null);
+    if (!bios && !biosOptional(sys)) { alert(biosOf(sys) + ' is required for ' + labelOf(sys) + '.'); return; }
+    if (bios) opts.bios = bios;
   }
   const parent = manualParent.files && manualParent.files[0];
   if (parent) opts.parent = parent;
 
+  playToken++;
   showPlayerFor(sys, 'Custom ROM — ' + f.name);
+  renderBiosPanel(sys, () => {
+    // BIOS changed in the player: drop the uploader pick so the vault wins, then relaunch
+    manualBios.value = '';
+    syncManualUI();
+    btnManualRun.click();
+  });
   startEmu(f, sys, opts);
 
   if (window.matchMedia("(max-width: 620px)").matches) {
