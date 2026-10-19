@@ -1,72 +1,134 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
-  <!-- AdSense -->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Native Ports & Homebrew — Nagcoop</title>
+  <meta name="description" content="Native PC ports and recompilations of console classics, recomp tools and free homebrew. Links to official projects only."/>
+  <link rel="canonical" href="https://nagcoop.github.io/downloads.html"/>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
-  <!-- Styles -->
-  <link rel="stylesheet" href="/assets/site.css">
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
-  <script src="/js/firebase-config.js"></script>
-
-  <title>Nagcoop • Downloads</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#0a0a0c;--bg2:#111114;--bg3:#18181d;--border:#2a2a32;--accent:#e8ff00;--text:#e8e6df;--muted:#6b6b78}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-weight:300;line-height:1.6}
+    a{color:inherit}
+    header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-bottom:1px solid var(--border);padding:1.2rem clamp(1.5rem,6vw,4rem)}
+    .logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.08em;color:var(--accent);text-decoration:none}
+    nav{display:flex;gap:clamp(1rem,3vw,2rem)}
+    nav a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+    nav a:hover,nav a[aria-current]{color:var(--accent)}
+    main{max-width:1100px;margin:0 auto;padding:clamp(2rem,6vw,4rem) clamp(1.5rem,6vw,4rem)}
+    .tag{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+    h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,9vw,5.5rem);line-height:.95;margin:.4rem 0 1rem}
+    .lead{color:#b8b6af;max-width:680px}
+    .note{background:var(--bg2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:1rem 1.3rem;margin:1.8rem 0 0;color:#b8b6af;font-size:.95rem}
+    h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3rem);margin:3rem 0 .4rem;letter-spacing:.02em}
+    .sub{color:var(--muted);font-size:.9rem;margin-bottom:1.4rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.1rem}
+    .card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.2rem 1.3rem;display:flex;flex-direction:column;gap:.55rem;text-decoration:none;transition:border-color .2s,transform .2s}
+    .card:hover{border-color:var(--accent);transform:translateY(-3px)}
+    .plat{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+    .card h3{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;line-height:1.1;letter-spacing:.02em}
+    .card p{color:var(--muted);font-size:.88rem;flex:1}
+    .go{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+    footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);margin-top:3rem}
+    footer a{color:var(--muted);margin:0 .6rem}
+  </style>
 </head>
 <body>
-  <header class="header">
-    <div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
-      <div class="brand">
-        <img src="/assets/logo.jpg" alt="Nagcoop Logo" style="height:46px;border:2px solid #9f1239;border-radius:8px">
-        <div>
-          <h1 style="margin:0;font-family:'Metal Mania',cursive;color:#f87171">Nagcoop</h1>
-          <div class="muted" style="margin-top:-6px">Games & News</div>
-        </div>
-      </div>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/downloads.html" aria-current="page">Downloads</a>
-        <a id="admin-link" href="/admin.html" style="display:none">Admin</a>
-        <a id="login-link" href="/login.html">Login</a>
-        <a id="logout-link" href="#" style="display:none">Logout</a>
-      </nav>
-    </div>
-  </header>
+<header>
+  <a class="logo" href="/">Nagcoop</a>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/downloads.html" aria-current="page">Ports</a>
+    <a href="/emulator.html">Emulator</a>
+    <a href="https://www.youtube.com/@Nagcoop" target="_blank" rel="noopener">YouTube</a>
+  </nav>
+</header>
 
-  <main class="wrap">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px">
-      <h2 style="margin:0">⬇ Downloads</h2>
-      <a class="btn" href="/" aria-label="Back to Home">← Back to Home</a>
-    </div>
-    <p class="muted" style="margin-top:4px">Files uploaded to <code>assets/downloads/</code> appear here automatically.</p>
+<main>
+  <div class="tag">Native ports · Recomps · Homebrew</div>
+  <h1>Classics running natively on PC</h1>
+  <p class="lead">A curated list of fan-made recompilations and ports, plus the tools behind them. Every link goes to the project's official page.</p>
+  <div class="note">⚠️ None of these projects include the game. You need the files from <strong>your own original copy</strong>. Nagcoop does not host or point to downloads of commercial games. Want to know how it works? Read the <a href="/" style="color:var(--accent)">static recompilation guide</a> on the blog.</div>
 
-    <!-- Lista preenchida via gh-downloads.js -->
-    <div id="downloads-list" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"></div>
-  </main>
+  <h2>Recompiled ports</h2>
+  <p class="sub">Console games translated into native PC programs, with widescreen, high frame rates and mods.</p>
+  <div class="grid">
+    <a class="card" href="https://github.com/Zelda64Recomp/Zelda64Recomp" target="_blank" rel="noopener">
+      <span class="plat">Nintendo 64 · Windows / Linux</span>
+      <h3>Zelda 64: Recompiled</h3>
+      <p>Majora's Mask running natively on PC, rendered by RT64, with a mod loader. Requires the US ROM from your cartridge.</p>
+      <span class="go">Official page ↗</span>
+    </a>
+    <a class="card" href="https://github.com/sonicdcer/Starfox64Recomp" target="_blank" rel="noopener">
+      <span class="plat">Nintendo 64 · Windows / Linux</span>
+      <h3>Starfox 64: Recompiled</h3>
+      <p>Star Fox 64 with enhancements and extensive mod support. Sibling project of the Starship port.</p>
+      <span class="go">Official page ↗</span>
+    </a>
+    <a class="card" href="https://github.com/hedge-dev/UnleashedRecomp" target="_blank" rel="noopener">
+      <span class="plat">Xbox 360 · PC</span>
+      <h3>Unleashed Recompiled</h3>
+      <p>Sonic Unleashed with an unlocked frame rate and ultrawide. Requires your own game files (US or EU) dumped from your Xbox 360.</p>
+      <span class="go">Official page ↗</span>
+    </a>
+    <a class="card" href="https://github.com/search?q=SymphonyRecomp&amp;type=repositories" target="_blank" rel="noopener">
+      <span class="plat">PlayStation 1 · Windows / Linux / macOS</span>
+      <h3>SymphonyRecomp</h3>
+      <p>BlackLabelHQ's Castlevania: Symphony of the Night, in open beta, with widescreen and extras. Requires the .bin/.cue of your US disc.</p>
+      <span class="go">Search GitHub ↗</span>
+    </a>
+  </div>
 
-  <footer class="wrap">© 2025 Nagcoop • All rights reserved • Powered by Dark Mode ⚡</footer>
+  <h2>Tools</h2>
+  <p class="sub">For anyone who wants to understand or contribute to recompilation projects.</p>
+  <div class="grid">
+    <a class="card" href="https://github.com/N64Recomp/N64Recomp" target="_blank" rel="noopener">
+      <span class="plat">Recompiler · N64</span>
+      <h3>N64: Recompiled</h3>
+      <p>The tool that started it all: translates Nintendo 64 code into C that compiles for any platform.</p>
+      <span class="go">GitHub ↗</span>
+    </a>
+    <a class="card" href="https://github.com/hedge-dev/XenonRecomp" target="_blank" rel="noopener">
+      <span class="plat">Recompiler · Xbox 360</span>
+      <h3>XenonRecomp</h3>
+      <p>Converts Xbox 360 PowerPC code into C++. The foundation of Unleashed Recompiled, alongside XenosRecomp for shaders.</p>
+      <span class="go">GitHub ↗</span>
+    </a>
+    <a class="card" href="https://github.com/sp00nznet/MidwayRecomp" target="_blank" rel="noopener">
+      <span class="plat">Recompiler · Arcade</span>
+      <h3>MidwayRecomp</h3>
+      <p>An N64Recomp fork for Midway arcade boards, home to games like CarnEvil and California Speed.</p>
+      <span class="go">GitHub ↗</span>
+    </a>
+    <a class="card" href="https://nio03.github.io/unricopie/en/" target="_blank" rel="noopener">
+      <span class="plat">Catalog</span>
+      <h3>Recompendium</h3>
+      <p>An up-to-date list of recompilations, decompilations and ports in progress, from N64 to Xbox 360.</p>
+      <span class="go">Open ↗</span>
+    </a>
+  </div>
 
-  <!-- Seu app (menus/login etc) -->
-  <script src="/js/app.js"></script>
+  <h2>Play now in your browser</h2>
+  <p class="sub">Homebrew and your own backups run in the Nagcoop emulator, no install needed.</p>
+  <div class="grid">
+    <a class="card" href="/emulator.html">
+      <span class="plat">Nagcoop · Web</span>
+      <h3>Nagcoop Emulator</h3>
+      <p>NES, SNES, Genesis, Game Boy, GBA, N64, PS1, Neo Geo and more, right in your browser.</p>
+      <span class="go">Open emulator →</span>
+    </a>
+    <a class="card" href="https://itch.io/search?q=homebrew" target="_blank" rel="noopener">
+      <span class="plat">itch.io</span>
+      <h3>Homebrew on itch.io</h3>
+      <p>New games made for classic consoles, many free and distributed by their own creators.</p>
+      <span class="go">Explore ↗</span>
+    </a>
+  </div>
+</main>
 
-  <!-- Auto-listar arquivos do GitHub -->
-  <script src="/js/gh-downloads.js"></script>
-  <script>
-    // Garante execução após o DOM existir (opcional, mas seguro)
-    window.addEventListener('DOMContentLoaded', function () {
-      renderGithubDownloads({
-        owner: 'nagcoop',
-        repo: 'nagcoop.github.io',
-        path: 'assets/downloads',
-        branch: 'main',
-        targetId: 'downloads-list'
-      });
-    });
-  </script>
+<footer>© 2026 Nagcoop · <a href="/">Home</a><a href="/privacy.html">Privacy</a></footer>
 </body>
 </html>
