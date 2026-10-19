@@ -12,6 +12,8 @@
   <meta property="og:url" content="https://nagcoop.github.io"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <link rel="canonical" href="https://nagcoop.github.io"/>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4819258401008864" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet"/>
@@ -168,6 +170,9 @@
     .news-body h3{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;line-height:1.1;letter-spacing:.02em;color:var(--text)}
     .news-body p{font-size:.85rem;color:var(--muted);line-height:1.5}
     .news-foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:1.5rem;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:.08em}
+      .badge-tut{background:#0d2a3a;color:#38bdf8;border:1px solid #1e4a6a}
+    .article-content a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+    .article-content code{font-family:'DM Mono',monospace;font-size:.85em;background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:1px 6px}
   </style>
 </head>
 <body>
@@ -301,6 +306,7 @@
       <a onclick="showHome()">Home</a>
       <a href="emulator.html">Emulator</a>
       <a href="https://www.youtube.com/@Nagcoop" target="_blank">YouTube</a>
+      <a href="privacidade.html">Privacidade</a>
     </nav>
     <div class="footer-copy">© 2025 Nagcoop · Todos os direitos reservados</div>
   </footer>
@@ -308,6 +314,127 @@
 
 <script>
 const A=[
+{id:'recompilacao-estatica-o-que-e',title:'Recompilação Estática: Como Clássicos de Console Estão Virando Jogos de PC',badge:'Tutorial',bc:'badge-tut',cat:'Recompilação',date:'19 Out 2026',rt:'7 min',desc:'Zelda, Sonic, Castlevania e Star Fox rodando nativos no PC, sem emulador. Entenda o que é recomp, como difere de emulação e decomp, e o que já dá para jogar.',bg:'RECOMP',bgc:'#0d1a2a',tags:['recompilação','recomp','N64Recomp','PC port','retro'],body:`
+<h2>Emulação, decomp e recomp: qual a diferença?</h2>
+<p>Até pouco tempo atrás, jogar um clássico de console no PC significava uma coisa só: <strong>emulação</strong>. O emulador finge ser o console inteiro (processador, placa de vídeo, som) e roda o jogo original dentro dessa simulação. Funciona, mas custa desempenho e limita o quanto dá para mexer no jogo.</p>
+<p>A <strong>decompilação</strong> foi o primeiro grande salto. Fãs reconstroem, função por função, o código-fonte do jogo em C. Foi assim que nasceram ports como o de Super Mario 64 e o SpaghettiKart (Mario Kart 64). O resultado é incrível, mas leva anos de trabalho manual.</p>
+<p>A <strong>recompilação estática</strong> é o atalho que mudou o jogo. Uma ferramenta pega o executável original do console e traduz automaticamente cada instrução do processador antigo para código C ou C++. Esse código é compilado como um programa nativo de PC. Não existe emulador rodando durante o jogo: o código já foi traduzido antes.</p>
+<div class="highlight-box"><p>⚡ Na prática: o jogo vira um .exe de verdade, roda com folga em qualquer PC moderno e ganha recursos que o original nunca teve, como widescreen, 60 fps ou mais, controles remapeáveis e suporte a mods.</p></div>
+<h2>Onde tudo começou: N64: Recompiled</h2>
+<p>O projeto que abriu a porta foi o <a href="https://github.com/N64Recomp/N64Recomp" target="_blank" rel="noopener">N64: Recompiled</a>, criado pelo desenvolvedor Wiseguy. Ele converte o código MIPS do Nintendo 64 em C, sem exigir que o jogo seja decompilado antes. Junto com o renderizador RT64, foi a base do <strong>Zelda 64: Recompiled</strong> (Majora's Mask), e depois de dezenas de outros ports.</p>
+<h2>A técnica se espalhou</h2>
+<ul>
+<li><strong>Xbox 360:</strong> o XenonRecomp traduz o código PowerPC do console para C++, e o XenosRecomp converte os shaders. O primeiro grande resultado foi o <strong>Unleashed Recompiled</strong> (Sonic Unleashed). Mais recentemente, o SDK ReXGlue gerou ports como o de Castlevania: Symphony of the Night na versão Xbox Live Arcade.</li>
+<li><strong>PlayStation 1:</strong> ferramentas como RecompOne e psxrecomp trouxeram o <strong>SymphonyRecomp</strong> (Castlevania: Symphony of the Night), MediEvil, Strider 2 e Street Fighter EX2 Plus.</li>
+<li><strong>Arcade:</strong> o MidwayRecomp é um fork do N64Recomp para placas da Midway, de jogos como CarnEvil e California Speed.</li>
+</ul>
+<h2>É legal?</h2>
+<p>Os projetos sérios <strong>não distribuem o jogo</strong>. Eles entregam só o programa que faz a tradução, e você precisa fornecer os arquivos da sua própria cópia original: o cartucho de N64 copiado com um leitor de cartuchos, ou o disco e o HD do seu console. Baixar ROM de jogo que você não tem continua sendo pirataria, e nenhum tutorial aqui do Nagcoop ensina isso.</p>
+<h2>Tutoriais no Nagcoop</h2>
+<p>Separamos guias passo a passo dos ports mais populares: Zelda 64: Recompiled, Unleashed Recompiled, SymphonyRecomp e uma lista dos melhores recomps de N64 para jogar hoje. Tudo aqui no blog. 🤘</p>`},
+
+{id:'tutorial-zelda-64-recompiled',title:'Tutorial: Como Jogar Majora\'s Mask Nativo no PC com Zelda 64: Recompiled',badge:'Tutorial',bc:'badge-tut',cat:'Recompilação',date:'19 Out 2026',rt:'6 min',desc:'Passo a passo para rodar The Legend of Zelda: Majora\'s Mask como jogo nativo de PC, com widescreen, alta taxa de quadros e mods.',bg:'ZELDA',bgc:'#0d1a2a',tags:['Zelda','Majora\'s Mask','N64','recomp','tutorial'],body:`
+<h2>O que é o Zelda 64: Recompiled</h2>
+<p>É um port não oficial de <strong>The Legend of Zelda: Majora's Mask</strong> para Windows e Linux, feito com N64: Recompiled e renderizado pelo RT64. O jogo roda nativo, sem emulador, e ganha recursos modernos como widescreen, taxa de quadros alta e carregador de mods. O Ocarina of Time está nos planos do projeto.</p>
+<div class="highlight-box"><p>⚠️ O projeto não inclui nenhum arquivo do jogo. Você precisa da sua própria cópia da <strong>versão norte-americana (US)</strong> de Majora's Mask.</p></div>
+<h2>Requisitos</h2>
+<ul>
+<li><strong>Placa de vídeo:</strong> compatível com Direct3D 12.0 (Shader Model 6) ou Vulkan 1.2. Na prática, de GeForce GT 630, Radeon HD 7750 ou Intel HD 510 para cima.</li>
+<li><strong>Processador:</strong> com suporte a AVX (Intel Core 2ª geração ou AMD Bulldozer em diante).</li>
+<li><strong>Drivers de vídeo atualizados.</strong> Se o jogo fechar ao abrir, essa é a primeira coisa a conferir.</li>
+<li><strong>Sua ROM US de Majora's Mask</strong>, copiada do seu cartucho com um leitor de cartuchos de N64.</li>
+</ul>
+<h2>Passo a passo</h2>
+<ol>
+<li>Acesse a página do projeto no GitHub: <a href="https://github.com/Zelda64Recomp/Zelda64Recomp" target="_blank" rel="noopener">github.com/Zelda64Recomp/Zelda64Recomp</a>.</li>
+<li>Clique em <strong>Releases</strong>, no lado direito da página, e baixe a versão mais recente para o seu sistema (Windows ou Linux).</li>
+<li>Extraia o arquivo numa pasta própria, por exemplo <code>C:\\Jogos\\Zelda64Recomp</code>.</li>
+<li>Abra o executável. No menu principal, use a opção para selecionar a ROM e aponte para o arquivo do seu cartucho.</li>
+<li>Pronto: o jogo é registrado e você já pode começar a jogar.</li>
+</ol>
+<h2>Dicas</h2>
+<ul>
+<li>Explore o menu de configurações gráficas antes de começar: é lá que ficam widescreen, resolução e taxa de quadros.</li>
+<li>Controle de Xbox ou PlayStation funciona direto, sem configuração.</li>
+<li>Para mods, procure a comunidade do N64: Recompiled. O carregador de mods é um dos grandes diferenciais do port.</li>
+</ul>
+<p>Viu algum mod interessante? Comenta no canal do YouTube!</p>`},
+
+{id:'tutorial-unleashed-recompiled',title:'Tutorial: Sonic Unleashed no PC com Unleashed Recompiled',badge:'Tutorial',bc:'badge-tut',cat:'Recompilação',date:'19 Out 2026',rt:'6 min',desc:'O Sonic Unleashed do Xbox 360 virou um port nativo de PC com frame rate destravado e ultrawide. Veja o que você precisa e como instalar.',bg:'SONIC',bgc:'#0d1a2a',tags:['Sonic','Unleashed','Xbox 360','recomp','tutorial'],body:`
+<h2>O que é o Unleashed Recompiled</h2>
+<p>É um port não oficial da versão de <strong>Xbox 360 de Sonic Unleashed</strong> para PC, criado por recompilação estática com as ferramentas XenonRecomp (código do processador) e XenosRecomp (shaders). O projeto foi inspirado diretamente no N64: Recompiled.</p>
+<p>O resultado é o Unleashed em alta resolução, com taxa de quadros destravada, suporte a ultrawide e ícones de controle de Xbox e PlayStation.</p>
+<div class="highlight-box"><p>⚠️ Você precisa dos arquivos da <strong>sua própria cópia</strong> do jogo de Xbox 360, versão <strong>US ou EU</strong>. A versão japonesa <strong>não é suportada</strong>. Disco original ou cópia digital comprada na Xbox Store servem.</p></div>
+<h2>Requisitos</h2>
+<ul>
+<li>Sonic Unleashed para Xbox 360 (US ou EU), em disco ou digital.</li>
+<li>Seu Xbox 360, para extrair os arquivos do jogo.</li>
+<li>Um PC com processador com AVX e placa de vídeo compatível com DirectX 12 ou Vulkan.</li>
+</ul>
+<h2>Passo a passo</h2>
+<ol>
+<li><strong>Extraia os arquivos do seu Xbox 360.</strong> O projeto tem guias oficiais para fazer isso pelo HD do console ou por pendrive USB. Siga um deles antes de continuar.</li>
+<li>Acesse <a href="https://github.com/hedge-dev/UnleashedRecomp" target="_blank" rel="noopener">github.com/hedge-dev/UnleashedRecomp</a>, clique em <strong>Releases</strong> e baixe a versão mais recente.</li>
+<li>Extraia o arquivo na pasta onde você quer instalar o jogo.</li>
+<li>Abra o programa. Um <strong>assistente de instalação</strong> guia o processo e confere a integridade dos arquivos em cada etapa.</li>
+<li>Aponte para o jogo base, a atualização (title update) e as DLCs, se você tiver. O assistente monta tudo.</li>
+</ol>
+<h2>Dicas</h2>
+<ul>
+<li>Se o assistente recusar algum arquivo, quase sempre é versão errada (JP) ou um dump incompleto. Refaça a extração seguindo o guia.</li>
+<li>No Steam Deck, dá para adicionar o executável como jogo não-Steam e rodar pelo modo de jogo.</li>
+<li>O Unleashed tem uma cena de mods ativa. Vale explorar depois de zerar.</li>
+</ul>`},
+
+{id:'tutorial-symphonyrecomp-castlevania',title:'Tutorial: Castlevania Symphony of the Night Nativo no PC com SymphonyRecomp',badge:'Tutorial',bc:'badge-tut',cat:'Recompilação',date:'19 Out 2026',rt:'5 min',desc:'A versão de PS1 do maior Castlevania de todos virou programa nativo para Windows, Linux e macOS, com widescreen e extras. Saiba como instalar.',bg:'SOTN',bgc:'#0d1a2a',tags:['Castlevania','Symphony of the Night','PS1','recomp','tutorial'],body:`
+<h2>O que é o SymphonyRecomp</h2>
+<p>É um port não oficial da <strong>versão de PlayStation 1 de Castlevania: Symphony of the Night</strong>, feito pela equipe BlackLabelHQ com a ferramenta RecompOne. O jogo roda nativo em Windows, Linux e macOS, sem emulador e sem precisar configurar plugins ou BIOS.</p>
+<div class="highlight-box"><p>⚠️ O projeto está em <strong>beta aberto</strong>. O jogo já dá para zerar do começo ao fim, mas ainda podem aparecer bugs. A versão estável 1.0 ainda não saiu.</p></div>
+<h2>O que ele traz de novo</h2>
+<ul>
+<li>Widescreen 16:9 de verdade, não só imagem esticada.</li>
+<li>Controles personalizáveis e modo tela cheia sem bordas.</li>
+<li>Opções de acessibilidade, incluindo modo para daltônicos.</li>
+<li>Extras opcionais, como randomizador e pulo infinito para explorar o castelo.</li>
+<li>Primeiros passos de suporte a mods.</li>
+</ul>
+<h2>Requisitos</h2>
+<ul>
+<li>Sua cópia da <strong>versão norte-americana do disco de PS1</strong>, em arquivos .bin e .cue, gerados a partir do seu disco original.</li>
+<li>Um PC comum. Os requisitos são bem modestos.</li>
+</ul>
+<h2>Passo a passo</h2>
+<ol>
+<li>Procure o projeto SymphonyRecomp da BlackLabelHQ no GitHub e baixe a release mais recente para o seu sistema.</li>
+<li>Extraia numa pasta própria.</li>
+<li>Coloque os arquivos .bin e .cue do seu disco na pasta indicada pelas instruções do projeto, com os nomes que ele pede.</li>
+<li>Rode o script de inicialização incluído. Ele faz a recompilação e gera o executável do jogo.</li>
+<li>Daqui para frente, é só abrir o executável como qualquer jogo de PC. O atualizador automático cuida das novas versões.</li>
+</ol>
+<h2>Não confunda</h2>
+<p>Existem dois projetos diferentes de Symphony of the Night no PC. O <strong>SymphonyRecomp</strong> usa a versão de PS1. O <strong>NocturneRecomp</strong> usa a versão de Xbox Live Arcade (Xbox 360) e foi feito com o SDK ReXGlue. Os dois exigem a sua própria cópia do jogo.</p>`},
+
+{id:'melhores-recomps-n64',title:'Os Melhores Recomps de N64 para Jogar no PC Hoje',badge:'Tutorial',bc:'badge-tut',cat:'Recompilação',date:'19 Out 2026',rt:'5 min',desc:'Donkey Kong 64, Star Fox 64, Goemon, Pokémon Stadium e mais: os ports nativos de Nintendo 64 feitos com N64: Recompiled que já dá para jogar.',bg:'N64',bgc:'#0d1a2a',tags:['N64','recomp','Star Fox','Donkey Kong 64','lista'],body:`
+<h2>A explosão dos recomps de N64</h2>
+<p>Desde o Zelda 64: Recompiled, o N64: Recompiled virou a base de dezenas de ports. A ferramenta reduz muito o esforço para portar um jogo de N64, e a cada mês aparece um projeto novo. Todos seguem a mesma regra: <strong>nenhum arquivo do jogo vem incluído</strong>, você usa a ROM do seu próprio cartucho.</p>
+<h2>A lista</h2>
+<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Zelda 64: Recompiled (Majora's Mask)</h4><p>O projeto que começou tudo. Widescreen, alta taxa de quadros e mods. Tem tutorial completo aqui no blog.</p></div></div>
+<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Starfox 64: Recompiled</h4><p>Port nativo com várias melhorias e amplo suporte a mods. Foi desenvolvido junto com o Starship, outro port de Star Fox 64, e os dois coexistem como projetos irmãos.</p></div></div>
+<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>DK64 Rekongpiled (Donkey Kong 64)</h4><p>Um dos recomps mais pedidos pela comunidade, com o jogo completo rodando nativo.</p></div></div>
+<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Pokémon Stadium</h4><p>Recompilação da versão US 1.0, com suporte a Transfer Pak e à GB Tower.</p></div></div>
+<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Goemon64Recomp (Mystical Ninja Starring Goemon)</h4><p>O clássico cult da Konami ganhando vida nova. Ainda em desenvolvimento.</p></div></div>
+<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Dinosaur Planet</h4><p>O jogo da Rare que nunca foi lançado e acabou virando Star Fox Adventures, agora jogável como port nativo.</p></div></div>
+<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Quest 64: Recompiled</h4><p>O RPG de N64 que divide opiniões, agora com todas as vantagens de um port de PC.</p></div></div>
+<h2>Como instalar qualquer um deles</h2>
+<p>O processo é quase sempre o mesmo do Zelda 64: Recompiled:</p>
+<ol>
+<li>Abra a página do projeto no GitHub e vá em <strong>Releases</strong>.</li>
+<li>Baixe a versão mais recente para o seu sistema e extraia numa pasta.</li>
+<li>Abra o executável e selecione a ROM do seu cartucho, na <strong>região que o projeto pede</strong> (geralmente a US).</li>
+</ol>
+<div class="highlight-box"><p>💡 Projetos marcados como "dev" ou "beta" podem ter bugs. Se você curte acompanhar, os builds de teste costumam ficar disponíveis na aba Actions do GitHub de cada projeto.</p></div>
+<p>Esqueceu de algum? Manda nos comentários do canal que a gente atualiza a lista.</p>`},
+
 {id:'melhores-jogos-coop-2025',title:'Os 10 Melhores Jogos Co-op de 2025',badge:'Co-op',bc:'badge-coop',cat:'Co-op',date:'20 Mar 2025',rt:'8 min',desc:'Uma seleção pesada dos melhores títulos cooperativos que dominaram 2025 — de Indies brutais a AAAs que finalmente entregaram.',bg:'CO-OP',bgc:'#0d1f0d',tags:['co-op','multiplayer','2025','games'],body:`
 <h2>Por que jogar em co-op é melhor em 2025</h2>
 <p>Se tem uma coisa que 2025 entregou de bandeja foi uma safra absurda de jogos cooperativos. Depois de anos de live service genérico e battle royale saturado, o mercado acordou para o que sempre foi a melhor forma de jogar: ao lado de um amigo.</p>
