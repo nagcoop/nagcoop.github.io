@@ -156,6 +156,18 @@
     @keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);transform-origin:top;opacity:1}100%{transform:scaleY(1);transform-origin:bottom;opacity:0}}
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
+      /* NEWS (robô) */
+    .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+    .news-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+    .news-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+    .news-img{aspect-ratio:16/9;background:var(--bg3);overflow:hidden}
+    .news-img img{width:100%;height:100%;object-fit:cover;display:block}
+    .news-body{padding:1rem 1.1rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+    .news-meta{display:flex;justify-content:space-between;gap:8px;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .news-src{color:var(--accent)}
+    .news-body h3{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;line-height:1.1;letter-spacing:.02em;color:var(--text)}
+    .news-body p{font-size:.85rem;color:var(--muted);line-height:1.5}
+    .news-foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:1.5rem;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:.08em}
   </style>
 </head>
 <body>
@@ -167,6 +179,7 @@
   </div>
   <ul class="nav-links">
     <li class="hide-sm"><a onclick="showHome();setTimeout(()=>goTo('#videos'),100)">Vídeos</a></li>
+    <li class="hide-sm"><a onclick="showHome();setTimeout(()=>goTo('#noticias'),100)">Notícias</a></li>
     <li class="hide-sm"><a onclick="showHome();setTimeout(()=>goTo('#blog'),100)">Blog</a></li>
     <li><a href="emulator.html">Emulator</a></li>
     <li><a href="downloads.html">Downloads</a></li>
@@ -201,6 +214,16 @@
     <div class="section-title reveal">Assista agora</div>
     <div class="yt-grid" id="yt-grid"><div class="yt-loading">Carregando vídeos...</div></div>
     <div class="yt-cta-wrap reveal"><a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener" class="btn btn-outline">Ver todos os vídeos ↗</a></div>
+  </section>
+
+  <section id="noticias" hidden>
+    <div class="section-label"><span>Notícias</span></div>
+    <div class="section-title">Radar gamer</div>
+    <div class="news-grid" id="news-grid"></div>
+    <div class="news-foot">
+      <span id="news-updated"></span>
+      <button class="btn btn-outline" id="news-more" hidden>Ver mais notícias</button>
+    </div>
   </section>
 
   <section class="blog-section" id="blog">
@@ -588,8 +611,33 @@ function subscribeNL(){
 }
 document.getElementById('nl-email').addEventListener('keydown',e=>{if(e.key==='Enter')subscribeNL();});
 
+// NEWS (gerado pelo robô em news.json)
+async function loadNews(){
+  const sec=document.getElementById('noticias'),grid=document.getElementById('news-grid'),
+        more=document.getElementById('news-more'),upd=document.getElementById('news-updated');
+  let data;
+  try{const r=await fetch('news.json?v='+Date.now());if(!r.ok)return;data=await r.json();}catch(e){return;}
+  const items=(data.items||[]).filter(n=>n.title&&/^https?:\/\//.test(n.link));
+  if(!items.length)return;
+  const esc=t=>String(t||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const ago=iso=>{if(!iso)return'';const m=Math.round((Date.now()-new Date(iso))/6e4);
+    if(m<60)return'há '+Math.max(m,1)+' min';const h=Math.round(m/60);if(h<24)return'há '+h+' h';
+    const d=Math.round(h/24);return d<30?'há '+d+(d>1?' dias':' dia'):new Date(iso).toLocaleDateString('pt-BR');};
+  const card=n=>`<a class="news-card" href="${esc(n.link)}" target="_blank" rel="noopener nofollow">
+    ${n.image?`<div class="news-img"><img src="${esc(n.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></div>`:''}
+    <div class="news-body"><div class="news-meta"><span class="news-src">${esc(n.source)}</span><span>${ago(n.date)}</span></div>
+    <h3>${esc(n.title)}</h3>${n.summary?`<p>${esc(n.summary)}</p>`:''}</div></a>`;
+  let shown=9;
+  const render=()=>{grid.innerHTML=items.slice(0,shown).map(card).join('');more.hidden=shown>=items.length;};
+  more.onclick=()=>{shown+=9;render();};
+  render();
+  if(data.updated)upd.textContent='// atualizado '+ago(data.updated)+' · clique para ler na fonte original';
+  sec.hidden=false;
+}
+
 renderBlog();
 loadVideos();
+loadNews();
 </script>
 </body>
 </html>
