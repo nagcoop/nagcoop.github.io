@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nagcoop — Games, Co-op & News</title>
-  <meta name="description" content="Nagcoop: canal de gameplay co-op, notícias de games, emulador web e downloads. Dark vibe, heavy energy."/>
-  <meta name="keywords" content="nagcoop, games, co-op, gameplay, emulador, notícias games, youtube gaming, jogos indie, retro, lançamentos 2025"/>
+  <meta name="description" content="Nagcoop: co-op gameplay channel, gaming news, retro tutorials and a free web emulator. Dark vibe, heavy energy."/>
+  <meta name="keywords" content="nagcoop, games, co-op, gameplay, emulator, gaming news, youtube gaming, indie games, retro, recompilation"/>
   <meta property="og:title" content="Nagcoop — Games, Co-op & News"/>
-  <meta property="og:description" content="Co-op mayhem, notícias rápidas e heavy vibe. Inscreve-se no canal."/>
+  <meta property="og:description" content="Co-op mayhem, quick gaming news and heavy vibes. Subscribe to the channel."/>
   <meta property="og:image" content="https://nagcoop.github.io/assets/logo.jpg"/>
   <meta property="og:url" content="https://nagcoop.github.io"/>
   <meta name="twitter:card" content="summary_large_image"/>
@@ -158,7 +158,7 @@
     @keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);transform-origin:top;opacity:1}100%{transform:scaleY(1);transform-origin:bottom;opacity:0}}
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
-      /* NEWS (robô) */
+      /* NEWS (bot) */
     .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
     .news-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
     .news-card:hover{border-color:var(--accent);transform:translateY(-3px)}
@@ -183,11 +183,11 @@
     <span>Nagcoop</span>
   </div>
   <ul class="nav-links">
-    <li class="hide-sm"><a onclick="showHome();setTimeout(()=>goTo('#videos'),100)">Vídeos</a></li>
-    <li class="hide-sm"><a onclick="showHome();setTimeout(()=>goTo('#noticias'),100)">Notícias</a></li>
+    <li class="hide-sm"><a onclick="showHome();setTimeout(()=>goTo('#videos'),100)">Videos</a></li>
+    <li class="hide-sm"><a onclick="showHome();setTimeout(()=>goTo('#news'),100)">News</a></li>
     <li class="hide-sm"><a onclick="showHome();setTimeout(()=>goTo('#blog'),100)">Blog</a></li>
     <li><a href="emulator.html">Emulator</a></li>
-    <li><a href="downloads.html">Downloads</a></li>
+    <li><a href="downloads.html">Ports</a></li>
     <li><a href="https://www.youtube.com/@Nagcoop?sub_confirmation=1" target="_blank" rel="noopener">YouTube ↗</a></li>
   </ul>
 </nav>
@@ -196,44 +196,44 @@
 <div id="page-home" class="page active">
   <section class="hero">
     <div class="hero-bg"></div><div class="hero-grid"></div>
-    <p class="hero-tag">Canal de games · Co-op · Heavy vibe</p>
+    <p class="hero-tag">Gaming channel · Co-op · Heavy vibe</p>
     <h1>NAG<br><span class="ay">COOP</span></h1>
-    <p class="hero-sub">Co-op mayhem, notícias rápidas de games e uma vibe pesada que não pede licença. Inscreve-se.</p>
+    <p class="hero-sub">Co-op mayhem, quick gaming news and heavy vibes that don't ask for permission. Subscribe.</p>
     <div class="hero-ctas">
-      <a href="https://www.youtube.com/@Nagcoop?sub_confirmation=1" target="_blank" rel="noopener" class="btn btn-primary">▶ Inscrever no canal</a>
-      <button class="btn btn-outline" onclick="goTo('#videos')">Ver vídeos</button>
-      <a href="emulator.html" class="btn btn-ghost">Emulador web ⚡</a>
+      <a href="https://www.youtube.com/@Nagcoop?sub_confirmation=1" target="_blank" rel="noopener" class="btn btn-primary">▶ Subscribe</a>
+      <button class="btn btn-outline" onclick="goTo('#videos')">Watch videos</button>
+      <a href="emulator.html" class="btn btn-ghost">Web emulator ⚡</a>
     </div>
     <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
   </section>
 
   <div class="stats-bar">
-    <div class="stat"><div class="stat-num" id="sub-count">—</div><div class="stat-label">Inscritos</div></div>
-    <div class="stat"><div class="stat-num" id="vid-count">—</div><div class="stat-label">Vídeos</div></div>
-    <div class="stat"><div class="stat-num">10</div><div class="stat-label">Artigos</div></div>
-    <div class="stat"><div class="stat-num">FREE</div><div class="stat-label">Sempre grátis</div></div>
+    <div class="stat"><div class="stat-num" id="sub-count">—</div><div class="stat-label">Subscribers</div></div>
+    <div class="stat"><div class="stat-num" id="vid-count">—</div><div class="stat-label">Videos</div></div>
+    <div class="stat"><div class="stat-num" id="art-count">—</div><div class="stat-label">Articles</div></div>
+    <div class="stat"><div class="stat-num">FREE</div><div class="stat-label">Always free</div></div>
   </div>
 
   <section id="videos">
-    <div class="section-label reveal"><span>Últimos vídeos</span></div>
-    <div class="section-title reveal">Assista agora</div>
-    <div class="yt-grid" id="yt-grid"><div class="yt-loading">Carregando vídeos...</div></div>
-    <div class="yt-cta-wrap reveal"><a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener" class="btn btn-outline">Ver todos os vídeos ↗</a></div>
+    <div class="section-label reveal"><span>Latest videos</span></div>
+    <div class="section-title reveal">Watch now</div>
+    <div class="yt-grid" id="yt-grid"><div class="yt-loading">Loading videos...</div></div>
+    <div class="yt-cta-wrap reveal"><a href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener" class="btn btn-outline">See all videos ↗</a></div>
   </section>
 
-  <section id="noticias" hidden>
-    <div class="section-label"><span>Notícias</span></div>
-    <div class="section-title">Radar gamer</div>
+  <section id="news" hidden>
+    <div class="section-label"><span>News</span></div>
+    <div class="section-title">Gamer radar</div>
     <div class="news-grid" id="news-grid"></div>
     <div class="news-foot">
       <span id="news-updated"></span>
-      <button class="btn btn-outline" id="news-more" hidden>Ver mais notícias</button>
+      <button class="btn btn-outline" id="news-more" hidden>More news</button>
     </div>
   </section>
 
   <section class="blog-section" id="blog">
-    <div class="section-label reveal"><span>Blog & Artigos</span></div>
-    <div class="section-title reveal">Últimas do mundo gamer</div>
+    <div class="section-label reveal"><span>Blog & Articles</span></div>
+    <div class="section-title reveal">Fresh from the gaming world</div>
     <div class="blog-grid" id="blog-grid"></div>
   </section>
 
@@ -248,9 +248,9 @@
         </div>
       </div>
       <div class="emu-text">
-        <h2>Emulador<br><span style="color:var(--accent)">Web</span><br>Grátis</h2>
-        <p>Roda direto no browser. Sem download, sem instalação. Carrega ROM local ou via URL. Mobile com controle na tela. Dark. 🤘</p>
-        <a href="emulator.html" class="btn btn-primary">Abrir emulador ⚡</a>
+        <h2>Free<br><span style="color:var(--accent)">Web</span><br>Emulator</h2>
+        <p>Runs right in your browser. No download, no install. Load your own ROM backups. On-screen controls on mobile. Dark. 🤘</p>
+        <a href="emulator.html" class="btn btn-primary">Open emulator ⚡</a>
       </div>
     </div>
   </section>
@@ -258,11 +258,11 @@
   <section class="newsletter-section" id="newsletter">
     <div class="newsletter-inner reveal">
       <div class="section-label" style="justify-content:center"><span>Newsletter</span></div>
-      <div class="section-title">Fica por dentro</div>
-      <p>Novidades do canal, drops de conteúdo e news de games direto no seu email. Sem spam.</p>
+      <div class="section-title">Stay in the loop</div>
+      <p>Channel updates, content drops and gaming news straight to your inbox. No spam.</p>
       <div class="newsletter-form">
-        <input type="email" id="nl-email" placeholder="seu@email.com" autocomplete="email"/>
-        <button class="btn btn-primary" onclick="subscribeNL()">Entrar</button>
+        <input type="email" id="nl-email" placeholder="you@email.com" autocomplete="email"/>
+        <button class="btn btn-primary" onclick="subscribeNL()">Join</button>
       </div>
       <div id="nl-status"></div>
     </div>
@@ -274,17 +274,18 @@
       <a onclick="showHome()">Home</a>
       <a onclick="showHome();setTimeout(()=>goTo('#blog'),100)">Blog</a>
       <a href="emulator.html">Emulator</a>
-      <a href="downloads.html">Downloads</a>
+      <a href="downloads.html">Ports</a>
       <a href="https://www.youtube.com/@Nagcoop" target="_blank" rel="noopener">YouTube</a>
+      <a href="privacy.html">Privacy</a>
     </nav>
-    <div class="footer-copy">© 2025 Nagcoop · Todos os direitos reservados · Feito com ⚡ e muito co-op</div>
+    <div class="footer-copy">© 2026 Nagcoop · All rights reserved · Made with ⚡ and lots of co-op</div>
   </footer>
 </div>
 
 <!-- ARTICLE PAGE -->
 <div id="page-article" class="page">
   <div class="article-hero">
-    <button class="back-btn" onclick="showHome()">← Voltar ao blog</button>
+    <button class="back-btn" onclick="showHome()">← Back to blog</button>
     <div class="article-hero-badge" id="art-badge"></div>
     <h1 id="art-title"></h1>
     <div class="article-hero-meta">
@@ -297,7 +298,7 @@
     <div class="article-tags" id="art-tags"></div>
   </div>
   <section class="related-section">
-    <div class="section-label"><span>Leia também</span></div>
+    <div class="section-label"><span>Read next</span></div>
     <div class="related-grid" id="related-grid"></div>
   </section>
   <footer>
@@ -306,333 +307,311 @@
       <a onclick="showHome()">Home</a>
       <a href="emulator.html">Emulator</a>
       <a href="https://www.youtube.com/@Nagcoop" target="_blank">YouTube</a>
-      <a href="privacidade.html">Privacidade</a>
+      <a href="privacy.html">Privacy</a>
     </nav>
-    <div class="footer-copy">© 2025 Nagcoop · Todos os direitos reservados</div>
+    <div class="footer-copy">© 2026 Nagcoop · All rights reserved</div>
   </footer>
 </div>
 
 <script>
 const A=[
-{id:'recompilacao-estatica-o-que-e',title:'Recompilação Estática: Como Clássicos de Console Estão Virando Jogos de PC',badge:'Tutorial',bc:'badge-tut',cat:'Recompilação',date:'19 Out 2026',rt:'7 min',desc:'Zelda, Sonic, Castlevania e Star Fox rodando nativos no PC, sem emulador. Entenda o que é recomp, como difere de emulação e decomp, e o que já dá para jogar.',bg:'RECOMP',bgc:'#0d1a2a',tags:['recompilação','recomp','N64Recomp','PC port','retro'],body:`
-<h2>Emulação, decomp e recomp: qual a diferença?</h2>
-<p>Até pouco tempo atrás, jogar um clássico de console no PC significava uma coisa só: <strong>emulação</strong>. O emulador finge ser o console inteiro (processador, placa de vídeo, som) e roda o jogo original dentro dessa simulação. Funciona, mas custa desempenho e limita o quanto dá para mexer no jogo.</p>
-<p>A <strong>decompilação</strong> foi o primeiro grande salto. Fãs reconstroem, função por função, o código-fonte do jogo em C. Foi assim que nasceram ports como o de Super Mario 64 e o SpaghettiKart (Mario Kart 64). O resultado é incrível, mas leva anos de trabalho manual.</p>
-<p>A <strong>recompilação estática</strong> é o atalho que mudou o jogo. Uma ferramenta pega o executável original do console e traduz automaticamente cada instrução do processador antigo para código C ou C++. Esse código é compilado como um programa nativo de PC. Não existe emulador rodando durante o jogo: o código já foi traduzido antes.</p>
-<div class="highlight-box"><p>⚡ Na prática: o jogo vira um .exe de verdade, roda com folga em qualquer PC moderno e ganha recursos que o original nunca teve, como widescreen, 60 fps ou mais, controles remapeáveis e suporte a mods.</p></div>
-<h2>Onde tudo começou: N64: Recompiled</h2>
-<p>O projeto que abriu a porta foi o <a href="https://github.com/N64Recomp/N64Recomp" target="_blank" rel="noopener">N64: Recompiled</a>, criado pelo desenvolvedor Wiseguy. Ele converte o código MIPS do Nintendo 64 em C, sem exigir que o jogo seja decompilado antes. Junto com o renderizador RT64, foi a base do <strong>Zelda 64: Recompiled</strong> (Majora's Mask), e depois de dezenas de outros ports.</p>
-<h2>A técnica se espalhou</h2>
+{id:'recompilacao-estatica-o-que-e',title:'Static Recompilation: How Console Classics Are Becoming Native PC Games',badge:'Tutorial',bc:'badge-tut',cat:'Recompilation',date:'Oct 19, 2026',rt:'7 min',desc:'Zelda, Sonic, Castlevania and Star Fox running natively on PC, no emulator. What recomps are, how they differ from emulation and decomps, and what you can play today.',bg:'RECOMP',bgc:'#0d1a2a',tags:['recompilation','recomp','N64Recomp','PC port','retro'],body:`
+<h2>Emulation, decomp and recomp: what's the difference?</h2>
+<p>Until recently, playing a console classic on PC meant one thing: <strong>emulation</strong>. The emulator pretends to be the whole console (CPU, graphics, sound) and runs the original game inside that simulation. It works, but it costs performance and limits how much you can change the game.</p>
+<p><strong>Decompilation</strong> was the first big leap. Fans rebuild the game's source code in C, function by function. That's how ports like Super Mario 64 and SpaghettiKart (Mario Kart 64) were born. The results are amazing, but it takes years of manual work.</p>
+<p><strong>Static recompilation</strong> is the shortcut that changed everything. A tool takes the console's original executable and automatically translates every instruction of the old CPU into C or C++ code. That code is then compiled as a native PC program. There's no emulator running while you play: the code was translated ahead of time.</p>
+<div class="highlight-box"><p>⚡ In practice: the game becomes a real executable, runs easily on any modern PC and gains features the original never had, like widescreen, 60 fps or higher, remappable controls and mod support.</p></div>
+<h2>Where it all started: N64: Recompiled</h2>
+<p>The project that opened the door was <a href="https://github.com/N64Recomp/N64Recomp" target="_blank" rel="noopener">N64: Recompiled</a>, created by developer Wiseguy. It converts Nintendo 64 MIPS code into C without requiring the game to be decompiled first. Together with the RT64 renderer, it became the foundation of <strong>Zelda 64: Recompiled</strong> (Majora's Mask), and later of dozens of other ports.</p>
+<h2>The technique spread</h2>
 <ul>
-<li><strong>Xbox 360:</strong> o XenonRecomp traduz o código PowerPC do console para C++, e o XenosRecomp converte os shaders. O primeiro grande resultado foi o <strong>Unleashed Recompiled</strong> (Sonic Unleashed). Mais recentemente, o SDK ReXGlue gerou ports como o de Castlevania: Symphony of the Night na versão Xbox Live Arcade.</li>
-<li><strong>PlayStation 1:</strong> ferramentas como RecompOne e psxrecomp trouxeram o <strong>SymphonyRecomp</strong> (Castlevania: Symphony of the Night), MediEvil, Strider 2 e Street Fighter EX2 Plus.</li>
-<li><strong>Arcade:</strong> o MidwayRecomp é um fork do N64Recomp para placas da Midway, de jogos como CarnEvil e California Speed.</li>
+<li><strong>Xbox 360:</strong> XenonRecomp translates the console's PowerPC code into C++, while XenosRecomp converts the shaders. The first big result was <strong>Unleashed Recompiled</strong> (Sonic Unleashed). More recently, the ReXGlue SDK produced ports like the Xbox Live Arcade version of Castlevania: Symphony of the Night.</li>
+<li><strong>PlayStation 1:</strong> tools such as RecompOne and psxrecomp brought us <strong>SymphonyRecomp</strong> (Castlevania: Symphony of the Night), MediEvil, Strider 2 and Street Fighter EX2 Plus.</li>
+<li><strong>Arcade:</strong> MidwayRecomp is an N64Recomp fork for Midway arcade boards, home to games like CarnEvil and California Speed.</li>
 </ul>
-<h2>É legal?</h2>
-<p>Os projetos sérios <strong>não distribuem o jogo</strong>. Eles entregam só o programa que faz a tradução, e você precisa fornecer os arquivos da sua própria cópia original: o cartucho de N64 copiado com um leitor de cartuchos, ou o disco e o HD do seu console. Baixar ROM de jogo que você não tem continua sendo pirataria, e nenhum tutorial aqui do Nagcoop ensina isso.</p>
-<h2>Tutoriais no Nagcoop</h2>
-<p>Separamos guias passo a passo dos ports mais populares: Zelda 64: Recompiled, Unleashed Recompiled, SymphonyRecomp e uma lista dos melhores recomps de N64 para jogar hoje. Tudo aqui no blog. 🤘</p>`},
+<h2>Is it legal?</h2>
+<p>Serious projects <strong>don't distribute the game</strong>. They only ship the program that does the translation, and you must provide the files from your own original copy: your N64 cartridge dumped with a cartridge reader, or the disc and hard drive of your own console. Downloading ROMs of games you don't own is still piracy, and no Nagcoop tutorial teaches that.</p>
+<h2>Tutorials on Nagcoop</h2>
+<p>We put together step-by-step guides for the most popular ports: Zelda 64: Recompiled, Unleashed Recompiled, SymphonyRecomp and a list of the best N64 recomps you can play today. All right here on the blog. 🤘</p>`},
 
-{id:'tutorial-zelda-64-recompiled',title:'Tutorial: Como Jogar Majora\'s Mask Nativo no PC com Zelda 64: Recompiled',badge:'Tutorial',bc:'badge-tut',cat:'Recompilação',date:'19 Out 2026',rt:'6 min',desc:'Passo a passo para rodar The Legend of Zelda: Majora\'s Mask como jogo nativo de PC, com widescreen, alta taxa de quadros e mods.',bg:'ZELDA',bgc:'#0d1a2a',tags:['Zelda','Majora\'s Mask','N64','recomp','tutorial'],body:`
-<h2>O que é o Zelda 64: Recompiled</h2>
-<p>É um port não oficial de <strong>The Legend of Zelda: Majora's Mask</strong> para Windows e Linux, feito com N64: Recompiled e renderizado pelo RT64. O jogo roda nativo, sem emulador, e ganha recursos modernos como widescreen, taxa de quadros alta e carregador de mods. O Ocarina of Time está nos planos do projeto.</p>
-<div class="highlight-box"><p>⚠️ O projeto não inclui nenhum arquivo do jogo. Você precisa da sua própria cópia da <strong>versão norte-americana (US)</strong> de Majora's Mask.</p></div>
-<h2>Requisitos</h2>
+{id:'tutorial-zelda-64-recompiled',title:'Tutorial: Play Majora\'s Mask Natively on PC with Zelda 64: Recompiled',badge:'Tutorial',bc:'badge-tut',cat:'Recompilation',date:'Oct 19, 2026',rt:'6 min',desc:'Step by step guide to running The Legend of Zelda: Majora\'s Mask as a native PC game, with widescreen, high frame rates and mods.',bg:'ZELDA',bgc:'#0d1a2a',tags:['Zelda','Majora\'s Mask','N64','recomp','tutorial'],body:`
+<h2>What is Zelda 64: Recompiled?</h2>
+<p>It's an unofficial port of <strong>The Legend of Zelda: Majora's Mask</strong> for Windows and Linux, built with N64: Recompiled and rendered by RT64. The game runs natively, with no emulator, and gains modern features like widescreen, high frame rates and a mod loader. Ocarina of Time is on the project's roadmap.</p>
+<div class="highlight-box"><p>⚠️ The project doesn't include any game files. You need your own copy of the <strong>North American (US) version</strong> of Majora's Mask.</p></div>
+<h2>Requirements</h2>
 <ul>
-<li><strong>Placa de vídeo:</strong> compatível com Direct3D 12.0 (Shader Model 6) ou Vulkan 1.2. Na prática, de GeForce GT 630, Radeon HD 7750 ou Intel HD 510 para cima.</li>
-<li><strong>Processador:</strong> com suporte a AVX (Intel Core 2ª geração ou AMD Bulldozer em diante).</li>
-<li><strong>Drivers de vídeo atualizados.</strong> Se o jogo fechar ao abrir, essa é a primeira coisa a conferir.</li>
-<li><strong>Sua ROM US de Majora's Mask</strong>, copiada do seu cartucho com um leitor de cartuchos de N64.</li>
+<li><strong>Graphics card:</strong> supporting Direct3D 12.0 (Shader Model 6) or Vulkan 1.2. In practice, GeForce GT 630, Radeon HD 7750 or Intel HD 510 and newer.</li>
+<li><strong>CPU:</strong> with AVX support (Intel 2nd gen Core or AMD Bulldozer and newer).</li>
+<li><strong>Up-to-date graphics drivers.</strong> If the game crashes on startup, this is the first thing to check.</li>
+<li><strong>Your US Majora's Mask ROM</strong>, dumped from your cartridge with an N64 cartridge reader.</li>
 </ul>
-<h2>Passo a passo</h2>
+<h2>Step by step</h2>
 <ol>
-<li>Acesse a página do projeto no GitHub: <a href="https://github.com/Zelda64Recomp/Zelda64Recomp" target="_blank" rel="noopener">github.com/Zelda64Recomp/Zelda64Recomp</a>.</li>
-<li>Clique em <strong>Releases</strong>, no lado direito da página, e baixe a versão mais recente para o seu sistema (Windows ou Linux).</li>
-<li>Extraia o arquivo numa pasta própria, por exemplo <code>C:\\Jogos\\Zelda64Recomp</code>.</li>
-<li>Abra o executável. No menu principal, use a opção para selecionar a ROM e aponte para o arquivo do seu cartucho.</li>
-<li>Pronto: o jogo é registrado e você já pode começar a jogar.</li>
+<li>Go to the project's GitHub page: <a href="https://github.com/Zelda64Recomp/Zelda64Recomp" target="_blank" rel="noopener">github.com/Zelda64Recomp/Zelda64Recomp</a>.</li>
+<li>Click <strong>Releases</strong> on the right side of the page and download the latest version for your system (Windows or Linux).</li>
+<li>Extract it into its own folder, for example <code>C:\\Games\\Zelda64Recomp</code>.</li>
+<li>Run the executable. In the main menu, use the option to select your ROM and point it to your cartridge dump.</li>
+<li>Done: the game is registered and you can start playing.</li>
 </ol>
-<h2>Dicas</h2>
+<h2>Tips</h2>
 <ul>
-<li>Explore o menu de configurações gráficas antes de começar: é lá que ficam widescreen, resolução e taxa de quadros.</li>
-<li>Controle de Xbox ou PlayStation funciona direto, sem configuração.</li>
-<li>Para mods, procure a comunidade do N64: Recompiled. O carregador de mods é um dos grandes diferenciais do port.</li>
+<li>Check out the graphics settings before you start: that's where widescreen, resolution and frame rate live.</li>
+<li>Xbox and PlayStation controllers work out of the box.</li>
+<li>For mods, look up the N64: Recompiled community. The mod loader is one of the port's biggest strengths.</li>
 </ul>
-<p>Viu algum mod interessante? Comenta no canal do YouTube!</p>`},
+<p>Found a cool mod? Tell us in the comments on our YouTube channel!</p>`},
 
-{id:'tutorial-unleashed-recompiled',title:'Tutorial: Sonic Unleashed no PC com Unleashed Recompiled',badge:'Tutorial',bc:'badge-tut',cat:'Recompilação',date:'19 Out 2026',rt:'6 min',desc:'O Sonic Unleashed do Xbox 360 virou um port nativo de PC com frame rate destravado e ultrawide. Veja o que você precisa e como instalar.',bg:'SONIC',bgc:'#0d1a2a',tags:['Sonic','Unleashed','Xbox 360','recomp','tutorial'],body:`
-<h2>O que é o Unleashed Recompiled</h2>
-<p>É um port não oficial da versão de <strong>Xbox 360 de Sonic Unleashed</strong> para PC, criado por recompilação estática com as ferramentas XenonRecomp (código do processador) e XenosRecomp (shaders). O projeto foi inspirado diretamente no N64: Recompiled.</p>
-<p>O resultado é o Unleashed em alta resolução, com taxa de quadros destravada, suporte a ultrawide e ícones de controle de Xbox e PlayStation.</p>
-<div class="highlight-box"><p>⚠️ Você precisa dos arquivos da <strong>sua própria cópia</strong> do jogo de Xbox 360, versão <strong>US ou EU</strong>. A versão japonesa <strong>não é suportada</strong>. Disco original ou cópia digital comprada na Xbox Store servem.</p></div>
-<h2>Requisitos</h2>
+{id:'tutorial-unleashed-recompiled',title:'Tutorial: Sonic Unleashed on PC with Unleashed Recompiled',badge:'Tutorial',bc:'badge-tut',cat:'Recompilation',date:'Oct 19, 2026',rt:'6 min',desc:'The Xbox 360 version of Sonic Unleashed became a native PC port with an unlocked frame rate and ultrawide support. Here\'s what you need and how to install it.',bg:'SONIC',bgc:'#0d1a2a',tags:['Sonic','Unleashed','Xbox 360','recomp','tutorial'],body:`
+<h2>What is Unleashed Recompiled?</h2>
+<p>It's an unofficial PC port of the <strong>Xbox 360 version of Sonic Unleashed</strong>, created through static recompilation with XenonRecomp (CPU code) and XenosRecomp (shaders). The project was directly inspired by N64: Recompiled.</p>
+<p>The result is Unleashed in high resolution, with an unlocked frame rate, ultrawide support and Xbox and PlayStation button prompts.</p>
+<div class="highlight-box"><p>⚠️ You need the files from <strong>your own copy</strong> of the Xbox 360 game, <strong>US or EU</strong> version. The Japanese version is <strong>not supported</strong>. A retail disc or a digital copy bought on the Xbox Store both work.</p></div>
+<h2>Requirements</h2>
 <ul>
-<li>Sonic Unleashed para Xbox 360 (US ou EU), em disco ou digital.</li>
-<li>Seu Xbox 360, para extrair os arquivos do jogo.</li>
-<li>Um PC com processador com AVX e placa de vídeo compatível com DirectX 12 ou Vulkan.</li>
+<li>Sonic Unleashed for Xbox 360 (US or EU), on disc or digital.</li>
+<li>Your Xbox 360, to extract the game files.</li>
+<li>A PC with an AVX-capable CPU and a graphics card that supports DirectX 12 or Vulkan.</li>
 </ul>
-<h2>Passo a passo</h2>
+<h2>Step by step</h2>
 <ol>
-<li><strong>Extraia os arquivos do seu Xbox 360.</strong> O projeto tem guias oficiais para fazer isso pelo HD do console ou por pendrive USB. Siga um deles antes de continuar.</li>
-<li>Acesse <a href="https://github.com/hedge-dev/UnleashedRecomp" target="_blank" rel="noopener">github.com/hedge-dev/UnleashedRecomp</a>, clique em <strong>Releases</strong> e baixe a versão mais recente.</li>
-<li>Extraia o arquivo na pasta onde você quer instalar o jogo.</li>
-<li>Abra o programa. Um <strong>assistente de instalação</strong> guia o processo e confere a integridade dos arquivos em cada etapa.</li>
-<li>Aponte para o jogo base, a atualização (title update) e as DLCs, se você tiver. O assistente monta tudo.</li>
+<li><strong>Dump the files from your Xbox 360.</strong> The project has official guides for doing it through the console's hard drive or a USB drive. Follow one of them before continuing.</li>
+<li>Go to <a href="https://github.com/hedge-dev/UnleashedRecomp" target="_blank" rel="noopener">github.com/hedge-dev/UnleashedRecomp</a>, click <strong>Releases</strong> and download the latest version.</li>
+<li>Extract it to the folder where you want the game installed.</li>
+<li>Run the program. An <strong>installation wizard</strong> guides you through the process and checks file integrity at every step.</li>
+<li>Point it to the base game, the title update and any DLC you own. The wizard puts it all together.</li>
 </ol>
-<h2>Dicas</h2>
+<h2>Tips</h2>
 <ul>
-<li>Se o assistente recusar algum arquivo, quase sempre é versão errada (JP) ou um dump incompleto. Refaça a extração seguindo o guia.</li>
-<li>No Steam Deck, dá para adicionar o executável como jogo não-Steam e rodar pelo modo de jogo.</li>
-<li>O Unleashed tem uma cena de mods ativa. Vale explorar depois de zerar.</li>
+<li>If the wizard rejects a file, it's almost always the wrong version (JP) or an incomplete dump. Redo the extraction following the guide.</li>
+<li>On Steam Deck, you can add the executable as a non-Steam game and run it from Game Mode.</li>
+<li>Unleashed has an active modding scene. Worth exploring once you've beaten it.</li>
 </ul>`},
 
-{id:'tutorial-symphonyrecomp-castlevania',title:'Tutorial: Castlevania Symphony of the Night Nativo no PC com SymphonyRecomp',badge:'Tutorial',bc:'badge-tut',cat:'Recompilação',date:'19 Out 2026',rt:'5 min',desc:'A versão de PS1 do maior Castlevania de todos virou programa nativo para Windows, Linux e macOS, com widescreen e extras. Saiba como instalar.',bg:'SOTN',bgc:'#0d1a2a',tags:['Castlevania','Symphony of the Night','PS1','recomp','tutorial'],body:`
-<h2>O que é o SymphonyRecomp</h2>
-<p>É um port não oficial da <strong>versão de PlayStation 1 de Castlevania: Symphony of the Night</strong>, feito pela equipe BlackLabelHQ com a ferramenta RecompOne. O jogo roda nativo em Windows, Linux e macOS, sem emulador e sem precisar configurar plugins ou BIOS.</p>
-<div class="highlight-box"><p>⚠️ O projeto está em <strong>beta aberto</strong>. O jogo já dá para zerar do começo ao fim, mas ainda podem aparecer bugs. A versão estável 1.0 ainda não saiu.</p></div>
-<h2>O que ele traz de novo</h2>
+{id:'tutorial-symphonyrecomp-castlevania',title:'Tutorial: Castlevania Symphony of the Night Running Natively on PC with SymphonyRecomp',badge:'Tutorial',bc:'badge-tut',cat:'Recompilation',date:'Oct 19, 2026',rt:'5 min',desc:'The PS1 version of the greatest Castlevania ever became a native program for Windows, Linux and macOS, with widescreen and extras. Here\'s how to install it.',bg:'SOTN',bgc:'#0d1a2a',tags:['Castlevania','Symphony of the Night','PS1','recomp','tutorial'],body:`
+<h2>What is SymphonyRecomp?</h2>
+<p>It's an unofficial port of the <strong>PlayStation 1 version of Castlevania: Symphony of the Night</strong>, made by the BlackLabelHQ team with the RecompOne tool. The game runs natively on Windows, Linux and macOS, with no emulator and no plugins or BIOS to configure.</p>
+<div class="highlight-box"><p>⚠️ The project is in <strong>open beta</strong>. You can already play it from start to finish, but bugs may still show up. The stable 1.0 release isn't out yet.</p></div>
+<h2>What's new</h2>
 <ul>
-<li>Widescreen 16:9 de verdade, não só imagem esticada.</li>
-<li>Controles personalizáveis e modo tela cheia sem bordas.</li>
-<li>Opções de acessibilidade, incluindo modo para daltônicos.</li>
-<li>Extras opcionais, como randomizador e pulo infinito para explorar o castelo.</li>
-<li>Primeiros passos de suporte a mods.</li>
+<li>True 16:9 widescreen, not just a stretched image.</li>
+<li>Customizable controls and borderless fullscreen.</li>
+<li>Accessibility options, including a colorblind mode.</li>
+<li>Optional extras such as a randomizer and infinite jump for exploring the castle.</li>
+<li>Early mod support.</li>
 </ul>
-<h2>Requisitos</h2>
+<h2>Requirements</h2>
 <ul>
-<li>Sua cópia da <strong>versão norte-americana do disco de PS1</strong>, em arquivos .bin e .cue, gerados a partir do seu disco original.</li>
-<li>Um PC comum. Os requisitos são bem modestos.</li>
+<li>Your copy of the <strong>North American PS1 disc</strong>, as .bin and .cue files made from your original disc.</li>
+<li>An ordinary PC. Requirements are very modest.</li>
 </ul>
-<h2>Passo a passo</h2>
+<h2>Step by step</h2>
 <ol>
-<li>Procure o projeto SymphonyRecomp da BlackLabelHQ no GitHub e baixe a release mais recente para o seu sistema.</li>
-<li>Extraia numa pasta própria.</li>
-<li>Coloque os arquivos .bin e .cue do seu disco na pasta indicada pelas instruções do projeto, com os nomes que ele pede.</li>
-<li>Rode o script de inicialização incluído. Ele faz a recompilação e gera o executável do jogo.</li>
-<li>Daqui para frente, é só abrir o executável como qualquer jogo de PC. O atualizador automático cuida das novas versões.</li>
+<li>Find BlackLabelHQ's SymphonyRecomp project on GitHub and download the latest release for your system.</li>
+<li>Extract it into its own folder.</li>
+<li>Place your disc's .bin and .cue files in the folder specified by the project's instructions, using the names it asks for.</li>
+<li>Run the included launch script. It performs the recompilation and builds the game executable.</li>
+<li>From then on, just open the executable like any other PC game. The automatic updater handles new versions.</li>
 </ol>
-<h2>Não confunda</h2>
-<p>Existem dois projetos diferentes de Symphony of the Night no PC. O <strong>SymphonyRecomp</strong> usa a versão de PS1. O <strong>NocturneRecomp</strong> usa a versão de Xbox Live Arcade (Xbox 360) e foi feito com o SDK ReXGlue. Os dois exigem a sua própria cópia do jogo.</p>`},
+<h2>Don't mix them up</h2>
+<p>There are two different Symphony of the Night projects on PC. <strong>SymphonyRecomp</strong> uses the PS1 version. <strong>NocturneRecomp</strong> uses the Xbox Live Arcade (Xbox 360) version and was built with the ReXGlue SDK. Both require your own copy of the game.</p>`},
 
-{id:'melhores-recomps-n64',title:'Os Melhores Recomps de N64 para Jogar no PC Hoje',badge:'Tutorial',bc:'badge-tut',cat:'Recompilação',date:'19 Out 2026',rt:'5 min',desc:'Donkey Kong 64, Star Fox 64, Goemon, Pokémon Stadium e mais: os ports nativos de Nintendo 64 feitos com N64: Recompiled que já dá para jogar.',bg:'N64',bgc:'#0d1a2a',tags:['N64','recomp','Star Fox','Donkey Kong 64','lista'],body:`
-<h2>A explosão dos recomps de N64</h2>
-<p>Desde o Zelda 64: Recompiled, o N64: Recompiled virou a base de dezenas de ports. A ferramenta reduz muito o esforço para portar um jogo de N64, e a cada mês aparece um projeto novo. Todos seguem a mesma regra: <strong>nenhum arquivo do jogo vem incluído</strong>, você usa a ROM do seu próprio cartucho.</p>
-<h2>A lista</h2>
-<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Zelda 64: Recompiled (Majora's Mask)</h4><p>O projeto que começou tudo. Widescreen, alta taxa de quadros e mods. Tem tutorial completo aqui no blog.</p></div></div>
-<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Starfox 64: Recompiled</h4><p>Port nativo com várias melhorias e amplo suporte a mods. Foi desenvolvido junto com o Starship, outro port de Star Fox 64, e os dois coexistem como projetos irmãos.</p></div></div>
-<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>DK64 Rekongpiled (Donkey Kong 64)</h4><p>Um dos recomps mais pedidos pela comunidade, com o jogo completo rodando nativo.</p></div></div>
-<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Pokémon Stadium</h4><p>Recompilação da versão US 1.0, com suporte a Transfer Pak e à GB Tower.</p></div></div>
-<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Goemon64Recomp (Mystical Ninja Starring Goemon)</h4><p>O clássico cult da Konami ganhando vida nova. Ainda em desenvolvimento.</p></div></div>
-<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Dinosaur Planet</h4><p>O jogo da Rare que nunca foi lançado e acabou virando Star Fox Adventures, agora jogável como port nativo.</p></div></div>
-<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Quest 64: Recompiled</h4><p>O RPG de N64 que divide opiniões, agora com todas as vantagens de um port de PC.</p></div></div>
-<h2>Como instalar qualquer um deles</h2>
-<p>O processo é quase sempre o mesmo do Zelda 64: Recompiled:</p>
+{id:'melhores-recomps-n64',title:'The Best N64 Recomps to Play on PC Today',badge:'Tutorial',bc:'badge-tut',cat:'Recompilation',date:'Oct 19, 2026',rt:'5 min',desc:'Donkey Kong 64, Star Fox 64, Goemon, Pokémon Stadium and more: the native Nintendo 64 ports built with N64: Recompiled that you can already play.',bg:'N64',bgc:'#0d1a2a',tags:['N64','recomp','Star Fox','Donkey Kong 64','list'],body:`
+<h2>The N64 recomp explosion</h2>
+<p>Since Zelda 64: Recompiled, N64: Recompiled has become the foundation for dozens of ports. The tool greatly reduces the effort needed to port an N64 game, and new projects show up every month. They all follow the same rule: <strong>no game files included</strong>, you use the ROM from your own cartridge.</p>
+<h2>The list</h2>
+<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Zelda 64: Recompiled (Majora's Mask)</h4><p>The project that started it all. Widescreen, high frame rates and mods. There's a full tutorial here on the blog.</p></div></div>
+<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Starfox 64: Recompiled</h4><p>A native port with plenty of enhancements and extensive mod support. It was developed alongside Starship, another Star Fox 64 port, and the two coexist as sibling projects.</p></div></div>
+<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>DK64 Rekongpiled (Donkey Kong 64)</h4><p>One of the community's most requested recomps, with the full game running natively.</p></div></div>
+<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Pokémon Stadium</h4><p>A recompilation of the US 1.0 version, with Transfer Pak and GB Tower support.</p></div></div>
+<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Goemon64Recomp (Mystical Ninja Starring Goemon)</h4><p>Konami's cult classic getting a new lease on life. Still in development.</p></div></div>
+<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Dinosaur Planet</h4><p>The Rare game that was never released and eventually became Star Fox Adventures, now playable as a native port.</p></div></div>
+<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Quest 64: Recompiled</h4><p>The divisive N64 RPG, now with all the perks of a PC port.</p></div></div>
+<h2>How to install any of them</h2>
+<p>The process is almost always the same as Zelda 64: Recompiled:</p>
 <ol>
-<li>Abra a página do projeto no GitHub e vá em <strong>Releases</strong>.</li>
-<li>Baixe a versão mais recente para o seu sistema e extraia numa pasta.</li>
-<li>Abra o executável e selecione a ROM do seu cartucho, na <strong>região que o projeto pede</strong> (geralmente a US).</li>
+<li>Open the project's GitHub page and go to <strong>Releases</strong>.</li>
+<li>Download the latest version for your system and extract it into a folder.</li>
+<li>Run the executable and select the ROM from your cartridge, in the <strong>region the project asks for</strong> (usually US).</li>
 </ol>
-<div class="highlight-box"><p>💡 Projetos marcados como "dev" ou "beta" podem ter bugs. Se você curte acompanhar, os builds de teste costumam ficar disponíveis na aba Actions do GitHub de cada projeto.</p></div>
-<p>Esqueceu de algum? Manda nos comentários do canal que a gente atualiza a lista.</p>`},
+<div class="highlight-box"><p>💡 Projects marked "dev" or "beta" may have bugs. If you like following along, test builds are usually available in each project's GitHub Actions tab.</p></div>
+<p>Did we miss one? Let us know in the comments on the channel and we'll update the list.</p>`},
 
-{id:'melhores-jogos-coop-2025',title:'Os 10 Melhores Jogos Co-op de 2025',badge:'Co-op',bc:'badge-coop',cat:'Co-op',date:'20 Mar 2025',rt:'8 min',desc:'Uma seleção pesada dos melhores títulos cooperativos que dominaram 2025 — de Indies brutais a AAAs que finalmente entregaram.',bg:'CO-OP',bgc:'#0d1f0d',tags:['co-op','multiplayer','2025','games'],body:`
-<h2>Por que jogar em co-op é melhor em 2025</h2>
-<p>Se tem uma coisa que 2025 entregou de bandeja foi uma safra absurda de jogos cooperativos. Depois de anos de live service genérico e battle royale saturado, o mercado acordou para o que sempre foi a melhor forma de jogar: ao lado de um amigo.</p>
-<div class="highlight-box"><p>💡 Todos os jogos dessa lista têm suporte a co-op nativo — sem mods, sem RemotePlay Together, sem gambiarra.</p></div>
-<h2>A Lista Definitiva</h2>
-<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>It Takes Two</h4><p>Ainda referência absoluta de design cooperativo. Cada fase reinventa o gameplay. Obrigatório para qualquer dupla.</p></div></div>
-<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Elden Ring — Nightreign</h4><p>FromSoftware abraçou o co-op de vez. Três jogadores, mundo compartilhado, dificuldade brutal. Perfeito.</p></div></div>
-<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>Deep Rock Galactic</h4><p>Quatro anões, uma missão, mil inimigos. Caos organizado e incrivelmente viciante.</p></div></div>
-<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Helldivers 2</h4><p>O fenômeno que continuou dominando 2025. Democracia gerenciada e friendly fire acidental nunca foram tão divertidos.</p></div></div>
-<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Remnant II</h4><p>Co-op soulslike com geração procedural de mapas. Cada run é diferente, cada sessão com amigos é única.</p></div></div>
-<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Baldur's Gate 3</h4><p>O RPG definitivo com co-op estável e polido. Quatro jogadores fazendo escolhas completamente diferentes é pura anarquia.</p></div></div>
-<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Monster Hunter Wilds</h4><p>A entrada da série no mundo aberto chegou com co-op fluido e caças épicas que pedem companhia.</p></div></div>
-<div class="game-card"><div class="game-card-num">08</div><div class="game-card-info"><h4>Hades II</h4><p>O Early Access trouxe co-op como novidade bombástica. Dois jogadores, um submundo, caos mítico.</p></div></div>
-<div class="game-card"><div class="game-card-num">09</div><div class="game-card-info"><h4>Palworld</h4><p>Servidor co-op com amigos continuou sendo uma das experiências mais absurdamente divertidas do ano.</p></div></div>
-<div class="game-card"><div class="game-card-num">10</div><div class="game-card-info"><h4>Content Warning</h4><p>Quatro jogadores, câmera de vídeo, monstros e internet para viralizar. O jogo social mais criativo de 2025.</p></div></div>
-<h2>Conclusão</h2>
-<p>2025 foi o ano que comprovou de vez: co-op não é nicho, é o futuro. Com amigos certos e um headset na cabeça, qualquer jogo dessa lista entrega mais de 100 horas de diversão garantida. Qual desses você já jogou? Comenta no YouTube!</p>`},
+{id:'melhores-jogos-coop-2025',title:'The 10 Best Co-op Games of 2025',badge:'Co-op',bc:'badge-coop',cat:'Co-op',date:'Mar 20, 2025',rt:'8 min',desc:'A heavy-hitting selection of the co-op titles that ruled 2025, from brutal indies to AAA games that finally delivered.',bg:'CO-OP',bgc:'#0d1f0d',tags:['co-op','multiplayer','2025','games'],body:`
+<h2>Why co-op is better in 2025</h2>
+<p>If there's one thing 2025 served up, it's an absurd crop of co-op games. After years of generic live service and an oversaturated battle royale market, the industry woke up to what has always been the best way to play: next to a friend.</p>
+<div class="highlight-box"><p>💡 Every game on this list has native co-op support. No mods, no Remote Play Together, no hacks.</p></div>
+<h2>The definitive list</h2>
+<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>It Takes Two</h4><p>Still the gold standard of co-op design. Every level reinvents the gameplay. A must for any duo.</p></div></div>
+<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Elden Ring Nightreign</h4><p>FromSoftware finally went all in on co-op. Three players, a shared world, brutal difficulty. Perfect.</p></div></div>
+<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>Deep Rock Galactic</h4><p>Four dwarves, one mission, a thousand enemies. Organized chaos and incredibly addictive.</p></div></div>
+<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Helldivers 2</h4><p>The phenomenon that kept dominating in 2025. Managed democracy and accidental friendly fire have never been this fun.</p></div></div>
+<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Remnant II</h4><p>A co-op soulslike with procedurally generated maps. Every run is different, every session with friends is unique.</p></div></div>
+<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Baldur's Gate 3</h4><p>The definitive RPG, with stable and polished co-op. Four players making completely different choices is pure anarchy.</p></div></div>
+<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Monster Hunter Wilds</h4><p>The series' step into an open world arrived with smooth co-op and epic hunts that call for company.</p></div></div>
+<div class="game-card"><div class="game-card-num">08</div><div class="game-card-info"><h4>Hades II</h4><p>Early Access brought co-op as a bombshell feature. Two players, one underworld, mythical chaos.</p></div></div>
+<div class="game-card"><div class="game-card-num">09</div><div class="game-card-info"><h4>Palworld</h4><p>A co-op server with friends remained one of the most absurdly fun experiences of the year.</p></div></div>
+<div class="game-card"><div class="game-card-num">10</div><div class="game-card-info"><h4>Content Warning</h4><p>Four players, a video camera, monsters and an internet to go viral on. The most creative social game of 2025.</p></div></div>
+<h2>Conclusion</h2>
+<p>2025 was the year that proved it once and for all: co-op isn't a niche, it's the future. With the right friends and a headset on, any game on this list delivers 100+ hours of guaranteed fun. Which ones have you played? Tell us on YouTube!</p>`},
 
-{id:'emulacao-browser-guia-completo',title:'Emulação no Browser: Guia Completo para Jogar Clássicos Online',badge:'Retro',bc:'badge-retro',cat:'Emulação',date:'15 Mar 2025',rt:'10 min',desc:'Tudo que você precisa saber para jogar SNES, N64, PS1 e muito mais direto no browser, sem instalar nada.',bg:'RETRO',bgc:'#1a0d2a',tags:['emulação','retro','browser','ROM','SNES','PS1'],body:`
-<h2>O Renascimento dos Clássicos</h2>
-<p>Com a evolução do WebAssembly e APIs modernas dos browsers, é possível rodar jogos de SNES, Nintendo 64, PS1 e GBA direto na aba do Chrome — sem instalar nada, sem emulador externo, sem configuração complicada. O emulador web do Nagcoop usa exatamente essa tecnologia.</p>
-<div class="highlight-box"><p>⚡ Importante: use apenas ROMs de jogos que você possui fisicamente. A emulação é legal; o download de ROMs protegidas por copyright não é.</p></div>
-<h2>Sistemas Suportados</h2>
+{id:'emulacao-browser-guia-completo',title:'Browser Emulation: The Complete Guide to Playing Classics Online',badge:'Retro',bc:'badge-retro',cat:'Emulation',date:'Mar 15, 2025',rt:'10 min',desc:'Everything you need to know to play SNES, N64, PS1 and much more right in your browser, without installing anything.',bg:'RETRO',bgc:'#1a0d2a',tags:['emulation','retro','browser','ROM','SNES','PS1'],body:`
+<h2>The rebirth of the classics</h2>
+<p>Thanks to WebAssembly and modern browser APIs, you can run SNES, Nintendo 64, PS1 and GBA games right in a Chrome tab: no installs, no external emulator, no complicated setup. The Nagcoop web emulator uses exactly this technology.</p>
+<div class="highlight-box"><p>⚡ Important: only use ROMs of games you physically own. Emulation is legal; downloading copyrighted ROMs is not.</p></div>
+<h2>Supported systems</h2>
 <h3>Super Nintendo (SNES)</h3>
-<p>Considerada por muitos a melhor biblioteca da história dos games. Chrono Trigger, Super Metroid, Street Fighter II, Zelda: A Link to the Past. No browser, roda suave na maioria dos títulos.</p>
+<p>Considered by many the best library in gaming history. Chrono Trigger, Super Metroid, Street Fighter II, Zelda: A Link to the Past. In the browser, most titles run smoothly.</p>
 <h3>Nintendo 64</h3>
-<p>Mais pesado de emular, mas títulos como Mario 64, Zelda OoT e GoldenEye rodam bem em PCs modernos mesmo via browser. Recomenda-se Chrome ou Edge para melhor performance.</p>
+<p>Heavier to emulate, but titles like Mario 64, Zelda: Ocarina of Time and GoldenEye run well on modern PCs, even in the browser. Chrome or Edge are recommended for the best performance.</p>
 <h3>Game Boy / GBA</h3>
-<p>Emulação perfeita no browser. Pokémon, Metroid Fusion, Castlevania: Aria of Sorrow — tudo funciona impecavelmente.</p>
+<p>Flawless emulation in the browser. Pokémon, Metroid Fusion, Castlevania: Aria of Sorrow: everything works perfectly.</p>
 <h3>Mega Drive / Genesis</h3>
-<p>Sonic, Streets of Rage, Mortal Kombat — emulação precisa e rápida da biblioteca Sega.</p>
+<p>Sonic, Streets of Rage, Mortal Kombat: accurate and fast emulation of the Sega library.</p>
 <h3>PlayStation 1</h3>
-<p>Requer a BIOS do console (scph1001.bin) extraída do seu PS1 original. Com ela, Final Fantasy VII, Metal Gear Solid e Crash Bandicoot rodam bem.</p>
-<h2>Como Usar o Emulador Nagcoop</h2>
+<p>The emulator has a built-in BIOS, but for better compatibility you can load the BIOS dumped from your own PS1 (such as scph1001.bin). Final Fantasy VII, Metal Gear Solid and Crash Bandicoot run well.</p>
+<h2>How to use the Nagcoop emulator</h2>
 <ol>
-<li>Acesse a página Emulator no menu</li>
-<li>Selecione o sistema no dropdown</li>
-<li>Clique em "Run local ROM" e selecione o arquivo do seu jogo</li>
-<li>Para PS1, adicione o arquivo de BIOS antes de carregar o jogo</li>
-<li>Use o controle na tela (mobile) ou teclado/gamepad (PC)</li>
+<li>Open the Emulator page from the menu</li>
+<li>Expand "Advanced — Load a custom ROM" and pick the system in the dropdown</li>
+<li>Choose your game file and click "Run local ROM"</li>
+<li>For systems that need a BIOS, load it once and it stays saved in your browser</li>
+<li>Use the on-screen controls (mobile) or keyboard/gamepad (PC)</li>
 </ol>
-<h2>Dicas de Performance</h2>
+<h2>Performance tips</h2>
 <ul>
-<li>Use Chrome ou Edge — melhor suporte a WebAssembly</li>
-<li>Feche abas desnecessárias para liberar RAM</li>
-<li>Para N64 e PS1, prefira tela cheia com F11</li>
-<li>Em mobile, gire para paisagem para melhor experiência</li>
+<li>Use Chrome or Edge for the best WebAssembly support</li>
+<li>Close unnecessary tabs to free up RAM</li>
+<li>For N64 and PS1, go fullscreen</li>
+<li>On mobile, rotate to landscape for the best experience</li>
 </ul>
-<h2>Homebrews: Jogos Legais e Gratuitos</h2>
-<p>Uma das partes mais interessantes da emulação moderna são os homebrews — jogos desenvolvidos pela comunidade para consoles antigos, distribuídos gratuitamente e legalmente. O botão "Load demo" no emulador do Nagcoop carrega homebrews selecionados para você experimentar sem precisar de nenhum arquivo externo.</p>`},
+<h2>Homebrews: legal, free games</h2>
+<p>One of the coolest parts of modern emulation is homebrew: games made by the community for classic consoles, distributed for free and legally by their own creators. Many of them run in the Nagcoop emulator, and you'll find plenty on itch.io.</p>`},
 
-{id:'jogos-indie-que-valem-pena-2025',title:'8 Jogos Indie que Valem Cada Centavo em 2025',badge:'Indie',bc:'badge-indie',cat:'Indie',date:'10 Mar 2025',rt:'7 min',desc:'Os melhores indies de 2025 que passaram voando pelo radar mas entregam experiências melhores que muitos AAAs.',bg:'INDIE',bgc:'#2a1a0d',tags:['indie','2025','recomendação','games'],body:`
-<h2>O Ano dos Indies</h2>
-<p>Enquanto as grandes publishers se debatem entre live service fracassado e remakes desnecessários, os estúdios independentes continuam entregando as experiências mais criativas e corajosas do mercado. 2025 foi um ano excepcional para quem sabe onde olhar.</p>
-<div class="highlight-box"><p>🎯 Critério: apenas jogos com avaliação "Muito Positiva" ou superior na Steam, lançados ou com major update em 2025.</p></div>
-<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Animal Well</h4><p>Metroidvania de exploração pura. Sem tutorial, sem mapa, sem mão na luva. Cada pixel esconde um segredo.</p></div></div>
-<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Balatro</h4><p>Jogo de cartas roguelike baseado em poker diferente de tudo. Impossível de parar. Disponível no mobile também.</p></div></div>
-<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>UFO 50</h4><p>Cinquenta jogos completos num único pacote, todos simulando games dos anos 80. Uma obra de amor ao retrogaming.</p></div></div>
-<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Neva</h4><p>Uma história de família e sobrevivência com visual de quadrinhos e combate fluido. Curto mas impactante.</p></div></div>
-<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Caves of Qud</h4><p>O roguelike mais ambicioso já feito. Ficção científica pós-apocalíptica com profundidade RPG absurda.</p></div></div>
-<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Mouthwashing</h4><p>Horror psicológico narrativo com arte perturbadora. Curto (3-4h), denso e inesquecível.</p></div></div>
-<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Pacific Drive</h4><p>Survival com carro num mundo distorcido e misterioso. A sensação de dirigir numa tempestade de anomalias é ímpar.</p></div></div>
-<div class="game-card"><div class="game-card-num">08</div><div class="game-card-info"><h4>Tactical Breach Wizards</h4><p>Estratégia por turnos com mecânicas de mago e senso de humor afiado. Puzzle e táticas no mesmo pacote.</p></div></div>
-<h2>Por Que Apoiar Indies?</h2>
-<p>Cada cópia de jogo indie que você compra é uma decisão criativa sendo viabilizada. Enquanto grandes publishers tomam decisões baseadas em métricas de engajamento, estúdios independentes ainda fazem jogos porque têm algo a dizer — e muitas vezes dizem mais com menos orçamento do que qualquer blockbuster de $200 milhões.</p>`},
+{id:'jogos-indie-que-valem-pena-2025',title:'8 Indie Games Worth Every Penny in 2025',badge:'Indie',bc:'badge-indie',cat:'Indie',date:'Mar 10, 2025',rt:'7 min',desc:'The best indies of 2025 that flew under the radar but deliver better experiences than many AAA games.',bg:'INDIE',bgc:'#2a1a0d',tags:['indie','2025','recommendations','games'],body:`
+<h2>The year of the indies</h2>
+<p>While big publishers struggle between failed live service games and unnecessary remakes, independent studios keep delivering the most creative and daring experiences on the market. 2025 was an exceptional year for anyone who knows where to look.</p>
+<div class="highlight-box"><p>🎯 Criteria: only games rated "Very Positive" or higher on Steam, released or with a major update in 2025.</p></div>
+<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Animal Well</h4><p>A pure exploration metroidvania. No tutorial, no map, no hand-holding. Every pixel hides a secret.</p></div></div>
+<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Balatro</h4><p>A poker-based roguelike card game unlike anything else. Impossible to put down. Also available on mobile.</p></div></div>
+<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>UFO 50</h4><p>Fifty complete games in a single package, all imitating 80s games. A labor of love for retro gaming.</p></div></div>
+<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Neva</h4><p>A story of family and survival with a storybook look and fluid combat. Short but powerful.</p></div></div>
+<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Caves of Qud</h4><p>The most ambitious roguelike ever made. Post-apocalyptic sci-fi with absurd RPG depth.</p></div></div>
+<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Mouthwashing</h4><p>Narrative psychological horror with disturbing art. Short (3-4 hours), dense and unforgettable.</p></div></div>
+<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Pacific Drive</h4><p>Car-based survival in a warped, mysterious world. Driving through a storm of anomalies feels like nothing else.</p></div></div>
+<div class="game-card"><div class="game-card-num">08</div><div class="game-card-info"><h4>Tactical Breach Wizards</h4><p>Turn-based strategy with wizard mechanics and a sharp sense of humor. Puzzles and tactics in one package.</p></div></div>
+<h2>Why support indies?</h2>
+<p>Every indie game you buy makes a creative decision possible. While big publishers make choices based on engagement metrics, independent studios still make games because they have something to say, and they often say more with less budget than any $200 million blockbuster.</p>`},
 
-{id:'melhores-jogos-coop-local-sofa',title:'Co-op de Sofá: Os Melhores para Jogar com Quem Está do Lado',badge:'Co-op',bc:'badge-coop',cat:'Co-op',date:'05 Mar 2025',rt:'6 min',desc:'Couch co-op ainda é a melhor forma de jogar. Aqui estão os títulos que fazem isso melhor em 2025.',bg:'SOFA',bgc:'#0d1f0d',tags:['co-op','couch co-op','local','multiplayer'],body:`
-<h2>A Magia do Co-op Local</h2>
-<p>Headset, lag, conexão caindo — nada disso existe quando você e um amigo estão no mesmo sofá, olhando pro mesmo monitor. O couch co-op é a forma mais pura de jogar junto, e felizmente a indústria não abandonou esse formato.</p>
-<h2>Para Casais e Duplas Casuais</h2>
-<div class="game-card"><div class="game-card-num">⭐</div><div class="game-card-info"><h4>It Takes Two</h4><p>O padrão ouro do gênero. Projetado do zero para duas pessoas. Criativo, emocionante e surpreendente até o final.</p></div></div>
-<div class="game-card"><div class="game-card-num">⭐</div><div class="game-card-info"><h4>Overcooked! 2</h4><p>Caos culinário colaborativo que testa amizades. Simples de aprender, absurdamente difícil de dominar.</p></div></div>
-<div class="game-card"><div class="game-card-num">⭐</div><div class="game-card-info"><h4>Moving Out 2</h4><p>Física caótica de mudança. Você e um amigo tentando tirar um sofá pela janela nunca foi tão hilário.</p></div></div>
-<h2>Para Hardcores</h2>
-<div class="game-card"><div class="game-card-num">💀</div><div class="game-card-info"><h4>Cuphead</h4><p>Dificuldade brutal com visual de animação dos anos 30. Co-op local adiciona caos e diversão em partes iguais.</p></div></div>
-<div class="game-card"><div class="game-card-num">💀</div><div class="game-card-info"><h4>Streets of Rage 4</h4><p>O retorno glorioso da franquia beat'em up da Sega. Co-op local para até 4 jogadores. Trilha sonora pesada.</p></div></div>
-<div class="game-card"><div class="game-card-num">💀</div><div class="game-card-info"><h4>TMNT: Shredder's Revenge</h4><p>Beat'em up old school perfeito. Referência dos anos 90 executada com maestria. Até 6 jogadores local.</p></div></div>
-<h2>Para Grupos de 3-4</h2>
-<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Pummel Party</h4><p>Mario Party mas sem filtro. Minigames caóticos e traição garantida. Melhor com quatro pessoas.</p></div></div>
-<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Nidhogg 2</h4><p>Duelo minimalista de esgrima que vicia absurdamente. Melhor jogo de 1v1 local da última década.</p></div></div>
-<h2>Setup Ideal para Couch Co-op no PC</h2>
+{id:'melhores-jogos-coop-local-sofa',title:'Couch Co-op: The Best Games to Play with the Person Next to You',badge:'Co-op',bc:'badge-coop',cat:'Co-op',date:'Mar 5, 2025',rt:'6 min',desc:'Couch co-op is still the best way to play. These are the titles that do it best in 2025.',bg:'COUCH',bgc:'#0d1f0d',tags:['co-op','couch co-op','local','multiplayer'],body:`
+<h2>The magic of local co-op</h2>
+<p>Headsets, lag, dropped connections: none of that exists when you and a friend are on the same couch, looking at the same screen. Couch co-op is the purest way to play together, and luckily the industry hasn't abandoned it.</p>
+<h2>For couples and casual duos</h2>
+<div class="game-card"><div class="game-card-num">⭐</div><div class="game-card-info"><h4>It Takes Two</h4><p>The genre's gold standard. Designed from scratch for two people. Creative, emotional and surprising until the very end.</p></div></div>
+<div class="game-card"><div class="game-card-num">⭐</div><div class="game-card-info"><h4>Overcooked! 2</h4><p>Collaborative kitchen chaos that tests friendships. Simple to learn, absurdly hard to master.</p></div></div>
+<div class="game-card"><div class="game-card-num">⭐</div><div class="game-card-info"><h4>Moving Out 2</h4><p>Chaotic moving-day physics. You and a friend trying to get a couch out through a window has never been this hilarious.</p></div></div>
+<h2>For hardcore players</h2>
+<div class="game-card"><div class="game-card-num">💀</div><div class="game-card-info"><h4>Cuphead</h4><p>Brutal difficulty with a 1930s cartoon look. Local co-op adds equal parts chaos and fun.</p></div></div>
+<div class="game-card"><div class="game-card-num">💀</div><div class="game-card-info"><h4>Streets of Rage 4</h4><p>The glorious return of Sega's beat 'em up franchise. Local co-op for up to 4 players. Heavy soundtrack.</p></div></div>
+<div class="game-card"><div class="game-card-num">💀</div><div class="game-card-info"><h4>TMNT: Shredder's Revenge</h4><p>A perfect old-school beat 'em up. A 90s throwback executed masterfully. Up to 6 local players.</p></div></div>
+<h2>For groups of 3-4</h2>
+<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Pummel Party</h4><p>Mario Party without the filter. Chaotic minigames and guaranteed betrayal. Best with four people.</p></div></div>
+<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Nidhogg 2</h4><p>A minimalist fencing duel that's absurdly addictive. The best local 1v1 game of the last decade.</p></div></div>
+<h2>Ideal couch co-op setup on PC</h2>
 <ul>
-<li>Dois controles USB ou Bluetooth (Xbox Series X funciona nativamente no Windows)</li>
-<li>Monitor ou TV de pelo menos 40" para split-screen confortável</li>
-<li>Steam Big Picture Mode para navegação na TV com controle</li>
-<li>Steam Remote Play Together para co-op online com jogos sem suporte nativo</li>
+<li>Two USB or Bluetooth controllers (Xbox Series controllers work natively on Windows)</li>
+<li>A monitor or TV of at least 40" for comfortable split-screen</li>
+<li>Steam Big Picture Mode for controller-friendly navigation on the TV</li>
+<li>Steam Remote Play Together for online co-op in games without native support</li>
 </ul>`},
 
-{id:'classicos-snes',title:'12 Clássicos do SNES que Você Precisa Jogar em 2025',badge:'Retro',bc:'badge-retro',cat:'Emulação',date:'28 Fev 2025',rt:'9 min',desc:'A biblioteca do Super Nintendo é considerada a melhor da história. Esses são os títulos que todo gamer precisa conhecer.',bg:'SNES',bgc:'#1a0d2a',tags:['SNES','retro','Super Nintendo','clássicos','emulação'],body:`
-<h2>Por que o SNES ainda importa?</h2>
-<p>Lançado em 1990, o Super Nintendo revolucionou os games com gráficos de modo 7, som de qualidade cinematográfica e uma biblioteca que estabeleceu franquias que existem até hoje. Com o emulador web do Nagcoop, você pode jogar todos esses clássicos direto no browser.</p>
-<h2>Os Imprescindíveis</h2>
-<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Chrono Trigger (1995)</h4><p>O RPG perfeito. Sistema ATB inovador, múltiplos finais, narrativa temporal e trilha sonora de Yasunori Mitsuda que ainda arrepia. Frequentemente apontado como o melhor jogo de todos os tempos.</p></div></div>
-<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Super Metroid (1994)</h4><p>Pai do gênero metroidvania. Atmosfera opressiva, exploração não-linear e design de mapa copiado por décadas.</p></div></div>
-<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>Zelda: A Link to the Past (1991)</h4><p>O template definitivo dos Zeldas 2D. Mundo duplo, dungeons elaboradas e narrativa clássica. Perfeito do início ao fim.</p></div></div>
-<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Final Fantasy VI (1994)</h4><p>O auge da era 16 bits dos JRPGs. Conjunto de personagens extraordinário, opera icônica, vilão inesquecível.</p></div></div>
-<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Super Mario World (1990)</h4><p>O jogo de lançamento que definiu a era. Yoshi, Cape Feather, mundos secretos. Ainda um dos melhores plataformas já feitos.</p></div></div>
-<h2>Ação e Beat'em Up</h2>
-<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Contra III: The Alien Wars</h4><p>Run and gun frenético. Dois jogadores, dificuldade brutal. O co-op mais selvagem do SNES.</p></div></div>
-<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Castlevania IV (1991)</h4><p>Gothic horror perfeito. Controles responsivos, level design impecável e trilha sonora arrepiante.</p></div></div>
-<div class="game-card"><div class="game-card-num">08</div><div class="game-card-info"><h4>Street Fighter II Turbo (1992)</h4><p>O fighting game que definiu o gênero no console. Todos os personagens e modos do arcade.</p></div></div>
-<h2>Joias Escondidas</h2>
-<div class="game-card"><div class="game-card-num">09</div><div class="game-card-info"><h4>Earthbound (1994)</h4><p>RPG excêntrico e genial ambientado em mundo contemporâneo. Humor surreal e crítica social única.</p></div></div>
-<div class="game-card"><div class="game-card-num">10</div><div class="game-card-info"><h4>Secret of Mana (1993)</h4><p>Action RPG com co-op em tempo real para até 3 jogadores. Inovador e belo para os padrões da época.</p></div></div>
-<div class="game-card"><div class="game-card-num">11</div><div class="game-card-info"><h4>Donkey Kong Country 2 (1995)</h4><p>O melhor da trilogia DKC. Level design criativo, trilha sonora excepcional de David Wise.</p></div></div>
-<div class="game-card"><div class="game-card-num">12</div><div class="game-card-info"><h4>Mega Man X (1993)</h4><p>A evolução perfeita da fórmula Mega Man. Mais rápido, mais estiloso, com dash e wall jump.</p></div></div>
-<h2>Como Jogar Hoje</h2>
-<p>O emulador web do Nagcoop suporta ROMs de SNES nativamente. Basta selecionar SNES no dropdown, carregar seu arquivo .smc ou .sfc e começar a jogar. Sem configuração, sem driver, sem nada.</p>`},
+{id:'classicos-snes',title:'12 SNES Classics You Need to Play',badge:'Retro',bc:'badge-retro',cat:'Emulation',date:'Feb 28, 2025',rt:'9 min',desc:'The Super Nintendo library is considered the best in history. These are the titles every gamer needs to know.',bg:'SNES',bgc:'#1a0d2a',tags:['SNES','retro','Super Nintendo','classics','emulation'],body:`
+<h2>Why does the SNES still matter?</h2>
+<p>Released in 1990, the Super Nintendo revolutionized gaming with Mode 7 graphics, cinematic-quality sound and a library that established franchises that still exist today. With your own cartridge backups and the Nagcoop web emulator, you can play these classics right in your browser.</p>
+<h2>The essentials</h2>
+<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Chrono Trigger (1995)</h4><p>The perfect RPG. An innovative ATB system, multiple endings, a time-travel story and a Yasunori Mitsuda soundtrack that still gives chills. Often named the greatest game of all time.</p></div></div>
+<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Super Metroid (1994)</h4><p>The father of the metroidvania genre. Oppressive atmosphere, non-linear exploration and map design copied for decades.</p></div></div>
+<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>Zelda: A Link to the Past (1991)</h4><p>The definitive template for 2D Zelda. Dual worlds, elaborate dungeons and a classic story. Perfect from start to finish.</p></div></div>
+<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Final Fantasy VI (1994)</h4><p>The peak of 16-bit JRPGs. An extraordinary cast, an iconic opera scene and an unforgettable villain.</p></div></div>
+<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Super Mario World (1990)</h4><p>The launch title that defined an era. Yoshi, the Cape Feather, secret worlds. Still one of the best platformers ever made.</p></div></div>
+<h2>Action and beat 'em ups</h2>
+<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Contra III: The Alien Wars</h4><p>Frantic run and gun. Two players, brutal difficulty. The wildest co-op on the SNES.</p></div></div>
+<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Super Castlevania IV (1991)</h4><p>Perfect gothic horror. Responsive controls, flawless level design and a chilling soundtrack.</p></div></div>
+<div class="game-card"><div class="game-card-num">08</div><div class="game-card-info"><h4>Street Fighter II Turbo (1992)</h4><p>The fighting game that defined the genre on consoles. All the arcade characters and modes.</p></div></div>
+<h2>Hidden gems</h2>
+<div class="game-card"><div class="game-card-num">09</div><div class="game-card-info"><h4>EarthBound (1994)</h4><p>An eccentric, brilliant RPG set in a contemporary world. Surreal humor and unique social commentary.</p></div></div>
+<div class="game-card"><div class="game-card-num">10</div><div class="game-card-info"><h4>Secret of Mana (1993)</h4><p>An action RPG with real-time co-op for up to 3 players. Innovative and beautiful for its time.</p></div></div>
+<div class="game-card"><div class="game-card-num">11</div><div class="game-card-info"><h4>Donkey Kong Country 2 (1995)</h4><p>The best of the DKC trilogy. Creative level design and an exceptional David Wise soundtrack.</p></div></div>
+<div class="game-card"><div class="game-card-num">12</div><div class="game-card-info"><h4>Mega Man X (1993)</h4><p>The perfect evolution of the Mega Man formula. Faster, more stylish, with dashing and wall jumps.</p></div></div>
+<h2>How to play today</h2>
+<p>The Nagcoop web emulator supports SNES natively. Just pick SNES in the dropdown, load the .smc or .sfc backup of your own cartridge and start playing. No setup, no drivers, nothing.</p>`},
 
-{id:'monster-hunter-wilds-review',title:'Monster Hunter Wilds: A Melhor Entrada da Franquia?',badge:'News',bc:'badge-news',cat:'Lançamentos',date:'22 Fev 2025',rt:'8 min',desc:'Monster Hunter Wilds chegou prometendo revolução. Depois de 60 horas de gameplay, aqui está nossa análise completa.',bg:'MH',bgc:'#3a1a1a',tags:['Monster Hunter','Wilds','review','2025','co-op'],body:`
-<h2>A Promessa de um Mundo Vivo</h2>
-<p>Quando a Capcom revelou Monster Hunter Wilds, a promessa era clara: um mundo aberto de verdade, onde os monstros existem em ecossistemas reais, interagem entre si e com o ambiente. Depois de mais de 60 horas com o jogo: eles entregaram. Quase que completamente.</p>
-<div class="highlight-box"><p>🎮 Testado em PC (RTX 3080, i9-12900K, 32GB RAM) e PS5. Review baseado em campanha solo e co-op até 4 jogadores.</p></div>
-<h2>O que Funciona Muito Bem</h2>
-<h3>O Mundo como Personagem</h3>
-<p>Os biomas de Wilds são vivos de uma forma que Monster Hunter World nunca conseguiu. Tempestades mudam o comportamento dos monstros. Monstros migram entre regiões em busca de presas. Um Rathalos ferido pode recuar para se recuperar antes que você termine a caça.</p>
-<h3>O Co-op Mais Fluido da Série</h3>
-<p>Histórico problema da franquia, o multijogador finalmente funciona sem atrito. Entrar na caça de um amigo, o sistema de SOS renovado, o crossplay entre PC e consoles — tudo foi polido. Caçar em grupo de quatro é agora a experiência mais recomendada.</p>
-<h3>14 Armas Revisadas</h3>
-<p>Cada categoria recebeu revisões substanciais. A Espada e Escudo ganhou mecânicas de escudo perfeito, a Great Sword continua sendo a catarse de dano mais satisfatória dos games, e a Insect Glaive foi completamente remodelada com foco em mobilidade aérea.</p>
-<h2>O que Poderia Ser Melhor</h2>
-<h3>Performance no PC</h3>
-<p>O lançamento no PC foi turbulento. Stutters em áreas abertas, Ray Tracing exigente e o infame problema de compilação de shaders que trava os primeiros minutos de jogo. Patches melhoraram mas não resolveram completamente.</p>
-<h3>Endgame Familiar</h3>
-<p>Se você jogou World e Iceborne, o loop de endgame vai parecer familiar demais. Funciona, mas não inova.</p>
-<h2>Veredicto</h2>
-<p>Monster Hunter Wilds é o jogo mais acessível da franquia sem perder a profundidade que faz a série especial. Os problemas de performance no PC e o endgame previsível são ressalvas reais, mas não comprometem uma das melhores experiências de 2025.</p>
-<div class="highlight-box"><p>⭐ Nota: 9/10 — Obrigatório para fãs da franquia e recomendado para iniciantes.</p></div>`},
+{id:'monster-hunter-wilds-review',title:'Monster Hunter Wilds: The Best Entry in the Series?',badge:'News',bc:'badge-news',cat:'Releases',date:'Feb 22, 2025',rt:'8 min',desc:'Monster Hunter Wilds arrived promising a revolution. After 60 hours of gameplay, here\'s our full review.',bg:'MH',bgc:'#3a1a1a',tags:['Monster Hunter','Wilds','review','2025','co-op'],body:`
+<h2>The promise of a living world</h2>
+<p>When Capcom revealed Monster Hunter Wilds, the promise was clear: a true open world where monsters live in real ecosystems, interacting with each other and with the environment. After more than 60 hours with the game: they delivered. Almost completely.</p>
+<div class="highlight-box"><p>🎮 Tested on PC (RTX 3080, i9-12900K, 32GB RAM) and PS5. Review based on the solo campaign and co-op with up to 4 players.</p></div>
+<h2>What works really well</h2>
+<h3>The world as a character</h3>
+<p>The biomes in Wilds are alive in a way Monster Hunter World never managed. Storms change monster behavior. Monsters migrate between regions in search of prey. A wounded Rathalos may retreat to recover before you finish the hunt.</p>
+<h3>The smoothest co-op in the series</h3>
+<p>A long-standing problem for the franchise, multiplayer finally works without friction. Joining a friend's hunt, the revamped SOS system, crossplay between PC and consoles: it's all been polished. Hunting in a group of four is now the most recommended way to play.</p>
+<h3>14 reworked weapons</h3>
+<p>Every weapon type received substantial changes. Sword and Shield gained perfect-guard mechanics, the Great Sword is still the most satisfying damage catharsis in gaming, and the Insect Glaive was completely reworked with a focus on aerial mobility.</p>
+<h2>What could be better</h2>
+<h3>PC performance</h3>
+<p>The PC launch was rocky. Stutters in open areas, demanding ray tracing and the infamous shader compilation issue that freezes the first minutes of play. Patches improved things but didn't fully solve them.</p>
+<h3>A familiar endgame</h3>
+<p>If you played World and Iceborne, the endgame loop will feel all too familiar. It works, but it doesn't innovate.</p>
+<h2>Verdict</h2>
+<p>Monster Hunter Wilds is the most accessible game in the franchise without losing the depth that makes the series special. The PC performance problems and predictable endgame are real caveats, but they don't undermine one of the best experiences of 2025.</p>
+<div class="highlight-box"><p>⭐ Score: 9/10. A must for series fans and recommended for newcomers.</p></div>`},
 
-{id:'ps1-classicos-remake',title:'7 Jogos de PS1 que Merecem um Remake em 2025',badge:'Retro',bc:'badge-retro',cat:'Emulação',date:'18 Fev 2025',rt:'7 min',desc:'Enquanto esperamos remakes que talvez nunca venham, esses clássicos do PS1 ainda podem ser jogados hoje via emulação.',bg:'PS1',bgc:'#1a0d2a',tags:['PS1','PlayStation','retro','remake','clássicos'],body:`
-<h2>A Era de Ouro do PS1</h2>
-<p>O PlayStation original foi um divisor de águas. Primeiro console a usar CDs, protagonizou a transição do 2D para o 3D e abrigou algumas das melhores franquias da história dos games. Enquanto Sony foca em remasters de PS4, esses clássicos seguem esperando por atenção.</p>
-<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Vagrant Story (2000)</h4><p>Action RPG de Yasumi Matsuno com sistema de crafting de armas absurdamente profundo e narrativa adulta e densa. Nunca teve sequência, nunca teve remake. Crime.</p></div></div>
-<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Parasite Eve (1998)</h4><p>Horror de ficção científica baseado no romance japonês. Combate em tempo real com elementos de RPG. Aya Brea é uma das melhores heroínas da era.</p></div></div>
-<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>Legend of Dragoon (1999)</h4><p>JRPG de 4 CDs com sistema de batalha baseado em timing perfeito. A Sony tentou criar sua resposta ao Final Fantasy e quase conseguiu.</p></div></div>
-<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Xenogears (1998)</h4><p>RPG filosófico que mistura consciência, religião e humanidade. Ambicioso demais para sua época — precisa de remake para completar a visão original.</p></div></div>
-<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Bushido Blade (1997)</h4><p>Fighting game de samurai onde um golpe pode matar. Sistema de dano localizado que nunca foi replicado com a mesma fidelidade. Único até hoje.</p></div></div>
-<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Fear Effect (2000)</h4><p>Action adventure de cyberpunk com estética animê e narrativa noir. Visual único e atmosfera incomparável para a época.</p></div></div>
-<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Threads of Fate (1999)</h4><p>Action RPG da Squaresoft com dois protagonistas com histórias diferentes. Charme, humor e gameplay sólido que merecia mais atenção.</p></div></div>
-<h2>Como Jogar PS1 no Emulador Nagcoop</h2>
+{id:'ps1-classicos-remake',title:'7 PS1 Games That Deserve a Remake',badge:'Retro',bc:'badge-retro',cat:'Emulation',date:'Feb 18, 2025',rt:'7 min',desc:'While we wait for remakes that may never come, these PS1 classics can still be played today through emulation.',bg:'PS1',bgc:'#1a0d2a',tags:['PS1','PlayStation','retro','remake','classics'],body:`
+<h2>The golden age of the PS1</h2>
+<p>The original PlayStation was a watershed moment. The first major console built around CDs, it led the transition from 2D to 3D and was home to some of the best franchises in gaming history. While Sony focuses on newer remasters, these classics are still waiting for some attention.</p>
+<div class="game-card"><div class="game-card-num">01</div><div class="game-card-info"><h4>Vagrant Story (2000)</h4><p>Yasumi Matsuno's action RPG, with an absurdly deep weapon crafting system and a dense, mature story. It never got a sequel or a remake. A crime.</p></div></div>
+<div class="game-card"><div class="game-card-num">02</div><div class="game-card-info"><h4>Parasite Eve (1998)</h4><p>Sci-fi horror based on the Japanese novel. Real-time combat with RPG elements. Aya Brea is one of the best heroines of the era.</p></div></div>
+<div class="game-card"><div class="game-card-num">03</div><div class="game-card-info"><h4>The Legend of Dragoon (1999)</h4><p>A 4-disc JRPG with a battle system built on precise timing. Sony tried to create its answer to Final Fantasy and almost pulled it off.</p></div></div>
+<div class="game-card"><div class="game-card-num">04</div><div class="game-card-info"><h4>Xenogears (1998)</h4><p>A philosophical RPG mixing consciousness, religion and humanity. Too ambitious for its time: it needs a remake to complete its original vision.</p></div></div>
+<div class="game-card"><div class="game-card-num">05</div><div class="game-card-info"><h4>Bushido Blade (1997)</h4><p>A samurai fighting game where a single strike can kill. A localized damage system that has never been replicated with the same fidelity. Still unique.</p></div></div>
+<div class="game-card"><div class="game-card-num">06</div><div class="game-card-info"><h4>Fear Effect (2000)</h4><p>A cyberpunk action adventure with an anime look and a noir story. A unique visual style and an unmatched atmosphere for its time.</p></div></div>
+<div class="game-card"><div class="game-card-num">07</div><div class="game-card-info"><h4>Threads of Fate (1999)</h4><p>A Squaresoft action RPG with two protagonists and two different stories. Charm, humor and solid gameplay that deserved more attention.</p></div></div>
+<h2>How to play PS1 games in the Nagcoop emulator</h2>
 <ol>
-<li>Extraia a BIOS do seu PS1 original (arquivo scph1001.bin)</li>
-<li>Na página do Emulator, selecione PlayStation (PS1)</li>
-<li>Adicione o arquivo de BIOS no campo específico</li>
-<li>Carregue o arquivo .bin ou .iso do seu jogo</li>
+<li>On the Emulator page, open "Advanced — Load a custom ROM" and select PlayStation 1</li>
+<li>Optionally, load the BIOS dumped from your own PS1 (such as scph1001.bin) for better compatibility</li>
+<li>Load the .bin, .cue, .chd or .iso backup of your own disc</li>
+<li>Click "Run local ROM"</li>
 </ol>
-<p>A performance de PS1 no browser é excelente em PCs modernos. Final Fantasy VII, Metal Gear Solid e Castlevania: Symphony of the Night rodam perfeitamente.</p>`},
+<p>PS1 performance in the browser is excellent on modern PCs. And if you own the US disc of Castlevania: Symphony of the Night, check out our SymphonyRecomp tutorial to play it as a native PC game.</p>`},
 
-{id:'nightreign-fromsoft-coop',title:'Elden Ring Nightreign: FromSoftware Acertou no Co-op?',badge:'News',bc:'badge-news',cat:'Lançamentos',date:'10 Fev 2025',rt:'7 min',desc:'A FromSoftware sempre resistiu ao co-op fácil. Nightreign é a virada de chave que fãs esperavam.',bg:'ELDEN',bgc:'#3a1a1a',tags:['Elden Ring','Nightreign','FromSoftware','co-op','review'],body:`
-<h2>A FromSoftware e o Co-op: Uma Relação Complicada</h2>
-<p>Durante anos, a FromSoftware tratou o multijogador como elemento periférico. O sistema de invocação via Destilados, as restrições de área, a ausência de voz — tudo comunicava que o Soulslike foi concebido como experiência solitária. Nightreign muda isso. De forma drástica.</p>
-<h2>O Que é Nightreign</h2>
-<p>Nightreign é um spin-off de Elden Ring construído do zero para co-op de três jogadores. Funciona como roguelite: cada sessão dura entre 30 e 60 minutos, com mapa gerado proceduralmente e um boss final que exige coordenação real entre os jogadores.</p>
-<div class="highlight-box"><p>⚡ Diferente do Elden Ring base, Nightreign é desenhado EXCLUSIVAMENTE para três jogadores. Jogar solo é possível mas claramente não é a experiência pretendida.</p></div>
-<h2>O que Funciona</h2>
-<h3>O Loop de 3 Rounds</h3>
-<p>Cada sessão tem três rodadas: exploração e coleta de recursos, confronto com boss intermediário e boss final. O ciclo dia/noite cria urgência real — você precisa estar forte o suficiente antes da noite cair ou é morte garantida.</p>
-<h3>8 Classes Distintas (Nightfarers)</h3>
-<p>Os Nightfarers têm estilos radicalmente diferentes. A Wylder é guerreiro versátil, a Duchess especialista em velocidade, o Recluse mago de suporte. A sinergia entre classes é parte central do design.</p>
-<h2>O que Divide Opiniões</h2>
-<h3>Sem o Solo Experience Soulslike</h3>
-<p>Fãs que amam FromSoftware pela solidão e tensão solo vão encontrar um jogo diferente. Nightreign é barulhento, rápido e cooperativo por natureza. É ótimo no que propõe, mas não substitui Elden Ring.</p>
-<h2>Veredicto</h2>
-<p>Nightreign é a melhor experiência de co-op que a FromSoftware já criou, mas não é o mesmo tipo de jogo que os Soulslikes tradicionais. É diferente — e bom diferente.</p>
-<div class="highlight-box"><p>⭐ Nota: 8.5/10 — Essencial para quem tem dois amigos dispostos a montar um grupo fixo.</p></div>`},
+{id:'nightreign-fromsoft-coop',title:'Elden Ring Nightreign: Did FromSoftware Nail Co-op?',badge:'News',bc:'badge-news',cat:'Releases',date:'Feb 10, 2025',rt:'7 min',desc:'FromSoftware has always resisted easy co-op. Nightreign is the turning point fans were waiting for.',bg:'ELDEN',bgc:'#3a1a1a',tags:['Elden Ring','Nightreign','FromSoftware','co-op','review'],body:`
+<h2>FromSoftware and co-op: a complicated relationship</h2>
+<p>For years, FromSoftware treated multiplayer as a peripheral feature. Summoning through items, area restrictions, no voice chat: everything said the soulslike was designed as a solitary experience. Nightreign changes that. Drastically.</p>
+<h2>What is Nightreign?</h2>
+<p>Nightreign is an Elden Ring spin-off built from the ground up for three-player co-op. It plays like a roguelite: each session lasts 30 to 60 minutes, with a procedurally altered map and a final boss that demands real coordination between players.</p>
+<div class="highlight-box"><p>⚡ Unlike base Elden Ring, Nightreign is designed for three players. Playing solo is possible, but it's clearly not the intended experience.</p></div>
+<h2>What works</h2>
+<h3>The three-day loop</h3>
+<p>Each session is split into stages: exploring and gathering resources, facing a mid-boss and then the final boss. The day/night cycle creates real urgency: you need to be strong enough before night falls or it's certain death.</p>
+<h3>Distinct classes (Nightfarers)</h3>
+<p>The Nightfarers have radically different playstyles. The Wylder is a versatile warrior, the Duchess is a speed specialist, the Recluse is a support mage. Synergy between classes is central to the design.</p>
+<h2>What divides opinions</h2>
+<h3>No solo soulslike experience</h3>
+<p>Fans who love FromSoftware for its solitude and solo tension will find a different game. Nightreign is loud, fast and cooperative by nature. It's great at what it sets out to do, but it doesn't replace Elden Ring.</p>
+<h2>Verdict</h2>
+<p>Nightreign is the best co-op experience FromSoftware has ever created, but it's not the same kind of game as the traditional soulslikes. It's different, and good different.</p>
+<div class="highlight-box"><p>⭐ Score: 8.5/10. Essential if you have two friends ready to form a regular squad.</p></div>`},
 
-{id:'coop-gratuito-freetoplay',title:'Co-op Gratuito: Os Melhores Free-to-Play para Jogar com Amigos',badge:'Co-op',bc:'badge-coop',cat:'Co-op',date:'03 Fev 2025',rt:'6 min',desc:'Sem gastar nada: os melhores jogos cooperativos gratuitos disponíveis agora para jogar com a galera.',bg:'FREE',bgc:'#0d1f0d',tags:['free-to-play','gratuito','co-op','multiplayer','f2p'],body:`
-<h2>Co-op de Graça Existe e é Bom</h2>
-<p>A percepção de que free-to-play é sinônimo de pay-to-win e experiência degradada foi derrubada por vários títulos nos últimos anos. Existe co-op gratuito de qualidade — você só precisa saber onde encontrar.</p>
-<div class="game-card"><div class="game-card-num">🔥</div><div class="game-card-info"><h4>Warframe</h4><p>Co-op de ação espacial com 10 anos de conteúdo gratuito. Nenhum conteúdo principal bloqueado por paywall. Um dos melhores F2P já feitos.</p></div></div>
-<div class="game-card"><div class="game-card-num">🔥</div><div class="game-card-info"><h4>Path of Exile 2</h4><p>O ARPG mais profundo do mercado está em Early Access mas é gratuito. Co-op para até 6 jogadores. Complexidade de build absurda e satisfatória.</p></div></div>
-<div class="game-card"><div class="game-card-num">🔥</div><div class="game-card-info"><h4>Genshin Impact</h4><p>JRPG de mundo aberto com monetização controversa mas conteúdo principal gratuito e extenso. Co-op funcional para exploração e bosses.</p></div></div>
-<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Destiny 2 (Free Content)</h4><p>A campanha New Light e atividades básicas são gratuitas. Conteúdo suficiente para centenas de horas antes de precisar de expansão.</p></div></div>
-<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Dauntless</h4><p>Monster Hunter free-to-play com co-op de até 4 jogadores. Mais acessível que MH e totalmente gratuito com crossplay entre todas as plataformas.</p></div></div>
+{id:'coop-gratuito-freetoplay',title:'Free Co-op: The Best Free-to-Play Games to Play with Friends',badge:'Co-op',bc:'badge-coop',cat:'Co-op',date:'Feb 3, 2025',rt:'6 min',desc:'Without spending a dime: the best free co-op games available right now to play with your crew.',bg:'FREE',bgc:'#0d1f0d',tags:['free-to-play','free','co-op','multiplayer','f2p'],body:`
+<h2>Free co-op exists, and it's good</h2>
+<p>The idea that free-to-play means pay-to-win and a watered-down experience has been knocked down by several titles in recent years. There is quality free co-op out there; you just need to know where to look.</p>
+<div class="game-card"><div class="game-card-num">🔥</div><div class="game-card-info"><h4>Warframe</h4><p>Space action co-op with over a decade of free content. No core content locked behind a paywall. One of the best F2P games ever made.</p></div></div>
+<div class="game-card"><div class="game-card-num">🔥</div><div class="game-card-info"><h4>Path of Exile</h4><p>One of the deepest ARPGs on the market, completely free. Party play with friends and absurdly satisfying build complexity. The sequel, Path of Exile 2, is in paid early access and is planned to go free-to-play at full release.</p></div></div>
+<div class="game-card"><div class="game-card-num">🔥</div><div class="game-card-info"><h4>Genshin Impact</h4><p>An open-world action RPG with controversial monetization, but extensive free core content. Functional co-op for exploration and bosses.</p></div></div>
+<div class="game-card"><div class="game-card-num">🎮</div><div class="game-card-info"><h4>Destiny 2 (free content)</h4><p>The New Light experience and basic activities are free. Enough content for hundreds of hours before you need an expansion.</p></div></div>
 <h2>Steam Remote Play Together</h2>
-<p>Tecnologia da Steam que permite jogar co-op local com amigos online. Se você tem o jogo, seu amigo não precisa — ele acessa via streaming. Basicamente transforma qualquer jogo com co-op local em co-op online gratuito para o convidado. Um dos recursos mais subutilizados da plataforma.</p>`},
+<p>A Steam feature that lets you play local co-op games with friends online. If you own the game, your friend doesn't need to: they join via streaming. It basically turns any local co-op game into free online co-op for your guest. One of the platform's most underused features.</p>`}
 
-{id:'lancamentos-2025-calendario',title:'Calendário de Lançamentos Esperados para o Resto de 2025',badge:'News',bc:'badge-news',cat:'Lançamentos',date:'28 Jan 2025',rt:'8 min',desc:'Tudo que ainda vem por aí em 2025 — os lançamentos mais esperados organizados por mês, com foco em co-op e multiplayer.',bg:'2025',bgc:'#3a1a1a',tags:['2025','lançamentos','preview','upcoming'],body:`
-<h2>O Que Ainda Vem em 2025</h2>
-<p>2025 já entregou Monster Hunter Wilds, Elden Ring Nightreign e uma safra excelente de indies. Mas o ano ainda não acabou, e tem muita coisa boa confirmada para os próximos meses. Aqui está o radar de lançamentos relevantes com foco em co-op e multiplayer.</p>
-<div class="highlight-box"><p>📅 Datas podem mudar. O "adiamento de última hora" é uma tradição do mercado — sempre confirme próximo do lançamento.</p></div>
-<h2>2º Trimestre (Abr — Jun)</h2>
-<div class="game-card"><div class="game-card-num">ABR</div><div class="game-card-info"><h4>Death Stranding 2: On the Beach</h4><p>Kojima continua conectando o mundo em co-op assíncrono. O primeiro foi divisivo mas único. O segundo promete escalar tudo que funcionou.</p></div></div>
-<div class="game-card"><div class="game-card-num">JUN</div><div class="game-card-info"><h4>Split Fiction (EA Motive)</h4><p>Do criador de It Takes Two, novo co-op obrigatório de dois jogadores. Josef Fares prometendo "o melhor co-op já feito". Expectativa altíssima.</p></div></div>
-<h2>3º Trimestre (Jul — Set)</h2>
-<div class="game-card"><div class="game-card-num">JUL</div><div class="game-card-info"><h4>Borderlands 4</h4><p>A franquia co-op de looter shooter está de volta. 4 jogadores, novo planeta e muito loot absurdo.</p></div></div>
-<div class="game-card"><div class="game-card-num">AGO</div><div class="game-card-info"><h4>Hades II (Full Release)</h4><p>O Early Access do roguelite da Supergiant deve sair do acesso antecipado com a versão completa e o modo co-op finalizado.</p></div></div>
-<div class="game-card"><div class="game-card-num">SET</div><div class="game-card-info"><h4>Ghost of Yōtei</h4><p>Sequência de Ghost of Tsushima. Detalhes sobre co-op ainda escassos, mas o original tinha modo Legends excelente.</p></div></div>
-<h2>4º Trimestre (Out — Dez)</h2>
-<div class="game-card"><div class="game-card-num">OUT</div><div class="game-card-info"><h4>GTA VI</h4><p>O elefante na sala. Rockstar confirmou 2025. Online co-op desde o dia 1 desta vez? Tudo indica que sim.</p></div></div>
-<div class="game-card"><div class="game-card-num">NOV</div><div class="game-card-info"><h4>Fable (Xbox)</h4><p>O reboot do clássico da Lionhead. Co-op online confirmado. Expectativa cautelosa após anos de desenvolvimento.</p></div></div>
-<h2>Indie Radar</h2>
-<ul>
-<li><strong>Clair Obscur: Expedition 33</strong> — JRPG francês com visual espetacular e combate por turnos renovado</li>
-<li><strong>Blue Prince</strong> — puzzle de geração procedural de mansão. Único e inventivo</li>
-<li><strong>Hollow Knight: Silksong</strong> — sem data confirmada mas o eterno "2025 TBD" persiste</li>
-</ul>
-<p>Acompanhe o canal no YouTube para gameplays e first looks de todos esses títulos assim que saírem. Inscreve-se para não perder nada!</p>`}
 ];
 
 // RENDER BLOG GRID
@@ -651,7 +630,7 @@ function renderBlog(){
       </div>
       <div class="article-footer">
         <span class="article-date">${a.date} · ${a.rt}</span>
-        <span class="article-read">Ler →</span>
+        <span class="article-read">Read →</span>
       </div>
     </article>`).join('');
   document.querySelectorAll('.reveal:not(.obs)').forEach(el=>{el.classList.add('obs');obs.observe(el);});
@@ -676,7 +655,7 @@ function openArt(id){
         <span class="article-badge ${r.bc}">${r.badge}</span>
       </div>
       <div class="article-body"><div class="article-cat">${r.cat}</div><h3>${r.title}</h3></div>
-      <div class="article-footer"><span class="article-date">${r.date}</span><span class="article-read">Ler →</span></div>
+      <div class="article-footer"><span class="article-date">${r.date}</span><span class="article-read">Read →</span></div>
     </article>`).join('');
   document.getElementById('page-home').classList.remove('active');
   document.getElementById('page-article').classList.add('active');
@@ -711,7 +690,7 @@ async function loadVideos(){
       const vid=e.querySelector('videoId')?.textContent||'';
       const title=e.querySelector('title')?.textContent||'';
       const pub=e.querySelector('published')?.textContent||'';
-      const date=pub?new Date(pub).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}):'';
+      const date=pub?new Date(pub).toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'}):'';
       return`<a class="yt-card" href="https://www.youtube.com/watch?v=${vid}" target="_blank" rel="noopener">
         <div class="yt-thumb"><img src="https://img.youtube.com/vi/${vid}/mqdefault.jpg" alt="${title}" loading="lazy"/>
           <div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -719,7 +698,7 @@ async function loadVideos(){
     }).join('');
     document.getElementById('vid-count').textContent=entries.length+'+';
   }catch{
-    grid.innerHTML=['Gameplay co-op — em breve novos vídeos! ⚡','Inscreva-se para não perder nada 🤘','Emulador web disponível agora no site'].map(t=>`
+    grid.innerHTML=['Co-op gameplay — new videos coming soon! ⚡','Subscribe so you don\'t miss a thing 🤘','Web emulator now live on the site'].map(t=>`
       <a class="yt-card" href="https://www.youtube.com/@Nagcoop/videos" target="_blank" rel="noopener">
         <div class="yt-thumb" style="background:var(--bg3);display:flex;align-items:center;justify-content:center;">
           <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--border)">▶</div></div>
@@ -730,17 +709,17 @@ async function loadVideos(){
 // NEWSLETTER
 function subscribeNL(){
   const el=document.getElementById('nl-email'),st=document.getElementById('nl-status'),v=el.value.trim();
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){st.textContent='// email inválido — tenta de novo';st.className='nl-err';return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){st.textContent='// invalid email — try again';st.className='nl-err';return;}
   const s=JSON.parse(localStorage.getItem('nagcoop_subs')||'[]');
-  if(s.includes(v)){st.textContent='// você já está na lista ✓';st.className='nl-ok';return;}
+  if(s.includes(v)){st.textContent='// you\'re already on the list ✓';st.className='nl-ok';return;}
   s.push(v);localStorage.setItem('nagcoop_subs',JSON.stringify(s));
-  el.value='';st.textContent='// inscrito com sucesso! ⚡ boas vindas à lista';st.className='nl-ok';
+  el.value='';st.textContent='// subscribed! ⚡ welcome aboard';st.className='nl-ok';
 }
 document.getElementById('nl-email').addEventListener('keydown',e=>{if(e.key==='Enter')subscribeNL();});
 
-// NEWS (gerado pelo robô em news.json)
+// NEWS (generated by the bot into news.json)
 async function loadNews(){
-  const sec=document.getElementById('noticias'),grid=document.getElementById('news-grid'),
+  const sec=document.getElementById('news'),grid=document.getElementById('news-grid'),
         more=document.getElementById('news-more'),upd=document.getElementById('news-updated');
   let data;
   try{const r=await fetch('news.json?v='+Date.now());if(!r.ok)return;data=await r.json();}catch(e){return;}
@@ -748,8 +727,8 @@ async function loadNews(){
   if(!items.length)return;
   const esc=t=>String(t||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const ago=iso=>{if(!iso)return'';const m=Math.round((Date.now()-new Date(iso))/6e4);
-    if(m<60)return'há '+Math.max(m,1)+' min';const h=Math.round(m/60);if(h<24)return'há '+h+' h';
-    const d=Math.round(h/24);return d<30?'há '+d+(d>1?' dias':' dia'):new Date(iso).toLocaleDateString('pt-BR');};
+    if(m<60)return Math.max(m,1)+' min ago';const h=Math.round(m/60);if(h<24)return h+'h ago';
+    const d=Math.round(h/24);return d<30?d+(d>1?' days ago':' day ago'):new Date(iso).toLocaleDateString('en-US');};
   const card=n=>`<a class="news-card" href="${esc(n.link)}" target="_blank" rel="noopener nofollow">
     ${n.image?`<div class="news-img"><img src="${esc(n.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></div>`:''}
     <div class="news-body"><div class="news-meta"><span class="news-src">${esc(n.source)}</span><span>${ago(n.date)}</span></div>
@@ -758,11 +737,12 @@ async function loadNews(){
   const render=()=>{grid.innerHTML=items.slice(0,shown).map(card).join('');more.hidden=shown>=items.length;};
   more.onclick=()=>{shown+=9;render();};
   render();
-  if(data.updated)upd.textContent='// atualizado '+ago(data.updated)+' · clique para ler na fonte original';
+  if(data.updated)upd.textContent='// updated '+ago(data.updated)+' · click to read at the original source';
   sec.hidden=false;
 }
 
 renderBlog();
+document.getElementById('art-count').textContent=A.length;
 loadVideos();
 loadNews();
 </script>
