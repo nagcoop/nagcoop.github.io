@@ -24,6 +24,20 @@ FEEDS = [
     ("Jovem Nerd",         "https://jovemnerd.com.br/feed/"),
 ]
 
+# Fontes que misturam games com filmes, séries etc.: só entra notícia de game
+FILTER_SOURCES = {"IGN Brasil", "Jovem Nerd"}
+GAME_WORDS = re.compile(
+    r"\b(jogos?|games?|gamers?|gameplay|videogames?|consoles?|playstation|ps[2-5]|psn|"
+    r"xbox|nintendo|switch|steam|epic games|dlc|remaster(?:ed|izado)?|remake|"
+    r"speedrun|e-?sports?|emulador(?:es)?|emulação|retr[ôo]|arcade|indie|"
+    r"rpg|fps|mmo|roguelike|metroidvania|recomp\w*|port para pc|pc gamer)\b",
+    re.I,
+)
+
+
+def is_game_news(item):
+    return bool(GAME_WORDS.search(item["title"] + " " + item["summary"]))
+
 MAX_TOTAL = 30        # quantas notícias o news.json guarda
 MAX_PER_SOURCE = 8    # evita que uma fonte só domine a lista
 SUMMARY_CHARS = 160   # resumo curto: o leitor clica para ler na fonte
@@ -130,6 +144,8 @@ def parse_feed(source, data):
             })
     out = []
     for i in items:
+        if source in FILTER_SOURCES and not is_game_news(i):
+            continue
         if i["title"] and i["link"].startswith("http"):
             i["source"] = source
             if i["image"] and not i["image"].startswith("https://"):
