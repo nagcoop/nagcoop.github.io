@@ -560,44 +560,123 @@ function handleDeepLink(){
                               EMULATOR BOOT
    ===================================================================== */
 
+/* Each launch runs EmulatorJS inside a fresh iframe.
+   - Re-injecting loader.js into the same page loaded emulator.min.js twice
+     ("EJS_STORAGE has already been declared") and left the old instance alive.
+   - Removing the iframe kills the old instance completely (audio, loops, listeners). */
+let emuToken = 0;
 function clearPlayer(){
+  emuToken++;
   gameDiv.innerHTML = "";
-  const old = document.getElementById("ejs-loader");
-  if (old) old.remove();
-  ['EJS_player','EJS_core','EJS_gameUrl','EJS_biosUrl','EJS_gameParentUrl',
-   'EJS_startOnLoaded','EJS_color','EJS_pathtodata','EJS_shader','EJS_volume',
-   'EJS_lightgun','EJS_mouse','EJS_gameName'
-  ].forEach(k => { try { delete window[k]; } catch(e){ window[k] = undefined; } });
+}
+
+/* Cores that need zips intact (FBNeo/MAME check CRCs inside neogeo.zip, kof2002.zip...) */
+const RAW_ZIP_CORES = new Set(["arcade","fbneo","mame","mame2003","mame2003_plus","fbalpha2012_cps1","fbalpha2012_cps2"]);
+
+/* File or URL -> { name, bytes } */
+async function toNamedBytes(src){
+  if (src instanceof Blob) {
+    return { name: src.name || 'file.bin', bytes: new Uint8Array(await src.arrayBuffer()) };
+  }
+  const url = new URL(src, location.href).href;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`HTTP ${r.status} — ${url}`);
+  const name = decodeURIComponent(url.split('/').pop().split(/[?#]/)[0]);
+  return { name, bytes: new Uint8Array(await r.arrayBuffer()) };
+}
+
+/* EmulatorJS stable (4.2.x) crashes with File objects in biosUrl/gameParentUrl
+   ("t.split is not a function") and extracts BIOS zips, which breaks neogeo.zip.
+   So BIOS/parent files are written into the emulator FS by us, untouched, right
+   next to the ROM, during the BIOS step. */
+function patchEmu(emu, extras){
+  if (!extras.length || !emu || typeof emu.downloadBios !== 'function') return;
+  const origBios = emu.downloadBios.bind(emu);
+  emu.downloadBios = async function(){
+    await origBios(); // string BIOS for non-arcade systems is still handled by EJS
+    const FS = this.gameManager.FS;
+    const full = "/" + (this.fileName || "game");
+    const dir = full.substring(0, full.length - full.split("/").pop().length);
+    for (const f of extras) {
+      try { FS.writeFile(dir + f.name, f.bytes); }
+      catch (e) { console.error('[nagcoop] failed to write', f.name, e); }
+    }
+  };
 }
 
 /**
  * startEmu — launches EmulatorJS with given source.
  * `romSrc` may be a URL string OR a File object (filename preserved).
+ * opts.bios / opts.parent may also be URL strings or File objects.
  */
-function startEmu(romSrc, uiCore, opts = {}){
+async function startEmu(romSrc, uiCore, opts = {}){
   clearPlayer();
-  window.EJS_player        = "#game";
-  window.EJS_core          = resolveCore(uiCore);
-  window.EJS_gameUrl       = romSrc;
-  window.EJS_startOnLoaded = true;
-  window.EJS_color         = "#9f1239";
-  window.EJS_pathtodata    = EJS_CDN;
-  window.EJS_volume        = (parseInt(volInp.value, 10) || 80) / 100;
+  const token = ++emuToken;
+  const core = resolveCore(uiCore);
+  const rawZips = RAW_ZIP_CORES.has(core);
+
+  // BIOS / parent we inject ourselves
+  const extras = [];
+  let biosForEjs;
+  try {
+    if (opts.parent) extras.push(await toNamedBytes(opts.parent));
+    if (opts.bios) {
+      if (rawZips || opts.bios instanceof Blob) extras.push(await toNamedBytes(opts.bios));
+      else biosForEjs = new URL(opts.bios, location.href).href;
+    }
+  } catch (e) {
+    alert('Failed to load BIOS/parent: ' + e.message);
+    return;
+  }
+  if (token !== emuToken) return;
+
+  const frame = document.createElement('iframe');
+  frame.allow = 'fullscreen; gamepad; autoplay';
+  frame.setAttribute('allowfullscreen', '');
+  frame.style.cssText = 'width:100%;height:100%;border:0;display:block;background:#000';
+  frame.srcdoc = '<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#game{width:100%;height:100%}</style></head><body><div id="game"></div></body></html>';
+  const loaded = new Promise(r => frame.addEventListener('load', r, { once: true }));
+  gameDiv.appendChild(frame);
+  await loaded;
+  if (token !== emuToken) return;
+  const w = frame.contentWindow;
+
+  // File objects must belong to the iframe's realm, or EJS's `instanceof File` fails
+  const rom = (romSrc instanceof Blob)
+    ? new w.File([romSrc], romSrc.name, { type: romSrc.type })
+    : new URL(romSrc, location.href).href;
+
+  w.EJS_player        = "#game";
+  w.EJS_core          = core;
+  w.EJS_gameUrl       = rom;
+  w.EJS_startOnLoaded = true;
+  w.EJS_color         = "#9f1239";
+  w.EJS_pathtodata    = EJS_CDN;
+  w.EJS_volume        = (parseInt(volInp.value, 10) || 80) / 100;
+  w.EJS_language      = "en-US";
+  w.EJS_disableAutoLang = false; // avoids the pt-PT.json 404
 
   if (opts.gameName) {
-    window.EJS_gameName = opts.gameName;
-  } else if (romSrc && typeof romSrc === 'object' && romSrc.name) {
-    window.EJS_gameName = romSrc.name.replace(/\.[^.]+$/, '');
+    w.EJS_gameName = opts.gameName;
+  } else if (romSrc instanceof Blob && romSrc.name) {
+    w.EJS_gameName = romSrc.name.replace(/\.[^.]+$/, '');
   }
-  if (shaderSel.value) window.EJS_shader = shaderSel.value;
-  if (opts.bios)   window.EJS_biosUrl       = opts.bios;
-  if (opts.parent) window.EJS_gameParentUrl = opts.parent;
+  if (shaderSel.value) w.EJS_shader = shaderSel.value;
+  if (biosForEjs) w.EJS_biosUrl = biosForEjs;
 
-  const s = document.createElement("script");
+  // Patch the instance the moment loader.js creates it (before any download starts)
+  let emuRef;
+  Object.defineProperty(w, 'EJS_emulator', {
+    configurable: true,
+    get(){ return emuRef; },
+    set(v){ emuRef = v; patchEmu(v, extras); }
+  });
+
+  const s = w.document.createElement("script");
   s.src = EJS_CDN + "loader.js";
-  s.id = "ejs-loader";
   s.onerror = () => alert("Failed to load the emulator (loader). Check your connection.");
-  document.body.appendChild(s);
+  w.document.body.appendChild(s);
+  frame.focus();
 }
 
 function showPlayerFor(system, title){
