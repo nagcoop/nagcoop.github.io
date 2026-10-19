@@ -383,9 +383,11 @@ function shortHint(uiCore){
    Priority: bios from games.json > visitor's BiosVault > site default
    ===================================================================== */
 
-/* Site-hosted BIOS files (empty = none hosted). See bios/README.md */
+/* Site-hosted BIOS files (empty = none hosted).
+   Intentionally empty: BIOS files are copyrighted, so the site never hosts them.
+   Visitors load their own BIOS once; BiosVault keeps it in their browser. */
 const DEFAULT_BIOS = {
-  neogeo:'bios/neogeo.zip', psx:'bios/scph1001.bin',
+  neogeo:'', psx:'',
   segaCD:'', segaSaturn:'', pcfx:'', '3do':'', amiga:''
 };
 
