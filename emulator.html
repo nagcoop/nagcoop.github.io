@@ -615,6 +615,13 @@ async function startEmu(romSrc, uiCore, opts = {}){
   const core = resolveCore(uiCore);
   const rawZips = RAW_ZIP_CORES.has(core);
 
+  // Neo Geo games picked under "Arcade (FBNeo)" also need neogeo.zip.
+  // FBNeo simply ignores it for non-Neo Geo games, so always ship it for arcade cores.
+  if (rawZips && !opts.bios) {
+    try { opts.bios = (await BiosVault.get('neogeo')) || (await siteBios('neogeo')) || undefined; }
+    catch (e) { console.warn('[nagcoop] neogeo BIOS lookup failed', e); }
+  }
+
   // BIOS / parent we inject ourselves
   const extras = [];
   let biosForEjs;
