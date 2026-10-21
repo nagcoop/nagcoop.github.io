@@ -12,7 +12,6 @@ on:
 
 permissions:
   contents: write
-  models: read            # free GitHub Models, no API key
 
 concurrency:
   group: site-bots
@@ -28,10 +27,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Write article (GitHub Models)
+      - name: Write article (Gemini free tier)
         id: draft
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TOPIC: ${{ github.event.inputs.topic }}
         run: python scripts/write_article.py
 
