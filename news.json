@@ -1,39 +1,245 @@
-name: Update news
-
-on:
-  schedule:
-    - cron: "17 9 * * *"   # every day, 06:17 Brasilia
-  workflow_dispatch:        # "Run workflow" button to run it now
-
-permissions:
-  contents: write
-
-concurrency:
-  group: site-bots
-  cancel-in-progress: false
-
-jobs:
-  news:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Fetch news
-        run: python scripts/fetch_news.py
-
-      - name: Publish news.json
-        run: |
-          git config user.name  "nagcoop-news-bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add news.json
-          if git diff --cached --quiet; then
-            echo "No new stories."
-          else
-            git commit -m "News $(date -u +%Y-%m-%d)"
-            git pull --rebase origin main
-            git push
-          fi
+{
+ "updated": "2026-10-21T12:07:29+00:00",
+ "items": [
+  {
+   "title": "Dawn of War 4 Has the Potential to Be the Best Warhammer 40,000 Game Ever",
+   "link": "https://www.polygon.com/dawn-of-war-4-preview/",
+   "date": "2026-10-21T12:00:17+00:00",
+   "summary": "Dawn of War 4 is shaping up to be the massive game the Warhammer 40,000 franchise and RTS genre need right now",
+   "image": "https://static0.polygonimages.com/wordpress/wp-content/uploads/2026/10/dawn-of-war-4-key-art.jpg",
+   "source": "Polygon"
+  },
+  {
+   "title": "Adorable Dr. Mario Inspired Puzzler 'Annalynn MD' Aims to Make the World 'A Little Bit Healthier'",
+   "link": "https://www.timeextension.com/news/2026/10/adorable-dr-mario-inspired-puzzler-annalynn-md-aims-to-make-the-world-a-little-bit-healthier",
+   "date": "2026-10-21T12:00:00+00:00",
+   "summary": "Just what the doctor ordered! It’s been five years since support for the last entry in the Dr. Mario series, the mobile title Dr. Mario World , was shut down…",
+   "image": "https://images.timeextension.com/01547873e75e0/large.jpg",
+   "source": "Time Extension"
+  },
+  {
+   "title": "Feature: After 15 Years Of Coming \"Directly To You\", Here Are The Best Nintendo Direct Moments Ever",
+   "link": "https://www.nintendolife.com/features/after-15-years-of-coming-directly-to-you-here-are-the-best-nintendo-direct-moments-ever",
+   "date": "2026-10-21T12:00:00+00:00",
+   "summary": "Direct message. That’s right, the humble news delivery machine that is the Nintendo Direct celebrates its 15th birthday on 21st October and to celebrate, we’re…",
+   "image": "https://images.nintendolife.com/90ff55a89096a/large.jpg",
+   "source": "Nintendo Life"
+  },
+  {
+   "title": "I've played 2 of Dawn of War 4's campaigns, and they're everything I hoped they'd be",
+   "link": "https://www.pcgamer.com/games/rts/ive-played-2-of-dawn-of-war-4s-campaigns-and-theyre-everything-i-hoped-theyd-be/",
+   "date": "2026-10-21T12:00:00+00:00",
+   "summary": "We're so back, baby!",
+   "image": "https://cdn.mos.cms.futurecdn.net/ZTpJJQQrDJ2Fd5TCpTkEzU-1920-80.jpg",
+   "source": "PC Gamer"
+  },
+  {
+   "title": "It's not just Xbox celebrating 25 years - retro translucent green tech is taking over",
+   "link": "https://www.gamesradar.com/hardware/gaming-controllers/its-not-just-xbox-celebrating-25-years-retro-translucent-green-tech-is-taking-over/",
+   "date": "2026-10-21T11:58:10+00:00",
+   "summary": "This week marks the launch of the Xbox X25 special edition anniversary controller, but plenty of other gadgets are getting in on the action as well.",
+   "image": "https://cdn.mos.cms.futurecdn.net/DSpQ6GQndPtNe8mGZEeTkH-1920-80.jpg",
+   "source": "GamesRadar+"
+  },
+  {
+   "title": "\"AI is a technofascist, anti-human and anti-art project\", says creator of lefty tech satire Future? No Thanks!, before explaining why he used it anyway",
+   "link": "https://www.rockpapershotgun.com/ai-is-a-technofascist-anti-human-and-anti-art-project-says-creator-of-lefty-tech-satire-future-no-thanks-before-explaining-why-he-used-it-anyway",
+   "date": "2026-10-21T11:42:31+00:00",
+   "summary": "Prominent capital-p Political game developer and left-wing academic Paulo \"Molleindustria\" Pedercini has revealed that he used generative AI tools for aspects…",
+   "image": "https://assetsio.gnwcdn.com/futurenothanks_XVnmkEK.jpg?width=690&quality=85&format=jpg&auto=webp",
+   "source": "Rock Paper Shotgun"
+  },
+  {
+   "title": "Three Xbox Games Are Out Today, Including A Spooky Post-Apocalyptic FPS (October 21)",
+   "link": "https://www.purexbox.com/news/2026/10/three-xbox-games-are-out-today-including-a-spooky-post-apocalyptic-fps-october-21",
+   "date": "2026-10-21T11:30:00+00:00",
+   "summary": "Oh, hail yeah! Welcome back to your daily fix of new Xbox releases! Today, admittedly, is a bit of a slow day for new stuff. Sandustry (PC) is now available…",
+   "image": "https://images.purexbox.com/4d039e957a506/large.jpg",
+   "source": "Pure Xbox"
+  },
+  {
+   "title": "Award-Winning Indie Horror 'Mouthwashing' Finally Arrives On Switch This Month",
+   "link": "https://www.nintendolife.com/news/2026/10/award-winning-indie-horror-mouthwashing-finally-arrives-on-switch-this-month",
+   "date": "2026-10-21T11:15:00+00:00",
+   "summary": "Eye spy. Creepy space horror Mouthwashing became something of an indie sensation when it launched back in 2024. After racking up over 500,000 Steam sales…",
+   "image": "https://images.nintendolife.com/ba8fe30037d4f/large.jpg",
+   "source": "Nintendo Life"
+  },
+  {
+   "title": "80% of Samsung's data center memory is already sold for 2027, meaning yet another double-digit price increase for RAM expected and more likely to come",
+   "link": "https://www.pcgamer.com/hardware/memory/80-percent-of-samsungs-data-center-memory-is-already-sold-for-2027-meaning-yet-another-double-digit-price-increase-for-ram-expected-and-more-likely-to-come/",
+   "date": "2026-10-21T11:14:24+00:00",
+   "summary": "Next year isn't looking so hot for sensibly priced hardware upgrades either…",
+   "image": "https://cdn.mos.cms.futurecdn.net/LanFmJykroZiecWNLtRCh3-1920-80.png",
+   "source": "PC Gamer"
+  },
+  {
+   "title": "110 million votes later Nurse Harrow has finally made it into Deadlock, with special thanks to a particularly dedicated player who 'cast exactly 1,000 votes for her'",
+   "link": "https://www.pcgamer.com/games/moba/110-million-votes-later-nurse-harrow-has-finally-made-it-into-deadlock-with-special-thanks-to-a-particularly-dedicated-player-who-cast-exactly-1-000-votes-for-her/",
+   "date": "2026-10-21T11:14:04+00:00",
+   "summary": "Nurse Harrow voters did, however, prove themselves to be of the most skilled players.",
+   "image": "https://cdn.mos.cms.futurecdn.net/MhL8YnvDkUDeEtfbuvDbq3-1920-80.png",
+   "source": "PC Gamer"
+  },
+  {
+   "title": "Crimson Desert DLC features everything from shipbuilding to marriage",
+   "link": "https://www.gamesradar.com/games/open-world/crimson-desert-dlc-features-everything-from-shipbuilding-to-marriage-pearl-abyss-shows-off-in-new-preview-of-charting-the-unknown/",
+   "date": "2026-10-21T11:08:17+00:00",
+   "summary": "Also you can use a turtle as a mount",
+   "image": "https://cdn.mos.cms.futurecdn.net/5D8DPiWuXhi2jPWNYCcdJS-1920-80.jpg",
+   "source": "GamesRadar+"
+  },
+  {
+   "title": "You've Not Seen Anything Like This Bizarre PS5 Open World RPG, Ordinary Oddness",
+   "link": "https://www.pushsquare.com/news/2026/10/youve-not-seen-anything-like-this-bizarre-ps5-open-world-rpg-ordinary-oddness",
+   "date": "2026-10-21T11:00:00+00:00",
+   "summary": "Extraordinary. I wasn't sure what to expect going into the announcement trailer for Ordinary Oddness , and it's left me with more questions than answers, but I…",
+   "image": "https://images.pushsquare.com/627f3f9ab931d/large.jpg",
+   "source": "Push Square"
+  },
+  {
+   "title": "If the idea of an $1,800 Xbox that doesn't even run physical games horrifies you, I'd pick up an Evercade Nexus and ignore the next generation",
+   "link": "https://www.gamesradar.com/hardware/retro/if-the-idea-of-an-usd1-800-xbox-that-doesnt-even-run-physical-games-horrifies-you-id-pick-up-an-evercade-nexus-and-ignore-the-next-generation/",
+   "date": "2026-10-21T10:53:23+00:00",
+   "summary": "Reports suggest the next Xbox could cost up to $1,800, so I'd suggest investing in the Evercade Nexus and its physical cartridge library instead.",
+   "image": "https://cdn.mos.cms.futurecdn.net/cMvgmuytmmqh4TTECu6Pz-1920-80.jpg",
+   "source": "GamesRadar+"
+  },
+  {
+   "title": "AYN Odin 3 Portal Handheld Available to Pre-Order Tomorrow, October 22, Prices Start at $399",
+   "link": "https://www.timeextension.com/news/2026/10/ayn-odin-3-portal-handheld-available-to-pre-order-tomorrow-october-22-prices-start-at-usd399",
+   "date": "2026-10-21T10:45:00+00:00",
+   "summary": "Base, Pro, and Max models available in three colour variants. Following on from last week's initial announcement, tech manufacturer AYN has released its first…",
+   "image": "https://images.timeextension.com/8ebeef6e7bfae/large.jpg",
+   "source": "Time Extension"
+  },
+  {
+   "title": "'We expect mass attacks to start within 15 minutes of the release': Web admins braced for emergency PHP updates to plug leaked high-severity holes",
+   "link": "https://www.pcgamer.com/software/security/we-expect-mass-attacks-to-start-within-15-minutes-of-the-release-web-admins-braced-for-emergency-php-updates-to-plug-leaked-high-severity-holes/",
+   "date": "2026-10-21T10:39:05+00:00",
+   "summary": "Batten down the virtual hatches.",
+   "image": "https://cdn.mos.cms.futurecdn.net/kNCDGE87fMuTymbxurAHYN-1920-80.jpg",
+   "source": "PC Gamer"
+  },
+  {
+   "title": "Call of Duty: Modern Warfare 4 patch fixes progression issues and overzealous enemy AI in DMZ",
+   "link": "https://www.gamesradar.com/games/call-of-duty/call-of-duty-modern-warfare-4-patch-fixes-progression-issues-and-overzealous-enemy-ai-in-dmz-as-well-as-one-mission-in-the-campaign-ahead-of-the-games-full-launch/",
+   "date": "2026-10-21T10:37:46+00:00",
+   "summary": "Infinity Ward is ironing out the creases",
+   "image": "https://cdn.mos.cms.futurecdn.net/te6SgBhuzTevsg4W5fc7f8-1920-80.jpg",
+   "source": "GamesRadar+"
+  },
+  {
+   "title": "Further Xbox layoff rounds reportedly planned for this month, November, and January, while a Game Pass overhaul is in the works",
+   "link": "https://www.rockpapershotgun.com/further-xbox-layoff-rounds-reportedly-planned-for-this-month-november-and-january-while-a-game-pass-overhaul-is-in-the-works",
+   "date": "2026-10-21T10:34:44+00:00",
+   "summary": "Further rounds of layoffs as part of Xbox's ongoing efforts to eventually have fed 3200 people into the furnace are reportedly planned to take place during…",
+   "image": "https://assetsio.gnwcdn.com/xbox-layoffs-report-sep-2026-01.jpg?width=690&quality=85&format=jpg&auto=webp",
+   "source": "Rock Paper Shotgun"
+  },
+  {
+   "title": "Life is Strange game director gives upcoming Amazon TV adaptation his blessing: \"I couldn’t be prouder\"",
+   "link": "https://www.gamesradar.com/entertainment/live-action-shows/life-is-strange-game-director-gives-upcoming-amazon-tv-adaptation-his-blessing-the-care-the-love-the-attention-to-detail-i-couldnt-be-prouder/",
+   "date": "2026-10-21T10:03:05+00:00",
+   "summary": "Life is Strange co-creator says visiting the set of the upcoming Prime Video TV show was the \"highlight of my career\"",
+   "image": "https://cdn.mos.cms.futurecdn.net/8W5bK5h6pUi8JKsWkiDviH-1920-80.jpg",
+   "source": "GamesRadar+"
+  },
+  {
+   "title": "Chinese repair centre has received 7 melted 12+4-pin Nvidia GPUs in just the past two days alone",
+   "link": "https://www.pcgamer.com/hardware/graphics-cards/chinese-repair-centre-has-received-7-melted-12-4-pin-nvidia-gpus-in-just-the-past-two-days-alone/",
+   "date": "2026-10-21T10:00:07+00:00",
+   "summary": "This is not getting better, is it?",
+   "image": "https://cdn.mos.cms.futurecdn.net/a9PnCDMGTLXJaMnyvDyntF-1920-80.jpg",
+   "source": "PC Gamer"
+  },
+  {
+   "title": "Star Streak Is a New, Asteroids-Style Shmup Blasting Off on Atari Jaguar in 2027",
+   "link": "https://www.timeextension.com/news/2026/10/star-streak-is-a-new-asteroids-style-shmup-blasting-off-on-atari-jaguar-in-2027",
+   "date": "2026-10-21T10:00:00+00:00",
+   "summary": "'Prepare to make your Jaguar ROAR!'. A brand-new '80s-style shmup is headed to the Atari Jaguar. Star Streak is a 360-degree arcade blaster developed by…",
+   "image": "https://images.timeextension.com/3302f6f5331f4/large.jpg",
+   "source": "Time Extension"
+  },
+  {
+   "title": "Xbox Exec Shows Off New Version Of The Blades Dashboard They've Been 'Cooking Up'",
+   "link": "https://www.purexbox.com/news/2026/10/xbox-exec-shows-off-new-version-of-the-blades-dashboard-theyve-been-cooking-up",
+   "date": "2026-10-21T10:00:00+00:00",
+   "summary": "\"Do we like this experiment?\". For years and years and years at this point, people have been clamouring for the return of the iconic \"Blades\" dashboard from…",
+   "image": "https://images.purexbox.com/f24701dbf76c5/large.jpg",
+   "source": "Pure Xbox"
+  },
+  {
+   "title": "Here's another gizmo to prevent your graphics card from melting - wouldn't it be nice if 12+4-pin connectors weren't a cause for concern at all?",
+   "link": "https://www.pcgamer.com/hardware/graphics-cards/heres-another-gizmo-to-prevent-your-graphics-card-from-melting-wouldnt-it-be-nice-if-12-4-pin-connectors-werent-a-cause-for-concern-at-all/",
+   "date": "2026-10-21T09:59:41+00:00",
+   "summary": "I'm thankful for accessories like this, but I wish it wasn't my problem to sort in the first place.",
+   "image": "https://cdn.mos.cms.futurecdn.net/SxnsCF6pwibC6d87uZFUBk-1920-80.jpg",
+   "source": "PC Gamer"
+  },
+  {
+   "title": "Cyberpunk 2077 Edgerunners 2 Update Leaked Ahead of Reveal",
+   "link": "https://www.polygon.com/cyberpunk-2077-edgerunners-2-update-leak/",
+   "date": "2026-10-21T09:55:20+00:00",
+   "summary": "To celebrate Edgerunners season 2, CD Projekt Red is releasing a patch for Cyberpunk 2077 riddled with themed content.",
+   "image": "https://static0.polygonimages.com/wordpress/wp-content/uploads/2026/08/cyberpunk-edgerunners-s2-netflix-3-1.jpg",
+   "source": "Polygon"
+  },
+  {
+   "title": "Weekly Roundup #536",
+   "link": "https://retrorgb.com/week536.html",
+   "date": "2026-10-21T09:00:43+00:00",
+   "summary": "The Roundup is available as a video and on all audio-only podcast services, such as iTunes, Google, Stitcher, Spotify, Amazon Music and direct-download…",
+   "image": "https://retrorgb.com/wp-content/uploads/2026/10/536-150x150.jpg",
+   "source": "RetroRGB"
+  },
+  {
+   "title": "Namco's F1-Themed 3D Racer 'Ace Driver Victory Lap' Is Making Its Debut On Consoles, After Almost 30 Years",
+   "link": "https://www.timeextension.com/news/2026/10/namcos-f1-themed-3d-racer-ace-driver-victory-lap-is-making-its-debut-on-consoles-after-almost-30-years",
+   "date": "2026-10-21T09:00:00+00:00",
+   "summary": "Start your engines! Namco's 1996 arcade sequel , Ace Driver Victory Lap , is coming to consoles for the first time as part of the Arcade Archives range…",
+   "image": "https://images.timeextension.com/d55b30e127b12/large.jpg",
+   "source": "Time Extension"
+  },
+  {
+   "title": "PS5 Firmware Update 26.07-14.20.00 Available to Download Now",
+   "link": "https://www.pushsquare.com/news/2026/10/ps5-firmware-update-26-07-14-20-00-available-to-download-now",
+   "date": "2026-10-21T09:00:00+00:00",
+   "summary": "What does version 26.07-14.20.00 do? Sony has today pushed live a new PS5 firmware patch that updates the console to version number 26.07-14.20.00. The new…",
+   "image": "https://images.pushsquare.com/4cad35fc2b20a/large.jpg",
+   "source": "Push Square"
+  },
+  {
+   "title": "Crimson Desert Reveals Just How Big Its PS5 DLC Really Is in New Trailer",
+   "link": "https://www.pushsquare.com/news/2026/10/crimson-desert-reveals-just-how-big-its-ps5-dlc-really-is-in-new-trailer",
+   "date": "2026-10-21T08:45:00+00:00",
+   "summary": "Get a full overview of Charting the Unknown. Crimson Desert studio Pearl Abyss doesn't do things by halves; it's demonstrated how it's the literal embodiment…",
+   "image": "https://images.pushsquare.com/f82fe3de274f6/large.jpg",
+   "source": "Push Square"
+  },
+  {
+   "title": "MSI Claw 8 EX AI+ review - superlative playing power with familiar Windows handheld caveats",
+   "link": "https://www.rockpapershotgun.com/msi-claw-8-ex-ai-plus-review",
+   "date": "2026-10-21T08:40:01+00:00",
+   "summary": "Welcome to my review of the MSI Claw 8 EX AI+, a handheld PC that went on sale four months ago. And if you think that’s bad, tell it to the 2025-spec Lenovo…",
+   "image": "https://assetsio.gnwcdn.com/MSI-Claw-8-EX-AI%2B-review.jpg?width=690&quality=85&format=jpg&auto=webp",
+   "source": "Rock Paper Shotgun"
+  },
+  {
+   "title": "Subnautica 2's next major update adds \"the scariest region we've ever done\", together with frog mechs and a very welcome tweak for dashing",
+   "link": "https://www.rockpapershotgun.com/subnautica-2s-next-major-update-adds-the-scariest-region-weve-ever-done-together-with-frog-mechs-and-a-very-welcome-tweak-for-dashing",
+   "date": "2026-10-21T08:07:06+00:00",
+   "summary": "Bracingly moist open world survival game Subnautica 2 is embarking on the \"voyage to early access 2.0\" - this being developer Unknown Worlds' excitable term…",
+   "image": "https://assetsio.gnwcdn.com/Screenshot-2026-10-21-082915.png?width=690&quality=85&format=jpg&auto=webp",
+   "source": "Rock Paper Shotgun"
+  },
+  {
+   "title": "Guide: All PS Plus Games Available Now",
+   "link": "https://www.pushsquare.com/guides/all-ps-plus-games-available-now",
+   "date": "2026-10-21T08:00:00+00:00",
+   "summary": "Every PS Plus game, updated in one place. We’re tracking every PS Plus game available now, so you always know exactly what’s included in your tier of Sony’s…",
+   "image": "https://images.pushsquare.com/82a68dc7ca28d/large.jpg",
+   "source": "Push Square"
+  }
+ ]
+}
