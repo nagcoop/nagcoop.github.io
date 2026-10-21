@@ -2,7 +2,7 @@
 """Nagcoop article bot (free: GitHub Models).
 
 Writes ONE new blog article and adds it to the top of posts.json. The workflow
-then opens a Pull Request so a human reviews the draft before it goes live.
+then publishes it straight to the site.
 Uses GitHub Models (free tier) through the workflow's GITHUB_TOKEN, so there
 is no API key and no cost. Standard library only.
 
@@ -15,6 +15,8 @@ import json
 import os
 import re
 import sys
+import time
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 
@@ -62,15 +64,14 @@ Output ONLY a JSON object, no markdown fences, with these keys:
           End with a <p> crediting the original source with a link."""
 
 
-def call_model(prompt):
-    token = os.environ.get("GITHUB_TOKEN")
-    if not token:
-        sys.exit("GITHUB_TOKEN is not set (the workflow needs `permissions: models: read`).")
+FALLBACK_MODELS = ["openai/gpt-4.1", "openai/gpt-4.1-mini", "openai/gpt-4o-mini"]
+
+
+def _request(model, prompt, token):
     body = {
-        "model": MODEL,
+        "model": model,
         "temperature": 0.7,
         "max_tokens": 3000,
-        "response_format": {"type": "json_object"},
         "messages": [
             {"role": "system", "content": SYSTEM},
             {"role": "user", "content": prompt},
@@ -80,21 +81,50 @@ def call_model(prompt):
         API_URL,
         data=json.dumps(body).encode(),
         headers={
-            "content-type": "application/json",
-            "authorization": f"Bearer {token}",
-            "accept": "application/json",
+            "Content-Type": "application/json",
+            "Accept": "application/vnd.github+json",
+            "Authorization": f"Bearer {token}",
+            "X-GitHub-Api-Version": "2022-11-28",
         },
     )
     try:
         with urllib.request.urlopen(req, timeout=180) as r:
-            data = json.load(r)
+            status, raw = r.status, r.read().decode("utf-8", errors="replace")
     except urllib.error.HTTPError as e:
-        sys.exit(f"GitHub Models error {e.code}: {e.read().decode(errors='replace')[:800]}")
-    text = data["choices"][0]["message"]["content"] or ""
-    m = re.search(r"\{.*\}", text, re.S)
-    if not m:
-        sys.exit("The model did not return JSON:\n" + text[:1500])
-    return json.loads(m.group(0))
+        status, raw = e.code, e.read().decode("utf-8", errors="replace")
+    except Exception as e:
+        status, raw = 0, str(e)
+    return status, raw
+
+
+def call_model(prompt):
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        sys.exit("GITHUB_TOKEN is not set (the workflow needs `permissions: models: read`).")
+    models = [MODEL] + [m for m in FALLBACK_MODELS if m != MODEL]
+    for model in models:
+        for attempt in range(2):
+            status, raw = _request(model, prompt, token)
+            print(f"[{model}] HTTP {status}, {len(raw)} bytes")
+            try:
+                data = json.loads(raw)
+                text = data["choices"][0]["message"]["content"] or ""
+            except (ValueError, KeyError, IndexError, TypeError):
+                print("  response: " + (raw[:400] or "(empty)"), file=sys.stderr)
+                if status in (401, 403):
+                    sys.exit("GitHub Models refused the token. Open github.com/marketplace/models, "
+                             "open any model to accept the terms, then run again.")
+                time.sleep(10)
+                continue
+            m = re.search(r"\{.*\}", text, re.S)
+            if m:
+                try:
+                    return json.loads(m.group(0))
+                except ValueError:
+                    pass
+            print("  model reply was not valid JSON, retrying", file=sys.stderr)
+            time.sleep(5)
+    sys.exit("No usable answer from GitHub Models; nothing published.")
 
 
 def page_text(url, limit=9000):
