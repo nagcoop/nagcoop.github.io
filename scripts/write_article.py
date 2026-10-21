@@ -49,7 +49,7 @@ Hard rules:
   Do not copy or closely paraphrase the source; never quote more than one short phrase.
 - Never link to or explain how to obtain pirated ROMs, BIOS files or cracked games.
   When relevant, say players need their own legally owned copy.
-- 600 to 900 words.
+- 700 to 900 words, at least 6 paragraphs. Short drafts are rejected.
 
 Output ONLY a JSON object, no markdown fences, with these keys:
   "title": string, under 90 characters
@@ -71,7 +71,9 @@ def _request(model, prompt, token):
     body = {
         "model": model,
         "temperature": 0.7,
-        "max_tokens": 3000,
+        # Gemini 3 models "think" before answering and that counts toward this
+        # limit, so it has to be generous or the article gets cut in half.
+        "max_tokens": 16000,
         "messages": [
             {"role": "system", "content": SYSTEM},
             {"role": "user", "content": prompt},
@@ -86,7 +88,7 @@ def _request(model, prompt, token):
         },
     )
     try:
-        with urllib.request.urlopen(req, timeout=180) as r:
+        with urllib.request.urlopen(req, timeout=300) as r:
             status, raw = r.status, r.read().decode("utf-8", errors="replace")
     except urllib.error.HTTPError as e:
         status, raw = e.code, e.read().decode("utf-8", errors="replace")
@@ -95,33 +97,46 @@ def _request(model, prompt, token):
     return status, raw
 
 
+def parse_article(text):
+    """Pull the JSON object out of the model reply, tolerating fences and raw newlines."""
+    text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip())
+    start, end = text.find("{"), text.rfind("}")
+    if start == -1 or end <= start:
+        return None
+    try:
+        return json.loads(text[start:end + 1], strict=False)
+    except ValueError:
+        return None
+
+
 def call_model(prompt):
     token = os.environ.get("GEMINI_API_KEY")
     if not token:
         sys.exit("GEMINI_API_KEY is not set (add it under Settings > Secrets and variables > Actions).")
     models = [MODEL] + [m for m in FALLBACK_MODELS if m != MODEL]
     for model in models:
-        for attempt in range(2):
+        for attempt in range(3):
             status, raw = _request(model, prompt, token)
             print(f"[{model}] HTTP {status}, {len(raw)} bytes")
             try:
                 data = json.loads(raw)
-                text = data["choices"][0]["message"]["content"] or ""
+                choice = data["choices"][0]
+                text = choice["message"]["content"] or ""
             except (ValueError, KeyError, IndexError, TypeError):
-                print("  response: " + (raw[:400] or "(empty)"), file=sys.stderr)
+                print("  response: " + (raw[:300] or "(empty)"), file=sys.stderr)
                 if status in (400, 401, 403) and "API key" in raw:
                     sys.exit("Gemini rejected the API key. Check the GEMINI_API_KEY secret.")
-                time.sleep(30 if status == 429 else 10)
+                if status == 404:
+                    break  # model not available for this account: try the next one
+                time.sleep(20 * (attempt + 1))  # 503 high demand / 429 limit: back off
                 continue
-            m = re.search(r"\{.*\}", text, re.S)
-            if m:
-                try:
-                    return json.loads(m.group(0))
-                except ValueError:
-                    pass
-            print("  model reply was not valid JSON, retrying", file=sys.stderr)
+            art = parse_article(text)
+            if art:
+                return art
+            print(f"  reply was not valid JSON (finish_reason={choice.get('finish_reason')}), retrying",
+                  file=sys.stderr)
             time.sleep(5)
-    sys.exit("No usable answer from the Gemini API; nothing published.")
+    return None
 
 
 def page_text(url, limit=9000):
@@ -201,14 +216,33 @@ Existing articles (don't repeat them):
 {existing}""", [story["link"]])
 
 
+def word_count(html):
+    return len(re.sub(r"<[^>]+>", " ", html).split())
+
+
 def main():
     posts = json.load(open(POSTS, encoding="utf-8"))
     prompt, sources = pick_prompt(posts)
-    art = call_model(prompt)
 
-    for k in ("title", "desc", "cat", "bg", "tags", "body"):
-        if not art.get(k):
-            sys.exit(f"Missing field '{k}' in model output.")
+    art, body, words = None, "", 0
+    for draft in range(3):
+        art = call_model(prompt)
+        if not art:
+            sys.exit("No usable answer from the Gemini API; nothing published.")
+        missing = [k for k in ("title", "desc", "cat", "bg", "tags", "body") if not art.get(k)]
+        if missing:
+            print(f"Draft {draft + 1} is missing {missing}, asking again.")
+            continue
+        body = sanitize(art["body"])
+        words = word_count(body)
+        if words >= 450 and re.search(r"<p[ >]", body):
+            break
+        print(f"Draft {draft + 1} too short ({words} words), asking for a longer one.")
+        prompt += (f"\n\nIMPORTANT: your previous draft had only {words} words. "
+                   "Write 700 to 900 words this time, with at least 6 paragraphs.")
+    else:
+        sys.exit(f"Could not get a long enough draft ({words} words); nothing published.")
+
     cat = art["cat"] if art["cat"] in CATEGORIES else "Releases"
     badge, bc, bgc = CATEGORIES[cat]
 
@@ -218,14 +252,7 @@ def main():
     while pid in ids:
         pid, n = f"{base}-{n}", n + 1
 
-    body = sanitize(art["body"])
-    words = len(re.sub(r"<[^>]+>", " ", body).split())
-    if words < 400:
-        sys.exit(f"Draft too short ({words} words); nothing published.")
-    if not re.search(r"<p[ >]", body):
-        sys.exit("Draft has no paragraphs; nothing published.")
     today = datetime.now(timezone.utc)
-
     post = {
         "id": pid,
         "title": art["title"].strip()[:120],
@@ -249,7 +276,7 @@ def main():
     with open(os.environ.get("GITHUB_OUTPUT", os.devnull), "a") as out:
         out.write(f"id={pid}\n")
         out.write(f"title={post['title']}\n")
-    print(f"Drafted: {post['title']} ({words} words, id={pid})")
+    print(f"Published: {post['title']} ({words} words, id={pid})")
 
 
 if __name__ == "__main__":
