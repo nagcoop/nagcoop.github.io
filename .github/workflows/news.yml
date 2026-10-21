@@ -2,14 +2,14 @@ name: Update news
 
 on:
   schedule:
-    - cron: "0 10 * * *"   # every day at 10:00 UTC
+    - cron: "17 9 * * *"   # every day, 06:17 Brasilia
   workflow_dispatch:        # "Run workflow" button to run it now
 
 permissions:
   contents: write
 
 concurrency:
-  group: news
+  group: site-bots
   cancel-in-progress: false
 
 jobs:
@@ -34,5 +34,6 @@ jobs:
             echo "No new stories."
           else
             git commit -m "News $(date -u +%Y-%m-%d)"
+            git pull --rebase origin main
             git push
           fi
