@@ -1,5 +1,29 @@
 [
  {
+  "id": "namco-s-ace-driver-victory-lap-finally-hits-consoles",
+  "title": "Namco's Ace Driver Victory Lap Finally Hits Consoles",
+  "badge": "News",
+  "bc": "badge-news",
+  "cat": "Releases",
+  "date": "Oct 21, 2026",
+  "rt": "3 min",
+  "desc": "Namco's 1996 arcade sequel Ace Driver Victory Lap is leaping to modern consoles after nearly thirty years, courtesy of Hamster's Arcade Archives.",
+  "bg": "NAMCO",
+  "bgc": "#3a1a1a",
+  "tags": [
+   "arcade",
+   "namco",
+   "retro",
+   "racing",
+   "hamster"
+  ],
+  "sources": [
+   "https://www.timeextension.com/news/2026/10/namcos-f1-themed-3d-racer-ace-driver-victory-lap-is-making-its-debut-on-consoles-after-almost-30-years"
+  ],
+  "draft_by": "article-bot",
+  "body": "\n<h2>Start Your Engines: A 90s Arcade Heavyweight Comes Home</h2>\n<p>There is nothing quite like the raw, sensory overload of walking into a noisy arcade in the mid-1990s and seeing a massive, linked cabinet setup flashing its lights at you. For fans of retro racing speedways, Namco's 1996 arcade sequel <em>Ace Driver Victory Lap</em> was an absolute staple of that golden era. Built originally for Namco's powerful System 22 hardware, this F1-themed classic let players chain multiple machines together for intense eight-player multiplayer showdowns. Now, nearly three decades after its initial arcade debut, this polygon-pushing beast is finally making its very first official console port.</p>\n\n<p>Thanks to developer Hamster and their ongoing preservation efforts, the game is joining the Arcade Archives range. This follows Hamster's release of the original 1994 game <em>Ace Driver</em> earlier in May of this year. While the original arcade hardware was famous for letting massive groups of friends race side-by-side, this modern console release scales things a bit differently depending on your hardware platform. Players on the standard Arcade Archives platforms like the Nintendo Switch and PS4 will get a single-player experience, while those jumping into the Arcade Archives 2 versions on newer hardware like the Nintendo Switch 2, PS5, and Xbox Series X|S will be able to enjoy up to four-player action.</p>\n\n<h3>What to Expect From the Victory Lap</h3>\n<p>Stepping back behind the wheel of a Formula One racing car in <em>Ace Driver Victory Lap</em> means tackling a host of upgrades over its predecessor. The sequel introduced a brand-new championship mode, completely redesigned vehicles, and a series of challenging new tracks designed to test your reflexes with high-speed thrills and authentic handling. Later down the line in 2008, Bandai Namco would release a third entry titled <em>Ace Driver 3: Final Turn</em>, but that title remained chained to the arcade ecosystem, making this console release of the second game a massive win for fans of historical racing titles.</p>\n\n<div class=\"highlight-box\">\n<p>Ace Driver Victory Lap launches with standard Hamster release perks, including online leaderboards to chase global high scores, fresh gameplay modes, and nostalgic video filters to capture that authentic CRT monitor vibe.</p>\n</div>\n\n<h3>Pricing and Modern Availability</h3>\n<p>If you are looking to add this piece of arcade history to your digital library, the rollout arrives with straightforward pricing tiers. The standard Arcade Archives version costs $14.99, while the newer Arcade Archives 2 version is priced at $16.99. Both versions officially become available to buy on Thursday, October 22nd, 2026. It is a fantastic opportunity for retro enthusiasts to experience a chunk of Namco's racing lineage that has stayed locked in smoke-filled arcades for far too long.</p>\n\n<p>Our take? While modern setups cannot fully replicate the sheer scale of linking eight arcade cabinets together in a crowded venue, having these forgotten gems preserved on modern hardware is a massive win for video game preservation. It beats letting foundational 3D arcade history rot away in damp warehouses, and it gives a whole new generation of players a chance to feel the speed of Namco's classic System 22 era.</p>\n\n<p>For more details on this release, check out the full story over at <a href=\"https://www.timeextension.com/news/2026/10/namcos-f1-themed-3d-racer-ace-driver-victory-lap-is-making-its-debut-on-consoles-after-almost-30-years\" target=\"_blank\" rel=\"noopener\">Time Extension</a>.</p>"
+ },
+ {
   "id": "recompilacao-estatica-o-que-e",
   "title": "Static Recompilation: How Console Classics Are Becoming Native PC Games",
   "badge": "Tutorial",
