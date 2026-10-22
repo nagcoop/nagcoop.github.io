@@ -174,8 +174,8 @@
     .article-content a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
     .article-content code{font-family:'DM Mono',monospace;font-size:.85em;background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:1px 6px}
   </style>
-  <!-- GoatCounter: free, cookie-free visitor stats (dashboard: https://nagcoop.goatcounter.com) -->
-  <script data-goatcounter="https://nagcoop.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <!-- GoatCounter: free, cookie-free visitor stats (dashboard: https://panga.goatcounter.com) -->
+  <script data-goatcounter="https://panga.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -452,7 +452,7 @@ async function loadPosts(){
 loadPosts();
 
 // VISITOR COUNTER (GoatCounter public total)
-fetch('https://nagcoop.goatcounter.com/counter/TOTAL.json')
+fetch('https://panga.goatcounter.com/counter/TOTAL.json')
   .then(r=>r.ok?r.json():null)
   .then(d=>{if(d&&d.count)document.getElementById('visit-count').textContent=' · 👁 '+d.count+' visits';})
   .catch(()=>{});
